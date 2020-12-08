@@ -1,7 +1,7 @@
 # Author: Sean Wu
 # Last Updated: November 12, 2020
 
-#include("boundaryCheck.jl")
+#include("BoundaryCheck.jl")
 
 function oneStep(initialXY)
     theta = -1*pi + 2*pi*rand(Float64)  # -pi to pi

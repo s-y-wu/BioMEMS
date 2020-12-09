@@ -3,7 +3,7 @@
 # Unless noted otherwise, lengths and coordinates are in microns
 
 "Simulation Controls"
-NUMBER_OF_WALKS = 5000
+NUMBER_OF_WALKS = 1000
 MAX_STEPS_PER_WALK = 3*1485604
 FLOW_OFF = true
 

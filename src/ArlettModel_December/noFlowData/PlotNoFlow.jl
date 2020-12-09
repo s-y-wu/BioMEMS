@@ -4,7 +4,7 @@ using Plots
 
 function inputName(relativepath::String)
     path = "C://Users//sywu//.julia//dev//HMCResearchRandomWalks//src//ArlettModel_December//noFlowData//"
-    fullname = path * relativepath * ".csv"
+    fullname = path * relativepath
     plotData(fullname)
 end
 

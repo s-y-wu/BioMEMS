@@ -19,10 +19,10 @@ include("Locationbools.jl")
 include("OneStep.jl")
 include("Spawn.jl")
 
-"   saveSimulation
+"   saveNoFlowData
 Save data from a no flow Arlett simulation."
-function saveSimulation()
-    n_arr, in_arr, out_arr = runSimulation()
+function saveNoFlowData()
+    n_arr, in_arr, out_arr = runNoFlowSimulation()
     df = DataFrame(nth_trial = n_arr, innerXtalk = in_arr, outerXtalk = out_arr)
 
     path = "C://Users//sywu//.julia//dev//HMCResearchRandomWalks//src//ArlettModel_December//noFlowData//"
@@ -31,11 +31,10 @@ function saveSimulation()
     newTime = replace(timeNow, ":" => ";")
     # example: "2020-12-07T20;41;59.177"
     full_path = path * newTime * ".csv"
-
     CSV.write(full_path, df)
 end
 
-function runSimulation()
+function runNoFlowSimulation()
     println("Begin cross talk recording (no flow)")
     n_array = []
     innerXtalk_array = []

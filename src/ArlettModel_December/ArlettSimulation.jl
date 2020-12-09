@@ -3,6 +3,9 @@
 # Author(s): Sean Wu
 # Last Updated: November 27, 2020
 
+using DataFrames
+using Dates
+
 include("arlettParameters.jl")
 include("boundaryCheck.jl")
 include("boundaryCross.jl")
@@ -13,24 +16,40 @@ include("locationbools.jl")
 include("oneStep.jl")
 include("spawn.jl")
 
-function animationBackend(filename)
-    record = []
-    peroxideXY = spawnRandomPoint()
-    index = 0
-    while peroxideXY != undef && index < MAX_STEPS_PER_WALK
-        append!(record, peroxideXY)
-        final, newTally = oneStep(peroxideXY)
-        index += 1
-    end
 
-    open(filename, "a") do file
-        for coordinate in record
-            write(file, string(coordinate))
-            write(file, "\n")
-        end
-    end
+function saveAnimationData()
+    x_arr, y_arr = animateArlettSimulation()
+    df = DataFrame(x_coordinate = x_arr,
+                    y_coordinate = y_arr)
+
+    relativePath = "\\src\\ArlettModel_December\\animations\\"
+    timeNow = string(Dates.now())
+    # Microsoft File Name prohibits ":"
+    newTime = replace(timeNow, ":" => ";")
+    full_path = pwd() * relativePath * newTime * ".csv"
+    CSV.write(full_path, df)
 end
 
+
+function animateArlettSimulation()
+    x_arr = []
+    y_arr = []
+    peroxideXY = spawnRandomPoint()
+    index = 0
+    everyNthFrame = 10
+    while peroxideXY != undef && index < MAX_STEPS_PER_WALK
+        if index % everyNthFrame == 0
+            x, y = peroxideXY
+            compressedX = convert(Float16, x)
+            compressedY = convert(Float16, y)
+            push!(x_arr, compressedX)
+            push!(y_arr, compressedY)
+        end
+        peroxideXY, newTally = oneStep(peroxideXY)
+        index += 1
+    end
+    return x_arr, y_arr
+end
 
 function fullCollisionData()
     println("Arlett Model: Walls + Overflow Spawn + 1 Thick Enzymatic + 5 PPD + Flow")
@@ -73,8 +92,4 @@ function fullCollisionData()
         end
         println(keyVal[1], "\t", extraSpacing, keyVal[2])
     end
-end
-
-function main()
-    fullCollisionData()
 end

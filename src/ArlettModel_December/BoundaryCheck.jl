@@ -2,6 +2,7 @@
 # Last Updated: November 12, 2020
 
 using Documenter
+using Random
 
 "required imports for unit testing"
 #include("CalcProposed.jl")

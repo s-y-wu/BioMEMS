@@ -5,7 +5,7 @@
 "Simulation Controls"
 NUMBER_OF_WALKS = 100
 MAX_STEPS_PER_WALK = 3*1485604
-FLOW_OFF = false
+FLOW_OFF = true
 
 "Sensor/Walls Coordinates"
 sensorHalfWidth = 0.5 * 25

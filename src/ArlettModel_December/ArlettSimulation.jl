@@ -68,6 +68,8 @@ function fullCollisionData()
 
     data["particles unresolved"] = 0
 
+    avgStepsTaken = 0
+
     for _ in 1:NUMBER_OF_WALKS
         peroxideXY = spawnRandomPoint()
         index = 0
@@ -78,18 +80,30 @@ function fullCollisionData()
             end
             index += 1
         end
+        avgStepsTaken += index
 
         if index >= MAX_STEPS_PER_WALK
             data["particles unresolved"] += 1
         end
     end
+
+    avgStepsTaken = avgStepsTaken / NUMBER_OF_WALKS
     # present data in command line
-    for keyVal in data
+    presentationOrder = ["side wall",
+        "top wall",
+        "left outer sensor",
+        "left inner sensor",
+        "center sensor",
+        "right inner sensor",
+        "right outer sensor",
+        "escape"]
+    for key in presentationOrder
         extraSpacing = ""
-        if length(keyVal[1]) < 14
-            multiplier = 13 ÷ length(keyVal[1])
+        if length(key) < 14
+            multiplier = 13 ÷ length(key)
             extraSpacing = repeat("\t", multiplier)
         end
-        println(keyVal[1], "\t", extraSpacing, keyVal[2])
+        println(key, "\t", extraSpacing, data[key])
     end
+    println("Avg Steps Taken", "\t", avgStepsTaken)
 end

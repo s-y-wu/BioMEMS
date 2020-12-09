@@ -254,6 +254,10 @@ function flow(previous)
         previous    [float, float] the xy coordinates of the original point, where the tail of the proposed vector begins
         bias        small nudge that shifts the proposed point to the right
     """
+    if true #previous[2] < 1.5
+        return 0
+    end
+
     speed = 6327*(1 - ((1270 - previous[2])^2) / (1270^2))  # For simplicity, use the previous y-coordinate, doesn't differ from proposed enough to significantly change flow bias.
     tau = 0.0000027077
     bias = speed*tau
@@ -463,6 +467,7 @@ function RandomWalk(n, max_steps, layers)
         layers      [float, float, float] from the global variable LAYERS, the array of steplengths of water, enzymatic, and ppd layers
     """
     finalTally = [0, 0, 0, 0, 0, 0, 0, 0]                       # Initialize the blank tally to track our data
+    avgStepsTaken = 0
     for _ in 1:n                                                # One iteration in the for loop for each peroxide walk
         final = spawnRandomPoint()                              # Initialize the first coordinate
         index = 0                                               # Track the number of steps taken
@@ -473,7 +478,10 @@ function RandomWalk(n, max_steps, layers)
             end
             index += 1
         end
+        avgStepsTaken += index
     end
+    avgStepsTaken = avgStepsTaken / n
+    println("Avg Steps Taken", "\t", avgStepsTaken)
     # for and while loop here are the only iterative pieces besides the occasional recursive loop in sensWall
     return finalTally
 end

@@ -25,7 +25,7 @@ function saveSimulation()
     n_arr, in_arr, out_arr = runSimulation()
     df = DataFrame(nth_trial = n_arr, innerXtalk = in_arr, outerXtalk = out_arr)
 
-    path = "C://Users//sywu//Dropbox//2020-workspace//workspaceSean//winter_arlett_model//noFlowData//"
+    path = "C://Users//sywu//.julia//dev//HMCResearchRandomWalks//src//ArlettModel_December//noFlowData//"
     timeNow = string(Dates.now())
     # Microsoft File Name prohibits ":"
     newTime = replace(timeNow, ":" => ";")

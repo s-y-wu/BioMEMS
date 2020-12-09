@@ -4,8 +4,8 @@
 using Documenter
 
 "required imports for unit testing"
-#include("calcProposed.jl")
-#include("collision.jl")
+#include("CalcProposed.jl")
+#include("Collision.jl")
 
 """
     boundaryCheck
@@ -63,4 +63,3 @@ function wallCases(initialXY)
         return cornerCase[bitrand()[1]] # coinflip rare ambiguous case
     end
 end
-    

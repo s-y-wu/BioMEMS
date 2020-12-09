@@ -3,7 +3,7 @@ using DataFrames
 using Plots
 
 function inputName(relativepath::String)
-    path = "C://Users//sywu//Dropbox//2020-workspace//workspaceSean//winter_arlett_model//noFlowData//"
+    path = "C://Users//sywu//.julia//dev//HMCResearchRandomWalks//src//ArlettModel_December//noFlowData//"
     fullname = path * relativepath * ".csv"
     plotData(fullname)
 end

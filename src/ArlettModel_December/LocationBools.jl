@@ -1,7 +1,7 @@
 # Author: Sean Wu
 # Last Updated: November 11, 2020
 
-#include("arlettParameters.jl")
+#include("ArlettParameters.jl")
 
 
 

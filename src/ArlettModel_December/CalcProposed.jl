@@ -2,10 +2,10 @@
 # Last Updated: November 11, 2020
 
 "required imports for unit testing"
-#include("flow.jl")
-#include("boundaryCross.jl")
-#include("spawn.jl")
-#include("locationbools.jl")
+#include("Flow.jl")
+#include("BoundaryCross.jl")
+#include("Spawn.jl")
+#include("LocationBools.jl")
 
 "Manages steplength calculations and adjusts the steplength by layers accordingly."
 function calculateProposedPoint(initialXY, dx, dy)
@@ -104,4 +104,3 @@ function ppdCalc(initialXY, dx, dy)
         return proposedXY, "ppd"
     end
 end
-    

@@ -1,8 +1,8 @@
 # Author: Sean Wu
 # Last Updated: November 11, 2020
 
-#include("arlettParameters.jl")
-#include("locationbools.jl")
+#include("ArlettParameters.jl")
+#include("LocationBools.jl")
 
 "Resolves collisions into parylene wall face with no catalase. Recursively shortens the proposed vector"
 function sensWall(initXY, dx, dy, stepSize)

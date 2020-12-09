@@ -3,8 +3,6 @@
 
 #include("ArlettParameters.jl")
 
-
-
 function inEscapeBounds(x_val, y_val)
     withinX = -1*escapeX <= x_val <= escapeX
     withinY = -1 <= y_val <= escapeY
@@ -33,7 +31,7 @@ function inInnerAdjX(x_val)
 end
 
 function inOuterAdjX(x_val)
-    return sensorOuterAdjMaxX < abs(x_val) < sensorOuterAdjMaxX
+    return sensorOuterAdjMinX < abs(x_val) < sensorOuterAdjMaxX
 end
 
 function inSensor(xyCoord)

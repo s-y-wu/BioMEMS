@@ -39,6 +39,6 @@ function whereOutsideSpawn(point)
     elseif initY > enzymeMaxY
         return "N"
     else
-        "whereOutsideSpawn Error"
+        return "whereOutsideSpawn Error"
     end
 end

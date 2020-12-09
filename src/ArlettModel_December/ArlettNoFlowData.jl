@@ -20,7 +20,10 @@ include("OneStep.jl")
 include("Spawn.jl")
 
 "   saveNoFlowData
-Save data from a no flow Arlett simulation."
+Save data from a no flow Arlett simulation.
+
+Runtime: 89.5 seconds for 100 runs
+"
 function saveNoFlowData()
     n_arr, in_arr, out_arr = runNoFlowSimulation()
     df = DataFrame(nth_trial = n_arr, innerXtalk = in_arr, outerXtalk = out_arr)

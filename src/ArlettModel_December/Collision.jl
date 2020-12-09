@@ -11,7 +11,7 @@ function sensWall(initXY, dx, dy, stepSize)
     newY = y + stepSize*dy
 
     if inWalls(newX, newY)
-        return sensWall(initXY, dx, dy, stepSize * 0.8)
+        return sensWall(initXY, dx, dy, stepSize * 0.5)
     else
         return [newX, newY]
     end

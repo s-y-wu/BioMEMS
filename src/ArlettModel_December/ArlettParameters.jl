@@ -3,9 +3,9 @@
 # Unless noted otherwise, lengths and coordinates are in microns
 
 "Simulation Controls"
-NUMBER_OF_WALKS = 1000
+NUMBER_OF_WALKS = 100
 MAX_STEPS_PER_WALK = 3*1485604
-FLOW_OFF = true
+FLOW_OFF = false
 
 "Sensor/Walls Coordinates"
 sensorHalfWidth = 0.5 * 25

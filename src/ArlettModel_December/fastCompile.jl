@@ -358,9 +358,9 @@ end
 
 function wallCases(initialXY)
     initX, initY = initialXY
-    if initY <= 1.5
+    if initY <= wallY
         return "side wall"
-    elseif initY > 1.5 && (inCenterX(initX) || inInnerAdjX(initX) || inOuterAdjX(initX))
+    elseif initY > wallY && (!inCenterX(initX) || !inInnerAdjX(initX) || !inOuterAdjX(initX))
         return "top wall"
     else
         cornerCase = Dict(0 => "side wall", 1 => "top wall")

@@ -68,7 +68,7 @@ end
 #         end
 #     end
 #
-#     if bitrand()[1] == 0
+#     if rand(Float64) > 0.5
 #         return "sidewall"
 #     else
 #         return "top wall"

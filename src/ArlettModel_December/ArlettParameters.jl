@@ -4,7 +4,7 @@
 
 # const variables w/ fixed types perform better than default (global) variables
 "Simulation Controls"
-const NUMBER_OF_WALKS = 1000
+const NUMBER_OF_WALKS = 100
 const MAX_STEPS_PER_WALK = 3*1485604
 const FLOW_OFF = true
 
@@ -37,6 +37,7 @@ const spawnEnzymeMaxY = enzymeMaxY - borderCorrection
 "Enzymatic-Water Corners"
 const cornerCutInEnz = sqrt(2) * enzStepSize
 const cornerCutInWater = sqrt(2) * waterStepSize
+# test set: locationbools here
 const waterToEnzNorthEast = [enzymaticRightX - cornerCutInEnz, enzymeMaxY - cornerCutInEnz]
 const waterToEnzNorthWest = [enzymaticLeftX + cornerCutInEnz, enzymeMaxY - cornerCutInEnz]
 const enzToWaterNorthEast = [enzymaticRightX + cornerCutInWater, enzymeMaxY + cornerCutInWater]

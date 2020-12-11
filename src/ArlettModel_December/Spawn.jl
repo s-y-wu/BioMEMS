@@ -4,9 +4,9 @@
 #include("ArlettParameters.jl")
 
 "Spawning above walls for overflowing enzymatic layer"
-function spawnRandomPoint()
+function spawnRandomPoint(randFloat)
     spawnLineLength = enzymaticRightX - enzymaticLeftX + 2 * enzymeMaxYFromWall
-    spawnCoordinate = spawnLineLength * rand(Float64) - spawnLineLength / 2
+    spawnCoordinate = spawnLineLength * randFloat - spawnLineLength / 2
 
     #Top Enzyme Face
     if spawnLeftX <= spawnCoordinate <= spawnRightX

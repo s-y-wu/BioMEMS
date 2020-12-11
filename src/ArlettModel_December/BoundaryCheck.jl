@@ -23,19 +23,19 @@ function boundaryCheck(initialXY, dx, dy)
     propX, propY = proposedXY
     endingStepSize = stepSizeDict[ endingLayer ]
 
-    if !inEscapeBounds(propX, propY)    # before wall for corner case
+    if inWalls(propX, propY)
+        return sensWall(initialXY, dx, dy, endingStepSize), "no collision"
+    elseif !inEscapeBounds(propX, propY)
         return undef, "escape"
     elseif inSensor(proposedXY)
         return undef, sensorCases(initX)
-    elseif inWalls(propX, propY)
-        return sensWall(initialXY, dx, dy, endingStepSize), wallCases(initialXY)
     else
         return proposedXY, "no collision"
     end
 end
 
 function sensorCases(initX)
-    if inCenterX(initX)
+    if inCenterSensorX(initX)
         return "center sensor"
     elseif initX < 0
         position = "left"
@@ -43,9 +43,9 @@ function sensorCases(initX)
         position = "right"
     end
 
-    if inInnerAdjX(initX)
+    if inInnerSensorX(initX)
         return position * " inner sensor"
-    elseif inOuterAdjX(initX)
+    elseif inOuterSensorX(initX)
         return position * " outer sensor"
     else
         println("sensorCases error ", initX)
@@ -53,14 +53,23 @@ function sensorCases(initX)
     end
 end
 
-function wallCases(initialXY)
-    initX, initY = initialXY
-    if initY <= 1.5
-        return "side wall"
-    elseif initY > 1.5 && inCenterX(initX) || inInnerAdjX(initX) || inOuterAdjX(initX)
-        return "top wall"
-    else
-        cornerCase = Dict(0 => "side wall", 1 => "top wall")
-        return cornerCase[bitrand()[1]] # coinflip rare ambiguous case
-    end
-end
+# when we do the top enzyme case
+# function wallCases(initialXY)
+#     initX, initY = initialXY
+#     if initY <= wallY
+#         return "side wall"
+#     elseif initY > wallY
+#         if inCenterWallsX(initX)
+#             return "top wall"
+#         elseif inInnerWallsX(initX)
+#             return "top wall"
+#         elseif inOuterWallsX(initX)
+#             return "top wall"
+#         end
+#     end
+#
+#     if rand(Float64) > 0.5
+#         return "sidewall"
+#     else
+#         return "top wall"
+# end

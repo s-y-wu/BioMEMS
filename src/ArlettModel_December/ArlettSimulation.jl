@@ -6,15 +6,16 @@
 using DataFrames
 using Dates
 
-include("arlettParameters.jl")
-include("boundaryCheck.jl")
-include("boundaryCross.jl")
-include("calcProposed.jl")
-include("collision.jl")
-include("flow.jl")
-include("locationbools.jl")
-include("oneStep.jl")
-include("spawn.jl")
+include("ArlettParameters.jl")
+include("BoundaryCheck.jl")
+include("BoundaryCross.jl")
+include("CalcProposed.jl")
+include("Collision.jl")
+include("Flow.jl")
+#include("LocationBools.jl")
+include("fastbooleans.jl")
+include("OneStep.jl")
+include("Spawn.jl")
 
 
 function saveAnimationData()
@@ -51,6 +52,11 @@ function animateArlettSimulation()
     return x_arr, y_arr
 end
 
+function fullCollisionData(seed::Int64)
+    Random.seed!(seed)
+    fullCollisionData()
+end
+
 function fullCollisionData()
     println("Arlett Model: Walls + Overflow Spawn + 1 Thick Enzymatic + 5 PPD + Flow")
     println("Particles: $NUMBER_OF_WALKS \t  Steps: $MAX_STEPS_PER_WALK\t Step lengths: $stepSizeDict")
@@ -67,11 +73,11 @@ function fullCollisionData()
     data["right outer sensor"] = 0
 
     data["particles unresolved"] = 0
-
     avgStepsTaken = 0
 
-    for _ in 1:NUMBER_OF_WALKS
-        peroxideXY = spawnRandomPoint()
+    arrayOfRandomFloats = rand(NUMBER_OF_WALKS)
+    for i in arrayOfRandomFloats
+        peroxideXY = spawnRandomPoint(i)
         index = 0
         while peroxideXY != undef && index < MAX_STEPS_PER_WALK
             peroxideXY, collision = oneStep(peroxideXY)
@@ -96,7 +102,8 @@ function fullCollisionData()
         "center sensor",
         "right inner sensor",
         "right outer sensor",
-        "escape"]
+        "escape",
+        "particles unresolved"]
     for key in presentationOrder
         extraSpacing = ""
         if length(key) < 14

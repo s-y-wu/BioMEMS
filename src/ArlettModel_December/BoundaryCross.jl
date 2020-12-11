@@ -1,16 +1,16 @@
 # Author: Sean Wu
 # Last Updated: November 11, 2020
 
-include("ArlettParameters.jl")
+#include("ArlettParameters.jl")
 
 "Corrects displacement vectors with head and tail at two different layers"
 
 "At horizontal boundary between water-enzymatic, water-ppd, or ppd-enzymatic"
-function North(previous, proposed, dx, dy, start, endup)
-    initX, initY = previous
+function North(initialXY, proposedXY, dx, dy, start, endup)
+    initX, initY = initialXY
     scale = stepSizeDict[start]
     scale2 = stepSizeDict[endup]
-    slope = (proposed[1] - initX) / (proposed[2] - initY)           # Reciprocal of traditional slope (delta x over delta y)
+    slope = (proposedXY[1] - initX) / (proposedXY[2] - initY)           # Reciprocal of traditional slope (delta x over delta y)
 
     if start == "ppd" || endup == "ppd"
         yIntersection = ppdMaxY
@@ -22,17 +22,18 @@ function North(previous, proposed, dx, dy, start, endup)
                 # Reciprocal slope lets us multiply the change in y to obtain the change in x
     yDistLeft = scale * dy + (initY - yIntersection)                # y-component legnth of the original second segment
     xDistLeft = scale * dx + (initX - xIntersection)                # x-component length of the original second segment
-    new_proposed = [xIntersection + xDistLeft * scale2/scale, yIntersection + yDistLeft * scale2/scale]
-                # First divide the x- and y- component lengths of the original segment steplength, scale -> recover the unit vector length of second segment
-                # Then multiply the x- and y-components of the unit vector length of  second semester by scale2 -> obtain correct length of the second segment in new layer
-                # Lastly append the correct lengths of the new second segment to the head of the first segment vector
-    return new_proposed
+    # First divide the x- and y- component lengths of the original segment steplength, scale -> recover the unit vector length of second segment
+    # Then multiply the x- and y-components of the unit vector length of  second semester by scale2 -> obtain correct length of the second segment in new layer
+    # Lastly append the correct lengths of the new second segment to the head of the first segment vector
+    proposedXY[1] = xIntersection + xDistLeft * scale2/scale
+    proposedXY[2] = yIntersection + yDistLeft * scale2/scale
+    return proposedXY
 end
 
 "At vertical boundary between enzyme and water. No ppd-water vertical boundary, only ppd-wall"
-function EastWest(previous, proposed, dx, dy, start, endup, EastOrWest)
-    initX, initY = previous
-    propX, propY = proposed
+function EastWest(initialXY, proposedXY, dx, dy, start, endup, EastOrWest)
+    initX, initY = initialXY
+    propX, propY = proposedXY
     scale = stepSizeDict[start]
     scale2 = stepSizeDict[endup]
     slope = (propY - initY) / (propX - initX)           # Traditional slope (delta y over delta x)
@@ -47,9 +48,10 @@ function EastWest(previous, proposed, dx, dy, start, endup, EastOrWest)
                 # Multiply the slope and the change in y to obtain the change in x
     xDistLeft = scale * dx + (initX - xIntersection)                # x-component legnth of the original second segment
     yDistLeft = scale * dy + (initY - yIntersection)                # y-component legnth of the original second segment
-    new_proposed = [xIntersection + xDistLeft * scale2/scale, yIntersection + yDistLeft * scale2/scale]
-                # Divide the x- and y- component lengths of the original segment steplength, scale -> recover the unit vector length of second segment
-                # Multiply the x- and y-components of the unit vector length of  second semester by scale2 -> obtain correct length of the second segment in new layer
-                # Append the correct lengths of the new second segment to the head of the first segment vector
-    return new_proposed
+    # Divide the x- and y- component lengths of the original segment steplength, scale -> recover the unit vector length of second segment
+    # Multiply the x- and y-components of the unit vector length of  second semester by scale2 -> obtain correct length of the second segment in new layer
+    # Append the correct lengths of the new second segment to the head of the first segment vector
+    proposedXY[1] = xIntersection + xDistLeft * scale2/scale
+    proposedXY[2] = yIntersection + yDistLeft * scale2/scale
+    return proposedXY
 end

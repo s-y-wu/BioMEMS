@@ -3,25 +3,24 @@
 
 #include("BoundaryCheck.jl")
 
+
+
 function oneStep(initialXY)
-    theta = -1*pi + 2*pi*rand(Float64)  # -pi to pi
+    theta = 2 * pi * rand(Float64) - pi  # -pi to pi
     dx = cos(theta)
     dy = sin(theta)
-    waterStepSize = stepSizeDict["water"]
 
-    initX, initY = initialXY
-    if inSafeBounds(initX, initY)   # fast computation
+    if inSafeBounds(initialXY)   # fast computation
         flowBias = flow(initialXY)
-        newX = initX + waterStepSize * dx + flowBias
-        newY = initY + waterStepSize * dy
-        return [newX, newY], "no collision"
+        # IMPORTANT: updating arrays always faster than initializing new array
+        initialXY[1] += waterStepSize * dx + flowBias
+        initialXY[2] += waterStepSize * dy
+        return initialXY, "no collision"
     else                            # more computation needed
         return boundaryCheck(initialXY, dx, dy)
     end
 end
 
-function inSafeBounds(x_val, y_val)
-    withinX = abs(x_val) < safeMaxX
-    withinY = safeMinY < y_val < safeMaxX
-    return withinX && withinY
+function inSafeBounds(xy)
+    return abs(xy[1]) < safeMaxX && safeMinY < xy[2] && xy[2] < safeMaxY
 end

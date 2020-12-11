@@ -4,9 +4,15 @@
 
 # const variables w/ fixed types perform better than default (global) variables
 "Simulation Controls"
-const NUMBER_OF_WALKS = 100
+const NUMBER_OF_WALKS = 2000
 const MAX_STEPS_PER_WALK = 3*1485604
 const FLOW_OFF = true
+
+"Solvent Diffusion Step Sizes (microns per 2.7 microseconds)"
+stepSizeDict = Dict("water" => 0.1, "enz" => 0.005, "ppd" => 0.0007)
+const waterStepSize = 0.1
+const enzStepSize = 0.005
+const ppdStepSize = 0.0007
 
 "Sensor/Walls Coordinates"
 const sensorHalfWidth = 0.5 * 25
@@ -42,12 +48,6 @@ const waterToEnzNorthEast = [enzymaticRightX - cornerCutInEnz, enzymeMaxY - corn
 const waterToEnzNorthWest = [enzymaticLeftX + cornerCutInEnz, enzymeMaxY - cornerCutInEnz]
 const enzToWaterNorthEast = [enzymaticRightX + cornerCutInWater, enzymeMaxY + cornerCutInWater]
 const enzToWaterNorthWest = [enzymaticLeftX - cornerCutInWater, enzymeMaxY + cornerCutInWater]
-
-"Solvent Diffusion Step Sizes (microns per 2.7 microseconds)"
-stepSizeDict = Dict("water" => 0.1, "enz" => 0.005, "ppd" => 0.0007)
-const waterStepSize = 0.1
-const enzStepSize = 0.005
-const ppdStepSize = 0.0007
 
 "Escape Bound Limits"
 const escapeX = 5 * sensorHalfWidth + 3 * sensorSpacing

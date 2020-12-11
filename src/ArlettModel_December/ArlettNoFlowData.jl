@@ -22,18 +22,29 @@ include("Spawn.jl")
 "   saveNoFlowData
 Save data from a no flow Arlett simulation.
 
-Runtime: 89.5 seconds for 100 runs
+Runtime 12/8: 89.5 seconds for 100 runs
+Runtime 12/10:
 "
+function saveNoFlowData(seed::Int64)
+    Random.seed!(seed)
+    saveNoFlowData(string(seed))
+end
+
 function saveNoFlowData()
+    saveNoFlowData("")
+end
+
+function saveNoFlowData(seedStr::String)
     n_arr, in_arr, out_arr = runNoFlowSimulation()
     df = DataFrame(nth_trial = n_arr, innerXtalk = in_arr, outerXtalk = out_arr)
 
-    path = "C://Users//sywu//.julia//dev//HMCResearchRandomWalks//src//ArlettModel_December//noFlowData//"
+    relativePath = "\\src\\ArlettModel_December\\noFlowData\\"
     timeNow = string(Dates.now())
     # Microsoft File Name prohibits ":"
     newTime = replace(timeNow, ":" => ";")
-    # example: "2020-12-07T20;41;59.177"
-    full_path = path * newTime * ".csv"
+    fileName = newTime * "_seed" * seedStr * ".csv"
+    # example: "2020-12-07T20;41;59.177.csv"
+    full_path = pwd() * relativePath * fileName
     CSV.write(full_path, df)
 end
 
@@ -48,8 +59,9 @@ function runNoFlowSimulation()
     innerXtalk = 0.0
     outerXtalk = 0.0
 
+    arrayOfRandomFloats = rand(NUMBER_OF_WALKS)
     for n in 1:NUMBER_OF_WALKS
-        peroxideXY = spawnRandomPoint()
+        peroxideXY = spawnRandomPoint(arrayOfRandomFloats[n])
         index = 0
 
         while peroxideXY != undef && index < MAX_STEPS_PER_WALK

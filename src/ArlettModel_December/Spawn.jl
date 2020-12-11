@@ -1,7 +1,7 @@
 # Author: Sean Wu
 # Last Updated: November 11, 2020
 
-include("ArlettParameters.jl")
+#include("ArlettParameters.jl")
 
 "Spawning above walls for overflowing enzymatic layer"
 function spawnRandomPoint()

@@ -6,15 +6,15 @@
 using DataFrames
 using Dates
 
-include("arlettParameters.jl")
-include("boundaryCheck.jl")
-include("boundaryCross.jl")
-include("calcProposed.jl")
-include("collision.jl")
-include("flow.jl")
-include("locationbools.jl")
-include("oneStep.jl")
-include("spawn.jl")
+include("ArlettParameters.jl")
+include("BoundaryCheck.jl")
+include("BoundaryCross.jl")
+include("CalcProposed.jl")
+include("Collision.jl")
+include("Flow.jl")
+include("LocationBools.jl")
+include("OneStep.jl")
+include("Spawn.jl")
 
 
 function saveAnimationData()
@@ -96,7 +96,8 @@ function fullCollisionData()
         "center sensor",
         "right inner sensor",
         "right outer sensor",
-        "escape"]
+        "escape",
+        "particles unresolved"]
     for key in presentationOrder
         extraSpacing = ""
         if length(key) < 14

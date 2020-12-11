@@ -6,13 +6,14 @@
 
 "Resolves collisions into parylene wall face with no catalase. Recursively shortens the proposed vector"
 function sensWall(initXY, dx, dy, stepSize)
-    x, y = initXY
-    newX = x + stepSize*dx
-    newY = y + stepSize*dy
+    newX = initXY[1] + stepSize*dx
+    newY = initXY[2] + stepSize*dy
 
     if inWalls(newX, newY)
         return sensWall(initXY, dx, dy, stepSize * 0.5)
     else
-        return [newX, newY]
+        initXY[1] = newX
+        initXY[2] = newY
+        return initXY
     end
 end

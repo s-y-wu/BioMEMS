@@ -23,8 +23,6 @@ end
 
 function waterCalc(initialXY, dx, dy)
     initX, initY = initialXY
-    waterStepSize = stepSizeDict["water"]
-    enzStepSize = stepSizeDict["enz"]
     flowBias = flow(initialXY)
     proposedXY = [initX + flowBias + waterStepSize * dx, initY + waterStepSize * dy]
 
@@ -37,11 +35,9 @@ function waterCalc(initialXY, dx, dy)
         elseif directionOfEntry == "N"
             confirmXY = North(initialXY, proposedXY, dx, dy, "water", "enz")
         elseif directionOfEntry == "NE"
-            cornerCut = sqrt(2) * enzStepSize
-            confirmXY = [enzymaticRightX - cornerCut, enzymeMaxY - cornerCut]
+            confirmXY = waterToEnzNorthEast
         elseif directionOfEntry == "NW"
-            cornerCut = sqrt(2) * enzStepSize
-            confirmXY = [enzymaticLeftX + cornerCut, enzymeMaxY - cornerCut]
+            confirmXY = waterToEnzNorthWest
         else # E or W
             confirmXY = EastWest(initialXY, proposedXY, dx, dy, "water", "enz", directionOfEntry)
         end
@@ -56,8 +52,6 @@ end
 
 function enzCalc(initialXY, dx, dy)
     initX, initY = initialXY
-    enzStepSize = stepSizeDict["enz"]
-    waterStepSize = stepSizeDict["water"]
     flowBias = flow(initialXY) * enzStepSize / waterStepSize
     proposedXY = [initX + flowBias + enzStepSize * dx, initY + enzStepSize * dy]
 
@@ -70,11 +64,9 @@ function enzCalc(initialXY, dx, dy)
         elseif directionOfEntry == "N"
             confirmXY = North(initialXY, proposedXY, dx, dy, "enz", "water")
         elseif directionOfEntry == "NE"
-            cornerCut = sqrt(2) * waterStepSize
-            confirmXY = [enzymaticLeftX - cornerCut, enzymeMaxY + cornerCut]
+            confirmXY = enzToWaterNorthEast
         elseif directionOfEntry == "NW"
-            cornerCut = sqrt(2) * waterStepSize
-            confirmXY = [enzymaticRightX + cornerCut, enzymeMaxY + cornerCut]
+            confirmXY = enzToWaterNorthWest
         else # E or W
             confirmXY = EastWest(initialXY, proposedXY, dx, dy, "enz", "water", directionOfEntry)
         end

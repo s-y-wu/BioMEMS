@@ -3,9 +3,9 @@
 
 #include("ArlettParameters.jl")
 
-"Spawning above walls for overflowing enzymatic layer"
+"Spawning above walls for overflowing enzyme layer"
 function spawnRandomPoint(randFloat)
-    spawnLineLength = enzymaticRightX - enzymaticLeftX + 2 * enzymeMaxYFromWall
+    spawnLineLength = enzymeRightX - enzymeLeftX + 2 * enzymeMaxYFromWall
     spawnCoordinate = spawnLineLength * randFloat - spawnLineLength / 2
 
     #Top Enzyme Face
@@ -24,13 +24,13 @@ end
 "Assigns an entering molecule W, NW, N, NE, E (cardinal directions) at the water-enzyme boundary"
 function whereOutsideSpawn(point)
     initX, initY = point
-    if initX < enzymaticLeftX
+    if initX < enzymeLeftX
         if initY > enzymeMaxY
             return "NW"
         else
             return "W"
         end
-    elseif initX > enzymaticRightX
+    elseif initX > enzymeRightX
         if initY > enzymeMaxY
             return "NE"
         else

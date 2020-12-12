@@ -5,7 +5,7 @@
 
 "Corrects displacement vectors with head and tail at two different layers"
 
-"At horizontal boundary between water-enzymatic, water-ppd, or ppd-enzymatic"
+"At horizontal boundary between water-enzyme, water-ppd, or ppd-enzyme"
 function North(initialXY, proposedXY, dx, dy, start, endup)
     initX, initY = initialXY
     scale = stepSizeDict[start]
@@ -39,9 +39,9 @@ function EastWest(initialXY, proposedXY, dx, dy, start, endup, EastOrWest)
     slope = (propY - initY) / (propX - initX)           # Traditional slope (delta y over delta x)
 
     if EastOrWest == "E"
-        xIntersection = enzymaticRightX
+        xIntersection = enzymeRightX
     else
-        xIntersection = enzymaticLeftX
+        xIntersection = enzymeLeftX
     end
 
     yIntersection = slope * (xIntersection - initX) + initY         # y-component of the head of first segment, ending at the border crossing

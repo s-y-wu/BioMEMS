@@ -1,38 +1,31 @@
 # Author: Sean Wu
+# Last Updated: December 11, 2020
 
-# Unless noted otherwise, lengths and coordinates are in microns
-
-# const variables w/ fixed types perform better than default (global) variables
 "Simulation Controls"
 const NUMBER_OF_WALKS = 100
 const MAX_STEPS_PER_WALK = 3*1485604
-const FLOW_OFF = true
+const FLOW_OFF = false
 
 "Solvent Diffusion Step Sizes (microns per 2.7 microseconds)"
-stepSizeDict = Dict("water" => 0.1, "enz" => 0.005, "ppd" => 0.0007)
 const waterStepSize = 0.1
-const enzStepSize = 0.005
-const ppdStepSize = 0.0007
+const ppdStepSize = 0
+# varying "enz" step size
+stepSizeDict = Dict("water" => waterStepSize, "enz" => 0.005, "ppd" => 0)
+enzStepSize = 0.005
 
 "Sensor/Walls Coordinates"
-const sensorHalfWidth = 0.5 * 25
-const sensorSpacing = 20
+const sensorHalfWidth = 0.5 * 280
 const sensorCenterMaxX = sensorHalfWidth
-const sensorInnerAdjMinX = sensorHalfWidth + sensorSpacing
-const sensorInnerAdjMaxX = 3 * sensorHalfWidth + sensorSpacing
-const sensorOuterAdjMinX = 3 * sensorHalfWidth + 2 * sensorSpacing
-const sensorOuterAdjMaxX = 5 * sensorHalfWidth + 2 * sensorSpacing
-
-"PPD Layer Dimensions"
-const ppdMaxY = 0.15
-const ppdMinY = 0
 
 "Enzyme Layer Dimensions"
-const enzymeLeftX = -13.5
-const enzymeRightX = 13.5
-const wallY = 1.5
-const enzymeMaxYFromWall = 0.15
-const enzymeMaxY = wallY + enzymeMaxYFromWall
+const enzymeRightX = 150
+const enzymeLeftX = -150
+const wallY = 0
+const enzymeMaxY = 0.2
+const enzymeMaxYFromWall = 0.2
+#const enzymeMaxYFromWall = 2
+#const enzymeMaxY = 2
+# thin wall 0.2, thick wall 2
 
 "Spawn Inside Enzyme Layer"
 const borderCorrection = 0.001
@@ -50,7 +43,7 @@ const enzToWaterNorthEast = [enzymeRightX + cornerCutInWater, enzymeMaxY + corne
 const enzToWaterNorthWest = [enzymeLeftX - cornerCutInWater, enzymeMaxY + cornerCutInWater]
 
 "Escape Bound Limits"
-const escapeX = 5 * sensorHalfWidth + 3 * sensorSpacing
+const escapeX = 3 * enzymeMaxY
 const escapeY = escapeX
 
 "Safe Bound Limits"

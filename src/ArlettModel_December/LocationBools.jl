@@ -2,12 +2,7 @@
 # Last Updated: December 09, 2020
 
 #include("ArlettParameters.jl")
-
-function inEscapeBounds(x_val, y_val)
-    withinX = -1*escapeX <= x_val <= escapeX
-    withinY = -1 <= y_val <= escapeY
-    return withinX && withinY
-end
+#include("OneStep.jl")
 
 "true when inside parylene walls"
 function inWalls(x_val, y_val)
@@ -16,30 +11,7 @@ function inWalls(x_val, y_val)
     return withinX && withinY
 end
 
-function inOverflowEnz(x_val, y_val)
-    withinX = enzymaticLeftX <= x_val <= enzymaticRightX
-    withinY = wallY < y_val <= enzymeMaxY
-    return withinX && withinY
-end
-
-function inCenterSensorX(x_val)
-    return abs(x_val) < sensorCenterMaxX
-end
-
-function inInnerSensorX(x_val)
-    return sensorInnerAdjMinX < abs(x_val) < sensorInnerAdjMaxX
-end
-
-function inOuterSensorX(x_val)
-    return sensorOuterAdjMinX < abs(x_val) < sensorOuterAdjMaxX
-end
-
-function inSensor(xyCoord)
-    y = xyCoord[2]
-    return y <= 0
-end
-
-"true when outside sensors ppd and enzymatic layers"
+"true when outside sensors ppd and enzyme layers"
 function inWater(xyCoord)
     x, y = xyCoord
     inAdjWellWater = ppdMaxY < y <= wallY && inInnerSensorX(x) || inOuterSensorX(x)
@@ -62,4 +34,47 @@ function inPPD(xyCoord)
     inPPDX = inCenterSensorX(x) || inInnerSensorX(x) || inOuterSensorX(x)
     inPPDY = ppdMinY < y <= ppdMaxY
     return inPPDX && inPPDY
+end
+
+
+function inOverflowEnz(x_val, y_val)
+    withinX = enzymeLeftX <= x_val <= enzymeRightX
+    withinY = wallY < y_val <= enzymeMaxY
+    return withinX && withinY
+end
+
+function inCenterSensorX(x_val)
+    return abs(x_val) < sensorCenterMaxX
+end
+
+function inInnerSensorX(x_val)
+    return sensorInnerAdjMinX < abs(x_val) < sensorInnerAdjMaxX
+end
+
+function inOuterSensorX(x_val)
+    return sensorOuterAdjMinX < abs(x_val) < sensorOuterAdjMaxX
+end
+
+function inSensor(xyCoord)
+    y = xyCoord[2]
+    return y <= 0
+end
+
+function sensorCases(initX)
+    if inCenterSensorX(initX)
+        return "center sensor"
+    elseif initX < 0
+        position = "left"
+    else
+        position = "right"
+    end
+
+    if inInnerSensorX(initX)
+        return position * " inner sensor"
+    elseif inOuterSensorX(initX)
+        return position * " outer sensor"
+    else
+        println("sensorCases error ", initX)
+        return "sensorCases error"
+    end
 end

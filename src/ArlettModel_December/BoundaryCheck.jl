@@ -5,6 +5,7 @@ using Documenter
 using Random
 
 "required imports for unit testing"
+# sensorCases from locationbools or enz_locations
 #include("CalcProposed.jl")
 #include("Collision.jl")
 
@@ -34,24 +35,7 @@ function boundaryCheck(initialXY, dx, dy)
     end
 end
 
-function sensorCases(initX)
-    if inCenterSensorX(initX)
-        return "center sensor"
-    elseif initX < 0
-        position = "left"
-    else
-        position = "right"
-    end
 
-    if inInnerSensorX(initX)
-        return position * " inner sensor"
-    elseif inOuterSensorX(initX)
-        return position * " outer sensor"
-    else
-        println("sensorCases error ", initX)
-        return "sensorCases error"
-    end
-end
 
 # when we do the top enzyme case
 # function wallCases(initialXY)

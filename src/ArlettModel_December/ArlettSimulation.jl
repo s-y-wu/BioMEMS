@@ -57,43 +57,25 @@ function fullCollisionData(seed::Int64)
 end
 
 function fullCollisionData()
-    println("Arlett Model: Walls + Overflow Spawn + 1 Thick Enzymatic + 5 PPD + Flow")
+    println("Arlett Model: Walls + Overflow Spawn + 1 Thick Enzyme + 5 PPD + Flow")
     println("Particles: $NUMBER_OF_WALKS \t  Steps: $MAX_STEPS_PER_WALK\t Step lengths: $stepSizeDict")
 
     data = Dict{String,Integer}()
     data["side wall"] = 0
     data["top wall"] = 0
     data["escape"] = 0
-
     data["left outer sensor"] = 0
     data["left inner sensor"] = 0
     data["center sensor"] = 0
     data["right inner sensor"] = 0
     data["right outer sensor"] = 0
-
     data["particles unresolved"] = 0
-    avgStepsTaken = 0
 
-    arrayOfRandomFloats = rand(NUMBER_OF_WALKS)
-    for i in arrayOfRandomFloats
-        peroxideXY = spawnRandomPoint(i)
-        index = 0
-        while peroxideXY != undef && index < MAX_STEPS_PER_WALK
-            peroxideXY, collision = oneStep(peroxideXY)
-            if collision != "no collision"
-                data[collision] += 1
-            end
-            index += 1
-        end
-        avgStepsTaken += index
+    output = runSimulation(data)
+    presentData(output)
+end
 
-        if index >= MAX_STEPS_PER_WALK
-            data["particles unresolved"] += 1
-        end
-    end
-
-    avgStepsTaken = avgStepsTaken / NUMBER_OF_WALKS
-    # present data in command line
+function presentData(data)
     presentationOrder = ["side wall",
         "top wall",
         "left outer sensor",
@@ -102,7 +84,8 @@ function fullCollisionData()
         "right inner sensor",
         "right outer sensor",
         "escape",
-        "particles unresolved"]
+        "particles unresolved",
+        "avg steps taken"]
     for key in presentationOrder
         extraSpacing = ""
         if length(key) < 14
@@ -111,5 +94,4 @@ function fullCollisionData()
         end
         println(key, "\t", extraSpacing, data[key])
     end
-    println("Avg Steps Taken", "\t", avgStepsTaken)
 end

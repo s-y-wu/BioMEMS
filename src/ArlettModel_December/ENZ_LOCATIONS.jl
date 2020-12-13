@@ -3,6 +3,10 @@
 
 # include("ENZ_PARAMETERS")
 
+function flow(XY)
+    return 0
+end
+
 function inSensor(XY)
     x_val, y_val = XY
     withinX = abs(x_val) < sensorHalfWidth

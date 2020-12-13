@@ -6,7 +6,7 @@ include("ENZ_LOCATIONS.jl")
 include("BoundaryCross.jl")
 include("BoundaryCheck.jl")
 include("CalcProposed.jl")
-include("Flow.jl")
+#include("Flow.jl")
 include("Spawn.jl")             #spawnRandomPoint, whereOutsideSpawn
 include("OneStep.jl")           #inSafeBounds, inEscapeBounds
 include("Collision.jl")         #sensWall
@@ -55,7 +55,7 @@ function callSimulation()
 end
 
 "Compare Enzymatic Step Sizes"
-const enzSStoTest = [0.001, 0.005, 0.01, 0.05]
+const enzSStoTest = [0.09, 0.08, 0.7]
 ss_arr = []
 thick_arr = []
 sensor_arr = []

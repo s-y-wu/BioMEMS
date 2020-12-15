@@ -2,16 +2,17 @@
 # Last Updated: December 11, 2020
 
 "Simulation Controls"
-const NUMBER_OF_WALKS = 100
+const NUMBER_OF_WALKS = 500
 const MAX_STEPS_PER_WALK = 3*1485604
 const FLOW_OFF = false
+const THICK_ENZ = true  # thin enzyme == false
 
 "Solvent Diffusion Step Sizes (microns per 2.7 microseconds)"
 const waterStepSize = 0.1
 const ppdStepSize = 0
 # varying "enz" step size
-stepSizeDict = Dict("water" => waterStepSize, "enz" => 0.005, "ppd" => 0)
-enzStepSize = 0.005
+global stepSizeDict = Dict("water" => waterStepSize, "enz" => 0.005, "ppd" => 0)
+global enzStepSize = 0.005
 
 "Sensor/Walls Coordinates"
 const sensorHalfWidth = 0.5 * 280
@@ -21,11 +22,14 @@ const sensorCenterMaxX = sensorHalfWidth
 const enzymeRightX = 150
 const enzymeLeftX = -150
 const wallY = 0
-const enzymeMaxY = 0.2
-const enzymeMaxYFromWall = 0.2
-#const enzymeMaxYFromWall = 2
-#const enzymeMaxY = 2
-# thin wall 0.2, thick wall 2
+if THICK_ENZ    # thin wall 0.2, thick wall 2
+    const enzymeMaxY = 2
+    const enzymeMaxYFromWall = 2
+else
+    const enzymeMaxYFromWall = 0.2
+    const enzymeMaxY = 0.2
+end
+
 
 "Spawn Inside Enzyme Layer"
 const borderCorrection = 0.001
@@ -43,7 +47,7 @@ const enzToWaterNorthEast = [enzymeRightX + cornerCutInWater, enzymeMaxY + corne
 const enzToWaterNorthWest = [enzymeLeftX - cornerCutInWater, enzymeMaxY + cornerCutInWater]
 
 "Escape Bound Limits"
-const escapeX = 3 * enzymeMaxY
+const escapeX = 3 * enzymeRightX
 const escapeY = escapeX
 
 "Safe Bound Limits"

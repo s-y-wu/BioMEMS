@@ -6,7 +6,7 @@ include("ENZ_LOCATIONS.jl")
 include("BoundaryCross.jl")
 include("BoundaryCheck.jl")
 include("CalcProposed.jl")
-#include("Flow.jl")
+include("Flow.jl")
 include("Spawn.jl")             #spawnRandomPoint, whereOutsideSpawn
 include("OneStep.jl")           #inSafeBounds, inEscapeBounds
 include("Collision.jl")         #sensWall
@@ -54,19 +54,23 @@ function callSimulation()
     return output
 end
 
-"Compare Enzymatic Step Sizes"
-const enzSStoTest = [0.09, 0.08, 0.7]
-ss_arr = []
-thick_arr = []
-sensor_arr = []
-escape_arr = []
-unresv_arr = []
-getEnzStep() # thin enzyme layer, 0.2 microns thick
-netyield_arr = [sensor_arr[i] / (NUMBER_OF_WALKS - unresv_arr[i]) for i in 1:length(sensor_arr)]
+begin
+    println("Compare Enzymatic Step Sizes")
+    println("Thick Enzyme? (thin == false) $THICK_ENZ")
+    const enzSStoTest = [0.05, 0.005]
+    ss_arr = []
+    thick_arr = []
+    sensor_arr = []
+    escape_arr = []
+    unresv_arr = []
+    # thin enzyme layer, 0.2 microns thick
+    getEnzStep()
+    netyield_arr = [sensor_arr[i] / (NUMBER_OF_WALKS - unresv_arr[i]) for i in 1:length(sensor_arr)]
 
-df = DataFrame(step_size = ss_arr,
-    enzyme_thickness = thick_arr,
-    sensor_yield = sensor_arr,
-    escaped = escape_arr,
-    unresolved = unresv_arr,
-    net_yield = netyield_arr)
+    df = DataFrame(step_size = ss_arr,
+        enzyme_thickness = thick_arr,
+        sensor_yield = sensor_arr,
+        escaped = escape_arr,
+        unresolved = unresv_arr,
+        net_yield = netyield_arr)
+end

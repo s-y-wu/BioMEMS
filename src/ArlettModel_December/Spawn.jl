@@ -22,21 +22,21 @@ function spawnRandomPoint(randFloat)
 end
 
 "Assigns an entering molecule W, NW, N, NE, E (cardinal directions) at the water-enzyme boundary"
-function whereOutsideSpawn(point)
-    initX, initY = point
-    if initX < enzymeLeftX
-        if initY > enzymeMaxY
+function whereOutsideSpawn(XY)
+    x, y = XY
+    if x < enzymeLeftX
+        if y > enzymeMaxY
             return "NW"
         else
             return "W"
         end
-    elseif initX > enzymeRightX
-        if initY > enzymeMaxY
+    elseif x > enzymeRightX
+        if y > enzymeMaxY
             return "NE"
         else
             return "E"
         end
-    elseif initY > enzymeMaxY
+    elseif y > enzymeMaxY
         return "N"
     else
         return "whereOutsideSpawn Error"

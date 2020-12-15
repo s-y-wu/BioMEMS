@@ -11,18 +11,6 @@ include("Spawn.jl")             #spawnRandomPoint, whereOutsideSpawn
 include("OneStep.jl")           #inSafeBounds, inEscapeBounds
 include("Collision.jl")         #sensWall
 
-function getEnzStep()
-    for ss in enzSStoTest
-        append!(ss_arr, ss)
-        append!(thick_arr, enzymeMaxY)
-        global enzStepSize = ss
-        global stepSizeDict = Dict("water" => waterStepSize, "enz" => ss, "ppd" => 0)
-        data = callSimulation()
-        append!(sensor_arr, data["sensor"])
-        append!(escape_arr, data["escape"])
-        append!(unresv_arr, data["particles unresolved"])
-    end
-end
 
 function runData(seed::Int64)
     Random.seed!(eed)
@@ -52,6 +40,19 @@ function callSimulation()
     data["particles unresolved"] = 0
     output = runSimulation(data)
     return output
+end
+
+function getEnzStep()
+    for ss in enzSStoTest
+        append!(ss_arr, ss)
+        append!(thick_arr, enzymeMaxY)
+        global enzStepSize = ss
+        global stepSizeDict = Dict("water" => waterStepSize, "enz" => ss, "ppd" => 0)
+        data = callSimulation()
+        append!(sensor_arr, data["sensor"])
+        append!(escape_arr, data["escape"])
+        append!(unresv_arr, data["particles unresolved"])
+    end
 end
 
 begin

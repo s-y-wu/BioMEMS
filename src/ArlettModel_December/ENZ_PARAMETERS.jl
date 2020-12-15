@@ -17,11 +17,11 @@ global enzStepSize = 0.005
 "Sensor/Walls Coordinates"
 const sensorHalfWidth = 0.5 * 280
 const sensorCenterMaxX = sensorHalfWidth
+const wallY = 0
 
 "Enzyme Layer Dimensions"
 const enzymeRightX = 150
 const enzymeLeftX = -150
-const wallY = 0
 if THICK_ENZ    # thin wall 0.2, thick wall 2
     const enzymeMaxY = 2
     const enzymeMaxYFromWall = 2

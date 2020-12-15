@@ -15,6 +15,7 @@ const enzStepSize = 0.005
 const ppdStepSize = 0.0007
 
 "Sensor/Walls Coordinates"
+const wallY = 1.5
 const sensorHalfWidth = 0.5 * 25
 const sensorSpacing = 20
 const sensorCenterMaxX = sensorHalfWidth
@@ -30,7 +31,6 @@ const ppdMinY = 0
 "Enzyme Layer Dimensions"
 const enzymeLeftX = -13.5
 const enzymeRightX = 13.5
-const wallY = 1.5
 const enzymeMaxYFromWall = 0.15
 const enzymeMaxY = wallY + enzymeMaxYFromWall
 

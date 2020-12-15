@@ -57,7 +57,7 @@ end
 begin
     println("Compare Enzymatic Step Sizes")
     println("Thick Enzyme? (thin == false) $THICK_ENZ")
-    const enzSStoTest = [0.05, 0.005]
+    const enzSStoTest = [0.0045]
     ss_arr = []
     thick_arr = []
     sensor_arr = []

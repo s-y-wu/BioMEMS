@@ -2,7 +2,7 @@
 # Last Updated: December 11, 2020
 
 "Simulation Controls"
-const NUMBER_OF_WALKS = 500
+const NUMBER_OF_WALKS = 1000
 const MAX_STEPS_PER_WALK = 3*1485604
 const FLOW_OFF = false
 const THICK_ENZ = true  # thin enzyme == false

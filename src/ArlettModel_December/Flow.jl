@@ -10,13 +10,13 @@ Analyze hydrogen peroxide position to compute the magnitude of flow
 By laminar flow, all nonzero flow biases the particle downstream
 in the positive x direction.
 "
-function flow(XY)
-    y = XY[2]
-    if FLOW_OFF || y < wallY || inEnz(XY)
+function flow(xy)
+    y = xy[2]
+    if FLOW_OFF || y < wallY || inEnz(xy)
         return 0
     else
-        xDisplacementBias = getSpeed(y) * SECONDS_PER_STEP
-        return xDisplacementBias
+        xdisplacementbias = getspeed(y) * SECONDS_PER_STEP
+        return xdisplacementbias
     end
 end
 
@@ -24,7 +24,7 @@ end
 const V_MAX = 6326
 const R = 1270
 
-"   getSpeed
+"   getspeed
 
 Compute the approximate laminar flow bias on the particle; magnitude of flow increases with the y-coordinate
 
@@ -37,7 +37,7 @@ and thus that v_max = 6326 um/s. From there, using the velocity equation
                                     v(r) = v_max * (1 - r^2 / R^2)
 where r is the y-distance from the center and R is the radius of the pipe. \"
 "
-function getSpeed(y)
+function getspeed(y)
     r = R - y
     return V_MAX * (1 - (r^2) / (R^2))
 end

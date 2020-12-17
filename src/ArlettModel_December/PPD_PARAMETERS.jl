@@ -2,25 +2,25 @@
 # First Written: December 15, 2020
 
 "Simulation Controls"
-const NUMBER_OF_WALKS = 10
-const MAX_STEPS_PER_WALK = 3*1485604
+const NUMBER_OF_WALKS = 1000
+const MAX_STEPS_PER_WALK = 1485604
 const FLOW_OFF = false
 const PPD_ON = true  # no PPD == false
 
 "Solvent Diffusion Step Sizes (microns per 2.7 microseconds)"
+const SECONDS_PER_STEP = 0.0000027077
 const waterStepSize = 0.1
-const enzStepSize = 0.005
+const enzStepSize = 0
 # varying "ppd" step size
 if PPD_ON
-    global ppdStepSize = 0.007
+    global ppdStepSize = 0.001
 else
     global ppdStepSize = waterStepSize
 end
-global stepSizeDict = Dict("water" => waterStepSize, "enz" => 0.005, "ppd" => ppdStepSize)
+global stepSizeDict = Dict("water" => waterStepSize, "enz" => 0, "ppd" => ppdStepSize)
 
 "Sensor/Walls Coordinates"
 const sensorHalfWidth = 0.5 * 25
-const sensorCenterMaxX = sensorHalfWidth
 const wallY = 1.5
 
 "PPD Layer Dimensions"

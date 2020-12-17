@@ -50,25 +50,25 @@ function callSimulation()
     return output
 end
 
-begin
-    println("Compare PPD Step Sizes")
-    println("PPD?: $PPD_ON")
-    if PPD_ON
-        const ppdSStoTest = [0.007]
-    else
-        const ppdSStoTest = [waterStepSize]
-    end
-    ss_arr = []
-    sensor_arr = []
-    escape_arr = []
-    unresv_arr = []
-    # thin enzyme layer, 0.2 microns thick
-    getPPDStep()
-    netyield_arr = [sensor_arr[i] / (NUMBER_OF_WALKS - unresv_arr[i]) for i in 1:length(sensor_arr)]
-
-    df = DataFrame(step_size = ss_arr,
-        sensor_yield = sensor_arr,
-        escaped = escape_arr,
-        unresolved = unresv_arr,
-        net_yield = netyield_arr)
-end
+# begin
+#     println("Compare PPD Step Sizes")
+#     println("PPD?: $PPD_ON")
+#     if PPD_ON
+#         const ppdSStoTest = [0.007]
+#     else
+#         const ppdSStoTest = [waterStepSize]
+#     end
+#     ss_arr = []
+#     sensor_arr = []
+#     escape_arr = []
+#     unresv_arr = []
+#     # thin enzyme layer, 0.2 microns thick
+#     getPPDStep()
+#     netyield_arr = [sensor_arr[i] / (NUMBER_OF_WALKS - unresv_arr[i]) for i in 1:length(sensor_arr)]
+#
+#     df = DataFrame(step_size = ss_arr,
+#         sensor_yield = sensor_arr,
+#         escaped = escape_arr,
+#         unresolved = unresv_arr,
+#         net_yield = netyield_arr)
+# end

@@ -9,6 +9,7 @@ const MAX_STEPS_PER_WALK = 3*1485604
 const FLOW_OFF = true
 
 "Solvent Diffusion Step Sizes (microns per 2.7 microseconds)"
+const SECONDS_PER_STEP = 0.0000027077
 stepSizeDict = Dict("water" => 0.1, "enz" => 0.005, "ppd" => 0.0007)
 const waterStepSize = 0.1
 const enzStepSize = 0.005

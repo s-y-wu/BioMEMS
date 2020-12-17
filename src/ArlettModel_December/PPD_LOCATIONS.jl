@@ -1,4 +1,4 @@
-include("PPD_PARAMETERS.jl")
+# include("PPD_PARAMETERS.jl")
 
 function inSensor(XY)
     y = XY[2]
@@ -7,7 +7,7 @@ end
 
 function inWalls(x_val, y_val)
     withinX = sensorHalfWidth < abs(x_val) <= escapeX
-    withinY = y_val < wallY
+    withinY = ppdMinY < y_val <= wallY
     return withinX && withinY
 end
 

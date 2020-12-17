@@ -8,6 +8,7 @@ const FLOW_OFF = false
 const THICK_ENZ = true  # thin enzyme == false
 
 "Solvent Diffusion Step Sizes (microns per 2.7 microseconds)"
+const SECONDS_PER_STEP = 0.0000027077
 const waterStepSize = 0.1
 const ppdStepSize = 0
 # varying "enz" step size
@@ -16,7 +17,6 @@ global enzStepSize = 0.005
 
 "Sensor/Walls Coordinates"
 const sensorHalfWidth = 0.5 * 280
-const sensorCenterMaxX = sensorHalfWidth
 const wallY = 0
 
 "Enzyme Layer Dimensions"

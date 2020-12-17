@@ -1,5 +1,5 @@
 module HMCResearch2020
 
-# Write your package code here.
+include(pwd()* "\\src\\ArlettModel_December\\" * "UseData.jl")
 
 end

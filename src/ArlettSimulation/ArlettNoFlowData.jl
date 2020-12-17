@@ -3,53 +3,33 @@
 # Author(s): Sean Wu
 # Last Updated: December 6, 2020
 
-using Plots
 using Random
 using DataFrames
-using CSV
-using Dates
 
-include("ArlettParameters.jl")
-include("BoundaryCheck.jl")
-include("BoundaryCross.jl")
-include("CalcProposed.jl")
-include("Collision.jl")
-include("Flow.jl")
-include("Locationbools.jl")
-include("OneStep.jl")
-include("Spawn.jl")
+include("PARAMETERS_Arlett.jl")
+include("Locations_Arlett.jl")
+include("Flow_Arlett.jl")
+include("Spawn_Arlett.jl")
+include(pwd() * "\\src\\WalkLogic\\WalkLogic.jl")
+include(pwd() * "\\src\\ViewOut\\UseData.jl")
 
-"   saveNoFlowData
+"
+    saveNoFlowData
 Save data from a no flow Arlett simulation.
 
 Runtime 12/8: 89.5 seconds for 100 runs
 Runtime 12/10:
 "
-function saveNoFlowData(seed::Int64)
+function saveNoFlowSimulation(seed::Int=trunc(Int, 10^4*rand()))
+    df = runNoFlowSimulation()
+    seedstring = string(seed)
+    savedata(df, "\\out\\noFlowData\\", seedstring)
+    return nothing
+end
+
+function runNoFlowSimulation(seed::Int=trunc(Int, 10^4*rand()))
     Random.seed!(seed)
-    saveNoFlowData(string(seed))
-end
-
-function saveNoFlowData()
-    saveNoFlowData("")
-end
-
-function saveNoFlowData(seedStr::String)
-    n_arr, in_arr, out_arr = runNoFlowSimulation()
-    df = DataFrame(nth_trial = n_arr, innerXtalk = in_arr, outerXtalk = out_arr)
-
-    relativePath = "\\src\\ArlettModel_December\\noFlowData\\"
-    timeNow = string(Dates.now())
-    # Microsoft File Name prohibits ":"
-    newTime = replace(timeNow, ":" => ";")
-    fileName = newTime * "_seed" * seedStr * ".csv"
-    # example: "2020-12-07T20;41;59.177.csv"
-    full_path = pwd() * relativePath * fileName
-    CSV.write(full_path, df)
-end
-
-function runNoFlowSimulation()
-    println("Begin cross talk recording (no flow)")
+    println("Begin No Flow Simulation. Seed: $seed")
     n_array = []
     innerXtalk_array = []
     outerXtalk_array = []
@@ -98,5 +78,9 @@ function runNoFlowSimulation()
         end
     end
 
-    return n_array, innerXtalk_array, outerXtalk_array
+    df = DataFrame(
+        nth_trial = n_array,
+        innerXtalk = innerXtalk_array,
+        outerXtalk = outerXtalk_array)
+    return df
 end

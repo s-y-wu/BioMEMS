@@ -1,16 +1,12 @@
-using CSV
-using DataFrames
 using Plots
+using MyData
 
-function inputFileName(relativepath::String)
-    path = "C://Users//sywu//.julia//dev//HMCResearchRandomWalks//out//noFlowData//"
-    fullname = path * relativepath
-    plotData(fullname)
-end
+include("UseData.jl")
 
-function plotData(pathname::String)
-    csv_data = CSV.File(pathname)
-    df = DataFrame(csv_data)
+const defaultfile = "2020-12-10T22;02;09.626_seed1234.csv"
+
+function plotdata_noflow(filename::String=defaultfile)
+    df = getdata(filename, "\\out\\noFlowData\\")
 
     x_data = df[:, "nth_trial"]
     y_data = df[:, "innerXtalk"]

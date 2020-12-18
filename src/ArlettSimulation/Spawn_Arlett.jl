@@ -4,39 +4,39 @@
 #include("ArlettParameters.jl")
 
 "Spawning above walls for overflowing enzyme layer"
-function spawnRandomPoint(randFloat)
-    spawnLineLength = enzymeRightX - enzymeLeftX + 2 * enzymeMaxYFromWall
+function spawnrandompoint(randFloat::Float64)::Array{Float64,1}
+    spawnLineLength = ENZYME_RIGHT_X - ENZYME_LEFT_X + 2 * ENZYME_MAX_Y_FROM_WALL
     spawnCoordinate = spawnLineLength * randFloat - spawnLineLength / 2
 
     #Top Enzyme Face
-    if spawnLeftX <= spawnCoordinate <= spawnRightX
-        return [spawnCoordinate, spawnEnzymeMaxY]
+    if SPAWN_LEFT_X <= spawnCoordinate <= SPAWN_RIGHT_X
+        return [spawnCoordinate, SPAWN_ENZYME_MAX_Y]
     else
-        randomY = wallY + abs(spawnCoordinate) - spawnRightX
+        randomY = WALL_Y + abs(spawnCoordinate) - SPAWN_RIGHT_X
         if spawnCoordinate < 0              #Left Enzyme Side
-            return [spawnLeftX, randomY]
+            return [SPAWN_LEFT_X, randomY]
         else                                #Top Enzyme Face
-            return [spawnRightX, randomY]
+            return [SPAWN_RIGHT_X, randomY]
         end
     end
 end
 
 "Assigns an entering molecule W, NW, N, NE, E (cardinal directions) at the water-enzyme boundary"
-function whereOutsideSpawn(XY)
-    x, y = XY
-    if x < enzymeLeftX
-        if y > enzymeMaxY
+function whereOutsideSpawn(xy::Array{Float64,1})::String
+    x, y = xy
+    if x < ENZYME_LEFT_X
+        if y > ENZYME_MAX_Y
             return "NW"
         else
             return "W"
         end
-    elseif x > enzymeRightX
-        if y > enzymeMaxY
+    elseif x > ENZYME_RIGHT_X
+        if y > ENZYME_MAX_Y
             return "NE"
         else
             return "E"
         end
-    elseif y > enzymeMaxY
+    elseif y > ENZYME_MAX_Y
         return "N"
     else
         return "whereOutsideSpawn Error"

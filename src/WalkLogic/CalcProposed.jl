@@ -1,98 +1,97 @@
 # Author: Sean Wu
 # Last Updated: November 11, 2020
 
-"required imports for unit testing"
 #include("Flow.jl")
 #include("BoundaryCross.jl")
 #include("Spawn.jl")
 #include("LocationBools.jl")
 
 "Manages steplength calculations and adjusts the steplength by layers accordingly."
-function calculateProposedPoint(initialXY, dx, dy)
-    if inWater(initialXY)
-        return waterCalc(initialXY, dx, dy)
-    elseif inEnz(initialXY)
-        return enzCalc(initialXY, dx, dy)
-    elseif inPPD(initialXY)
-        return ppdCalc(initialXY, dx, dy)
+function calculateproposedpoint(initxy, dx, dy)
+    if inWater(initxy)
+        return watercalc(initxy, dx, dy)
+    elseif inEnz(initxy)
+        return enzcalc(initxy, dx, dy)
+    elseif inPPD(initxy)
+        return ppdcalc(initxy, dx, dy)
     else
-        println("calcPropPoint Error", initialXY)
+        println("calcPropPoint Error", initxy)
         return undef, 0
     end
 end
 
-function waterCalc(initialXY, dx, dy)
-    initX, initY = initialXY
-    flowBias = flow(initialXY)
-    proposedXY = [initX + flowBias + waterStepSize * dx, initY + waterStepSize * dy]
+function watercalc(initxy, dx, dy)
+    initx, inity = initxy
+    flowBias = flow(initxy)
+    proposedxy = [initx + flowBias + WATER_STEP_SIZE * dx, inity + WATER_STEP_SIZE * dy]
 
-    if inWater(proposedXY)
-        return proposedXY, "water"
-    elseif inEnz(proposedXY)
-        directionOfEntry = whereOutsideSpawn(initialXY) # tail in water
+    if inWater(proposedxy)
+        return proposedxy, "water"
+    elseif inEnz(proposedxy)
+        directionOfEntry = whereOutsideSpawn(initxy) # tail in water
         if directionOfEntry == "whereOutsideSpawn Error"
-            println(directionOfEntry, " in waterCalc ", initialXY, proposedXY)
+            println(directionOfEntry, " in watercalc ", initxy, proposedxy)
         elseif directionOfEntry == "N"
-            confirmXY = North(initialXY, proposedXY, dx, dy, "water", "enz")
+            confirmxy = north(initxy, proposedxy, dx, dy, "water", "enz")
         elseif directionOfEntry == "NE"
-            confirmXY = waterToEnzNorthEast
+            confirmxy = WATER_TO_ENZ_NORTHEAST
         elseif directionOfEntry == "NW"
-            confirmXY = waterToEnzNorthWest
+            confirmxy = WATER_TO_ENZ_NORTHWEST
         else # E or W
-            confirmXY = EastWest(initialXY, proposedXY, dx, dy, "water", "enz", directionOfEntry)
+            confirmxy = eastwest(initxy, proposedxy, dx, dy, "water", "enz", directionOfEntry)
         end
-        return confirmXY, "enz"
-    elseif inPPD(proposedXY)
-        confirmXY = North(initialXY, proposedXY, dx, dy, "water", "ppd")
-        return confirmXY, "ppd"
+        return confirmxy, "enz"
+    elseif inPPD(proposedxy)
+        confirmxy = north(initxy, proposedxy, dx, dy, "water", "ppd")
+        return confirmxy, "ppd"
     else # collision
-        return proposedXY, "water"
+        return proposedxy, "water"
     end
 end
 
-function enzCalc(initialXY, dx, dy)
-    initX, initY = initialXY
-    flowBias = flow(initialXY) * enzStepSize / waterStepSize
-    proposedXY = [initX + flowBias + enzStepSize * dx, initY + enzStepSize * dy]
+function enzcalc(initxy, dx, dy)
+    initx, inity = initxy
+    flowBias = flow(initxy) * ENZ_STEP_SIZE / WATER_STEP_SIZE
+    proposedxy = [initx + flowBias + ENZ_STEP_SIZE * dx, inity + ENZ_STEP_SIZE * dy]
 
-    if inEnz(proposedXY)
-        return proposedXY, "enz"
-    elseif inWater(proposedXY)
-        directionOfEntry = whereOutsideSpawn(proposedXY) # head in water
+    if inEnz(proposedxy)
+        return proposedxy, "enz"
+    elseif inWater(proposedxy)
+        directionOfEntry = whereOutsideSpawn(proposedxy) # head in water
         if directionOfEntry == "whereOutsideSpawn Error"
-            println(directionOfEntry, " in enzCalc ", initialXY, proposedXY)
+            println(directionOfEntry, " in enzcalc ", initxy, proposedxy)
         elseif directionOfEntry == "N"
-            confirmXY = North(initialXY, proposedXY, dx, dy, "enz", "water")
+            confirmxy = north(initxy, proposedxy, dx, dy, "enz", "water")
         elseif directionOfEntry == "NE"
-            confirmXY = enzToWaterNorthEast
+            confirmxy = ENZ_TO_WATER_NORTHEAST
         elseif directionOfEntry == "NW"
-            confirmXY = enzToWaterNorthWest
+            confirmxy = ENZ_TO_WATER_NORTHWEST
         else # E or W
-            confirmXY = EastWest(initialXY, proposedXY, dx, dy, "enz", "water", directionOfEntry)
+            confirmxy = eastwest(initxy, proposedxy, dx, dy, "enz", "water", directionOfEntry)
         end
-        return confirmXY, "water"
-    elseif inPPD(proposedXY)
-        confirmXY = North(initialXY, proposedXY, dx, dy, "enz", "ppd")
-        return confirmXY, "ppd"
+        return confirmxy, "water"
+    elseif inPPD(proposedxy)
+        confirmxy = north(initxy, proposedxy, dx, dy, "enz", "ppd")
+        return confirmxy, "ppd"
     else # collision
-        return proposedXY, "enz"
+        return proposedxy, "enz"
     end
 end
 
-function ppdCalc(initialXY, dx, dy)
-    initX, initY = initialXY
-    ppdStepSize = stepSizeDict["ppd"]
-    proposedXY = [initX + ppdStepSize * dx, initY + ppdStepSize * dy] # no flow
+function ppdcalc(initxy, dx, dy)
+    initx, inity = initxy
+    PPD_STEP_SIZE = STEP_SIZE_DICT["ppd"]
+    proposedxy = [initx + PPD_STEP_SIZE * dx, inity + PPD_STEP_SIZE * dy] # no flow
 
-    if inPPD(proposedXY)
-        return proposedXY, "ppd"
-    elseif inEnz(proposedXY)
-        confirmXY = North(initialXY, proposedXY, dx, dy, "ppd", "enz")
-        return confirmXY, "enz"
-    elseif inWater(proposedXY)
-        confirmXY = North(initialXY, proposedXY, dx, dy, "ppd", "water")
-        return confirmXY, "water"
+    if inPPD(proposedxy)
+        return proposedxy, "ppd"
+    elseif inEnz(proposedxy)
+        confirmxy = north(initxy, proposedxy, dx, dy, "ppd", "enz")
+        return confirmxy, "enz"
+    elseif inWater(proposedxy)
+        confirmxy = north(initxy, proposedxy, dx, dy, "ppd", "water")
+        return confirmxy, "water"
     else # collision
-        return proposedXY, "ppd"
+        return proposedxy, "ppd"
     end
 end

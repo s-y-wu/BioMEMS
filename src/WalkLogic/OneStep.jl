@@ -3,51 +3,28 @@
 
 #include("BoundaryCheck.jl")
 
-function runSimulation(data::Dict{String,Integer})
-    avgStepsTaken = 0
-    arrayOfRandomFloats = rand(NUMBER_OF_WALKS)
-    for i in arrayOfRandomFloats
-        peroxideXY = spawnRandomPoint(i)
-        index = 0
-        while peroxideXY != undef && index < MAX_STEPS_PER_WALK
-            peroxideXY, collision = oneStep(peroxideXY)
-            if collision != "no collision"
-                data[collision] += 1
-            end
-            index += 1
-        end
-        avgStepsTaken += index
-        if index >= MAX_STEPS_PER_WALK
-            data["particles unresolved"] += 1
-        end
-    end
-    avgStepsTaken = avgStepsTaken ÷ NUMBER_OF_WALKS
-    data["avg steps taken"] = avgStepsTaken
-    return data
-end
-
-function oneStep(initialXY)
+function onestep!(initxy)
     theta = 2 * pi * rand(Float64) - pi  # -pi to pi
     dx = cos(theta)
     dy = sin(theta)
 
-    if inSafeBounds(initialXY)   # fast computation
-        flowBias = flow(initialXY)
-        # IMPORTANT: updating arrays always faster than initializing new array
-        initialXY[1] += waterStepSize * dx + flowBias
-        initialXY[2] += waterStepSize * dy
-        return initialXY, "no collision"
+    if insafebounds(initxy)   # fast computation
+        flowBias = flow(initxy)
+        # IMPORTANT: updating arrays always faster than initizing new array
+        initxy[1] += WATER_STEP_SIZE * dx + flowBias
+        initxy[2] += WATER_STEP_SIZE * dy
+        return initxy, "no collision"
     else                            # more computation needed
-        return boundaryCheck(initialXY, dx, dy)
+        return boundarycheck(initxy, dx, dy)
     end
 end
 
-function inSafeBounds(xy)
-    return abs(xy[1]) < safeMaxX && safeMinY < xy[2] && xy[2] < safeMaxY
+function insafebounds(xy)
+    return abs(xy[1]) < SAFE_MAX_X && SAFE_MIN_Y < xy[2] < SAFE_MAX_Y
 end
 
-function inEscapeBounds(x_val, y_val)
-    withinX = -1*escapeX <= x_val <= escapeX
-    withinY = -1 <= y_val <= escapeY
-    return withinX && withinY
+function inescapebounds(x_val, y_val)
+    withinx = -1*ESCAPE_X <= x_val <= ESCAPE_X
+    withiny = -1 <= y_val <= ESCAPE_Y
+    return withinx && withiny
 end

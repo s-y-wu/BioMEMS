@@ -16,8 +16,8 @@ include("Collision.jl")
 function getPPDStep()
     for ss in ppdSStoTest
         append!(ss_arr, ss)
-        global ppdStepSize = ss
-        global stepSizeDict = Dict("water" => waterStepSize, "enz" => ss, "ppd" => 0)
+        global PPD_STEP_SIZE = ss
+        global STEP_SIZE_DICT = Dict("water" => WATER_STEP_SIZE, "enz" => ss, "ppd" => 0)
         data = callSimulation()
         append!(sensor_arr, data["sensor"])
         append!(escape_arr, data["escape"])
@@ -28,7 +28,7 @@ end
 function runData()
     println("PPD Stepsize Derivation")
     println("PPD?: $PPD_ON")
-    println("Particles: $NUMBER_OF_WALKS \t Steps: $MAX_STEPS_PER_WALK\t Step lengths: $stepSizeDict")
+    println("Particles: $NUMBER_OF_WALKS \t Steps: $MAX_STEPS_PER_WALK\t Step lengths: $STEP_SIZE_DICT")
     output = callSimulation()
 
     presentationOrder = ["sensor",
@@ -56,7 +56,7 @@ end
 #     if PPD_ON
 #         const ppdSStoTest = [0.007]
 #     else
-#         const ppdSStoTest = [waterStepSize]
+#         const ppdSStoTest = [WATER_STEP_SIZE]
 #     end
 #     ss_arr = []
 #     sensor_arr = []

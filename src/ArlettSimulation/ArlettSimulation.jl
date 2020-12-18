@@ -3,63 +3,19 @@
 # Author(s): Sean Wu
 # Last Updated: November 27, 2020
 
+using Random
 using DataFrames
-using Dates
 
-include("ArlettParameters.jl")
-include("BoundaryCheck.jl")
-include("BoundaryCross.jl")
-include("CalcProposed.jl")
-include("Collision.jl")
-include("Flow.jl")
-include("LocationBools.jl")
-include("OneStep.jl")
-include("Spawn.jl")
+include("PARAMETERS_Arlett.jl")
+include("Locations_Arlett.jl")
+include("Flow_Arlett.jl")
+include("Spawn_Arlett.jl")
+include(pwd() * "\\src\\WalkLogic\\WalkLogic.jl")
+include(pwd() * "\\src\\ViewOut\\UseData.jl")
 
-
-function saveAnimationData()
-    x_arr, y_arr = animateArlettSimulation()
-    df = DataFrame(x_coordinate = x_arr,
-                    y_coordinate = y_arr)
-
-    relativePath = "\\src\\ArlettModel_December\\animations\\"
-    timeNow = string(Dates.now())
-    # Microsoft File Name prohibits ":"
-    newTime = replace(timeNow, ":" => ";")
-    full_path = pwd() * relativePath * newTime * ".csv"
-    CSV.write(full_path, df)
-end
-
-
-function animateArlettSimulation()
-    x_arr = []
-    y_arr = []
-    peroxideXY = spawnRandomPoint()
-    index = 0
-    everyNthFrame = 10
-    while peroxideXY != undef && index < MAX_STEPS_PER_WALK
-        if index % everyNthFrame == 0
-            x, y = peroxideXY
-            compressedX = convert(Float16, x)
-            compressedY = convert(Float16, y)
-            push!(x_arr, compressedX)
-            push!(y_arr, compressedY)
-        end
-        peroxideXY, newTally = oneStep(peroxideXY)
-        index += 1
-    end
-    return x_arr, y_arr
-end
-
-function fullCollisionData(seed::Int64)
-    Random.seed!(seed)
-    fullCollisionData()
-end
-
-function fullCollisionData()
+function runsimulation_arlett(seed::Int=randseed())
     println("Arlett Model: Walls + Overflow Spawn + 1 Thick Enzyme + 5 PPD + Flow")
-    println("Particles: $NUMBER_OF_WALKS \t  Steps: $MAX_STEPS_PER_WALK\t Step lengths: $stepSizeDict")
-
+    println("Particles: $NUMBER_OF_WALKS \t  Steps: $MAX_STEPS_PER_WALK\t Step lengths: $STEP_SIZE_DICT")
     data = Dict{String,Integer}()
     data["side wall"] = 0
     data["top wall"] = 0
@@ -71,11 +27,12 @@ function fullCollisionData()
     data["right outer sensor"] = 0
     data["particles unresolved"] = 0
 
-    output = runSimulation(data)
-    presentData(output)
+    output = runsimulation!(data, seed)
+    presentdata_arlett(output)
+    return nothing
 end
 
-function presentData(data)
+function presentdata_arlett(output_data::Dict{String, Integer})
     presentationOrder = ["side wall",
         "top wall",
         "left outer sensor",
@@ -92,6 +49,7 @@ function presentData(data)
             multiplier = 13 ÷ length(key)
             extraSpacing = repeat("\t", multiplier)
         end
-        println(key, "\t", extraSpacing, data[key])
+        println(key, "\t", extraSpacing, output_data[key])
     end
+    return nothing
 end

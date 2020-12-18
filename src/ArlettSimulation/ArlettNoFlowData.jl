@@ -20,14 +20,14 @@ Save data from a no flow Arlett simulation.
 Runtime 12/8: 89.5 seconds for 100 runs
 Runtime 12/10:
 "
-function saveNoFlowSimulation(seed::Int=trunc(Int, 10^4*rand()))
-    df = runNoFlowSimulation()
+function savesimulation_arlettnoflow(seed::Int=randseed())
+    df = runsimulation_arlettnoflow()
     seedstring = string(seed)
-    savedata(df, "\\out\\noFlowData\\", seedstring)
+    savedata(df, "\\out\\noflowdata\\", seedstring)
     return nothing
 end
 
-function runNoFlowSimulation(seed::Int=trunc(Int, 10^4*rand()))
+function runsimulation_arlettnoflow(seed::Int=randseed())::DataFrame
     Random.seed!(seed)
     println("Begin No Flow Simulation. Seed: $seed")
     n_array = []
@@ -41,11 +41,11 @@ function runNoFlowSimulation(seed::Int=trunc(Int, 10^4*rand()))
 
     arrayOfRandomFloats = rand(NUMBER_OF_WALKS)
     for n in 1:NUMBER_OF_WALKS
-        peroxideXY = spawnRandomPoint(arrayOfRandomFloats[n])
+        peroxidexy = spawnrandompoint(arrayOfRandomFloats[n])
         index = 0
 
-        while peroxideXY != undef && index < MAX_STEPS_PER_WALK
-            peroxideXY, collision = oneStep(peroxideXY)
+        while peroxidexy != undef && index < MAX_STEPS_PER_WALK
+            peroxidexy, collision = onestep!(peroxidexy)
             update = false
 
             if collision == "left outer sensor" || collision == "right outer sensor"

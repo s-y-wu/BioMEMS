@@ -7,21 +7,19 @@ include("BoundaryCross.jl")
 include("BoundaryCheck.jl")
 include("CalcProposed.jl")
 include("Flow.jl")
-include("Spawn.jl")             #spawnRandomPoint, whereOutsideSpawn
+include("Spawn.jl")             #spawnrandompoint, whereOutsideSpawn
 include("OneStep.jl")           #inSafeBounds, inEscapeBounds
-include("Collision.jl")         #sensWall
+include("Collision.jl")         #sensewall!
 
-
-function runData(seed::Int64)
-    Random.seed!(eed)
-    runData()
-end
-
-function runData()
+function runsimulation_enzstep(seed::Int=trunc(Int, 10^4*rand()))
     println("Enzyme Stepsize Derivation")
-    println("Enzyme Thickness:\t$enzymeMaxY")
-    println("Particles: $NUMBER_OF_WALKS \t Steps: $MAX_STEPS_PER_WALK\t Step lengths: $stepSizeDict")
-    output = callSimulation()
+    println("Enzyme Thickness:\t$ENZYME_MAX_Y")
+    println("Particles: $NUMBER_OF_WALKS \t Steps: $MAX_STEPS_PER_WALK\t Step lengths: $STEP_SIZE_DICT")
+    data = Dict{String,Integer}()
+    data["sensor"] = 0
+    data["escape"] = 0
+    data["particles unresolved"] = 0
+    output = runsimulation!(data, seed)
 
     presentationOrder = ["sensor",
         "escape",
@@ -33,21 +31,12 @@ function runData()
     end
 end
 
-function callSimulation()
-    data = Dict{String,Integer}()
-    data["sensor"] = 0
-    data["escape"] = 0
-    data["particles unresolved"] = 0
-    output = runSimulation(data)
-    return output
-end
-
 function getEnzStep()
     for ss in enzSStoTest
         append!(ss_arr, ss)
-        append!(thick_arr, enzymeMaxY)
-        global enzStepSize = ss
-        global stepSizeDict = Dict("water" => waterStepSize, "enz" => ss, "ppd" => 0)
+        append!(thick_arr, ENZYME_MAX_Y)
+        global ENZ_STEP_SIZE = ss
+        global STEP_SIZE_DICT = Dict("water" => WATER_STEP_SIZE, "enz" => ss, "ppd" => 0)
         data = callSimulation()
         append!(sensor_arr, data["sensor"])
         append!(escape_arr, data["escape"])

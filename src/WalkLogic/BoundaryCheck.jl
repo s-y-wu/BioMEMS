@@ -1,7 +1,7 @@
 # Author: Sean Wu
 # Last Updated: November 12, 2020
 
-using Documenter
+# using Documenter
 using Random
 
 "required imports for unit testing"
@@ -10,44 +10,42 @@ using Random
 #include("Collision.jl")
 
 """
-    boundaryCheck
+    boundarycheck
 
-Confirm the next coordinates after initialXY with unit displacement vectors
+Confirm the next coordinates after initxy with unit displacement vectors
 dx, dy. Resolve collisions with escape boundaries, sensors, and walls.
 
 # Examples
 ```ju
 """
-function boundaryCheck(initialXY, dx, dy)
-    proposedXY, endingLayer = calculateProposedPoint(initialXY, dx, dy)
-    initX, initY = initialXY
-    propX, propY = proposedXY
-    endingStepSize = stepSizeDict[ endingLayer ]
+function boundarycheck(initxy, dx, dy)
+    proposedxy, endingLayer = calculateproposedpoint(initxy, dx, dy)
+    initx, inity = initxy
+    propx, propy = proposedxy
+    endingStepSize = STEP_SIZE_DICT[ endingLayer ]
 
-    if inWalls(propX, propY)
-        return sensWall(initialXY, dx, dy, endingStepSize), "no collision"
-    elseif !inEscapeBounds(propX, propY)
+    if inWalls(propx, propy)
+        return sensewall!(initxy, dx, dy, endingStepSize), "no collision"
+    elseif !inescapebounds(propx, propy)
         return undef, "escape"
-    elseif inSensor(proposedXY)
-        return undef, sensorCases(initX)
+    elseif inSensor(proposedxy)
+        return undef, sensorcases(initx)
     else
-        return proposedXY, "no collision"
+        return proposedxy, "no collision"
     end
 end
 
-
-
 # when we do the top enzyme case
-# function wallCases(initialXY)
-#     initX, initY = initialXY
-#     if initY <= wallY
+# function wallCases(initxy)
+#     initx, inity = initxy
+#     if inity <= WALL_Y
 #         return "side wall"
-#     elseif initY > wallY
-#         if inCenterWallsX(initX)
+#     elseif inity > WALL_Y
+#         if inCenterWallsx(initx)
 #             return "top wall"
-#         elseif inInnerWallsX(initX)
+#         elseif inInnerWallsx(initx)
 #             return "top wall"
-#         elseif inOuterWallsX(initX)
+#         elseif inOuterWallsx(initx)
 #             return "top wall"
 #         end
 #     end

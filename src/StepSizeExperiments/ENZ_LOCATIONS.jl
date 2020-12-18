@@ -3,39 +3,39 @@
 
 # include("ENZ_PARAMETERS")
 
-# function flow(XY)
+# function flow(xy)
 #     return 0
 # end
 
-function inSensor(XY)
-    x_val, y_val = XY
-    withinX = abs(x_val) < sensorHalfWidth
+function inSensor(xy)
+    x_val, y_val = xy
+    withinX = abs(x_val) < SENSOR_HALF_WIDTH
     withinY = y_val < 0
     return withinX && withinY
 end
 
 function inWalls(x_val, y_val)
-    withinX = sensorHalfWidth < abs(x_val) <= escapeX
+    withinX = SENSOR_HALF_WIDTH < abs(x_val) <= ESCAPE_X
     withinY = y_val < 0
     return withinX && withinY
 end
 
-function inEnz(XY)
-    withinX = enzymeLeftX <= XY[1] <= enzymeRightX
-    withinY = wallY < XY[2] <= enzymeMaxY
+function inEnz(xy)
+    withinX = ENZYME_LEFT_X <= xy[1] <= ENZYME_RIGHT_X
+    withinY = WALL_Y < xy[2] <= ENZYME_MAX_Y
     return withinX && withinY
 end
 
-function inWater(XY)
-    x_val, y_val = XY
-    aboveEnzX = abs(x_val) <= escapeX
-    aboveEnzY = enzymeMaxY < y_val <= escapeY
-    besideEnzX = enzymeRightX < abs(x_val) <= escapeX
-    besideEnzY = wallY < y_val <= enzymeMaxY
+function inWater(xy)
+    x_val, y_val = xy
+    aboveEnzX = abs(x_val) <= ESCAPE_X
+    aboveEnzY = ENZYME_MAX_Y < y_val <= ESCAPE_Y
+    besideEnzX = ENZYME_RIGHT_X < abs(x_val) <= ESCAPE_X
+    besideEnzY = WALL_Y < y_val <= ENZYME_MAX_Y
     return (aboveEnzX && aboveEnzY) || (besideEnzX && besideEnzY)
 end
 
-function inPPD(XY)
+function inPPD(xy)
     return false
 end
 

@@ -1,45 +1,45 @@
 # include("PPD_PARAMETERS.jl")
 
-function inSensor(XY)
-    y = XY[2]
-    return y <= ppdMinY
+function inSensor(xy)
+    y = xy[2]
+    return y <= PPD_MIN_Y
 end
 
 function inWalls(x_val, y_val)
-    withinX = sensorHalfWidth < abs(x_val) <= escapeX
-    withinY = ppdMinY < y_val <= wallY
+    withinX = SENSOR_HALF_WIDTH < abs(x_val) <= ESCAPE_X
+    withinY = PPD_MIN_Y < y_val <= WALL_Y
     return withinX && withinY
 end
 
-function inPPD(XY)
-    withinX = abs(XY[1]) <= sensorHalfWidth
-    withinY = ppdMinY < XY[2] <= ppdMaxY
+function inPPD(xy)
+    withinX = abs(xy[1]) <= SENSOR_HALF_WIDTH
+    withinY = PPD_MIN_Y < xy[2] <= PPD_MAX_Y
     return withinX && withinY
 end
 
-function inWater(XY)
-    x_val, y_val = XY
-    aboveWallX = abs(x_val) <= escapeX
-    aboveWallY = wallY < y_val <= escapeY
-    inWellX = abs(x_val) <= sensorHalfWidth
-    inWellY = ppdMaxY < y_val <= wallY
-    return (aboveWallX && aboveWallY) || (inWellX && inWellY)
+function inWater(xy)
+    x_val, y_val = xy
+    aboveWallX = abs(x_val) <= ESCAPE_X
+    aboveWALL_Y = WALL_Y < y_val <= ESCAPE_Y
+    inWellX = abs(x_val) <= SENSOR_HALF_WIDTH
+    inWellY = PPD_MAX_Y < y_val <= WALL_Y
+    return (aboveWallX && aboveWALL_Y) || (inWellX && inWellY)
 end
 
-function inEnz(XY)
+function inEnz(xy)
     # No enzyme layer
     return false
 end
 
-function spawnRandomPoint(randFloatX)
+function spawnrandompoint(randFloatX)
     randFloatY = rand(Float64)
-    newXY = copy(spawnTopLeftXY)
-    newXY[1] += randFloatX * spawnXRange
-    newXY[2] -= randFloatY * spawnYRange
-    return newXY
+    newxy = copy(SPAWN_TOP_LEFT_XY)
+    newxy[1] += randFloatX * SPAWN_X_RANGE
+    newxy[2] -= randFloatY * SPAWN_Y_RANGE
+    return newxy
 end
 
-function whereOutsideSpawn(XY)
+function whereOutsideSpawn(xy)
     # No Enzyme Layer, only horizontal inteface between
     # Water and PPD Layer inside sensor well
     return "N"

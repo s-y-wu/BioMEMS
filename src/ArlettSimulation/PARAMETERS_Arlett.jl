@@ -10,52 +10,52 @@ const FLOW_OFF = true
 
 "Solvent Diffusion Step Sizes (microns per 2.7 microseconds)"
 const SECONDS_PER_STEP = 0.0000027077
-stepSizeDict = Dict("water" => 0.1, "enz" => 0.005, "ppd" => 0.0007)
-const waterStepSize = 0.1
-const enzStepSize = 0.005
-const ppdStepSize = 0.0007
+STEP_SIZE_DICT = Dict("water" => 0.1, "enz" => 0.005, "ppd" => 0.0007)
+const WATER_STEP_SIZE = 0.1
+const ENZ_STEP_SIZE = 0.005
+const PPD_STEP_SIZE = 0.0007
 
 "Sensor/Walls Coordinates"
-const wallY = 1.5
-const sensorHalfWidth = 0.5 * 25
-const sensorSpacing = 20
-const sensorCenterMaxX = sensorHalfWidth
-const sensorInnerAdjMinX = sensorHalfWidth + sensorSpacing
-const sensorInnerAdjMaxX = 3 * sensorHalfWidth + sensorSpacing
-const sensorOuterAdjMinX = 3 * sensorHalfWidth + 2 * sensorSpacing
-const sensorOuterAdjMaxX = 5 * sensorHalfWidth + 2 * sensorSpacing
+const WALL_Y = 1.5
+const SENSOR_HALF_WIDTH = 0.5 * 25
+const SENSOR_SPACING = 20
+const SENSOR_CENTER_MAX_X = SENSOR_HALF_WIDTH
+const SENSOR_INNER_ADJ_MIN_X = SENSOR_HALF_WIDTH + SENSOR_SPACING
+const SENSOR_INNER_ADJ_MAX_X = 3 * SENSOR_HALF_WIDTH + SENSOR_SPACING
+const SENSOR_OUTER_ADJ_MIN_X = 3 * SENSOR_HALF_WIDTH + 2 * SENSOR_SPACING
+const SENSOR_OUTER_ADJ_MAX_X = 5 * SENSOR_HALF_WIDTH + 2 * SENSOR_SPACING
 
 "PPD Layer Dimensions"
-const ppdMaxY = 0.15
-const ppdMinY = 0
+const PPD_MAX_Y = 0.15
+const PPD_MIN_Y = 0
 
 "Enzyme Layer Dimensions"
-const enzymeLeftX = -13.5
-const enzymeRightX = 13.5
-const enzymeMaxYFromWall = 0.15
-const enzymeMaxY = wallY + enzymeMaxYFromWall
+const ENZYME_LEFT_X = -13.5
+const ENZYME_RIGHT_X = 13.5
+const ENZYME_MAX_Y_FROM_WALL = 0.15
+const ENZYME_MAX_Y = WALL_Y + ENZYME_MAX_Y_FROM_WALL
 
 "Spawn Inside Enzyme Layer"
-const borderCorrection = 0.001
-const spawnLeftX = enzymeLeftX + borderCorrection
-const spawnRightX = enzymeRightX - borderCorrection
-const spawnEnzymeMaxY = enzymeMaxY - borderCorrection
+const BORDER_CORRECTION = 0.001
+const SPAWN_LEFT_X = ENZYME_LEFT_X + BORDER_CORRECTION
+const SPAWN_RIGHT_X = ENZYME_RIGHT_X - BORDER_CORRECTION
+const SPAWN_ENZYME_MAX_Y = ENZYME_MAX_Y - BORDER_CORRECTION
 
 "Enzyme-Water Corners"
-const cornerCutInEnz = sqrt(2) * enzStepSize
-const cornerCutInWater = sqrt(2) * waterStepSize
+const CORNER_CUT_IN_ENZ = sqrt(2) * ENZ_STEP_SIZE
+const CORNER_CUT_IN_WATER = sqrt(2) * WATER_STEP_SIZE
 # test set: locationbools here
-const waterToEnzNorthEast = [enzymeRightX - cornerCutInEnz, enzymeMaxY - cornerCutInEnz]
-const waterToEnzNorthWest = [enzymeLeftX + cornerCutInEnz, enzymeMaxY - cornerCutInEnz]
-const enzToWaterNorthEast = [enzymeRightX + cornerCutInWater, enzymeMaxY + cornerCutInWater]
-const enzToWaterNorthWest = [enzymeLeftX - cornerCutInWater, enzymeMaxY + cornerCutInWater]
+const WATER_TO_ENZ_NORTHEAST = [ENZYME_RIGHT_X - CORNER_CUT_IN_ENZ, ENZYME_MAX_Y - CORNER_CUT_IN_ENZ]
+const WATER_TO_ENZ_NORTHWEST = [ENZYME_LEFT_X + CORNER_CUT_IN_ENZ, ENZYME_MAX_Y - CORNER_CUT_IN_ENZ]
+const ENZ_TO_WATER_NORTHEAST = [ENZYME_RIGHT_X + CORNER_CUT_IN_WATER, ENZYME_MAX_Y + CORNER_CUT_IN_WATER]
+const ENZ_TO_WATER_NORTHWEST = [ENZYME_LEFT_X - CORNER_CUT_IN_WATER, ENZYME_MAX_Y + CORNER_CUT_IN_WATER]
 
 "Escape Bound Limits"
-const escapeX = 5 * sensorHalfWidth + 3 * sensorSpacing
-const escapeY = escapeX
+const ESCAPE_X = 5 * SENSOR_HALF_WIDTH + 3 * SENSOR_SPACING
+const ESCAPE_Y = ESCAPE_X
 
 "Safe Bound Limits"
-const marginOfCollision = 2 * waterStepSize
-const safeMinY = enzymeMaxY + marginOfCollision
-const safeMaxY = escapeY - marginOfCollision
-const safeMaxX = escapeX - marginOfCollision
+const MARGIN_OF_COLLISION = 2 * WATER_STEP_SIZE
+const SAFE_MIN_Y = ENZYME_MAX_Y + MARGIN_OF_COLLISION
+const SAFE_MAX_Y = ESCAPE_Y - MARGIN_OF_COLLISION
+const SAFE_MAX_X = ESCAPE_X - MARGIN_OF_COLLISION

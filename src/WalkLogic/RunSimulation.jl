@@ -8,18 +8,19 @@ end
 function runsimulation!(data::Dict{String,Integer}, seed::Int=randseed())::Dict{String,Integer}
     println("Seed:\t$seed")
     Random.seed!(seed)
-    arrayOfRandomFloats = rand(NUMBER_OF_WALKS)
+    float_arr_one = rand(NUMBER_OF_WALKS)
+    float_arr_two = rand(NUMBER_OF_WALKS)
     avgStepsTaken = 0
 
-    for i in arrayOfRandomFloats
-        peroxidexy = spawnrandompoint(i)
-        index = 0
-        while peroxidexy != undef && index < MAX_STEPS_PER_WALK
+    for i in 1:NUMBER_OF_WALKS
+        peroxidexy = spawnrandompoint(float_arr_one[i], float_arr_two[i])
+        steps_sofar = 0
+        while peroxidexy != undef && steps_sofar < MAX_STEPS_PER_WALK
             peroxidexy, collision = onestep!(peroxidexy)
             if collision != "no collision"
                 data[collision] += 1
             end
-            index += 1
+            steps_sofar += 1
         end
         avgStepsTaken += index
         if index >= MAX_STEPS_PER_WALK

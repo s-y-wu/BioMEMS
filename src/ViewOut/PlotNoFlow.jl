@@ -9,7 +9,7 @@ function plotdata_noflow(filename::String=defaultfile)
     df = getdata(filename, "\\out\\noFlowData\\")
 
     x_data = df[:, "nth_trial"]
-    y_data = df[:, "innerXtalk"]
+    y_data = df[:, "inner_crosstalk"]
 
     # x-axis upper boundL round up to the hundredth
     roundBy = 100

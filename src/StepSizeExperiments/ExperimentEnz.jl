@@ -1,17 +1,14 @@
 using DataFrames
+
 "Lab data shows thin enzyme has ~ double the yield of thick enzyme"
+include("PARAMETERS_Enz.jl")
+include("Locations_Enz.jl")
+include(pwd() * "\\src\\ArlettSimulation\\Flow_Arlett.jl")
+include(pwd() * "\\src\\ArlettSimulation\\Spawn_Arlett.jl")
+include(pwd() * "\\src\\WalkLogic\\WalkLogic.jl")
+# include(pwd() * "\\src\\ViewOut\\UseData.jl")
 
-include("ENZ_PARAMETERS.jl")
-include("ENZ_LOCATIONS.jl")
-include("BoundaryCross.jl")
-include("BoundaryCheck.jl")
-include("CalcProposed.jl")
-include("Flow.jl")
-include("Spawn.jl")             #spawnrandompoint, whereOutsideSpawn
-include("OneStep.jl")           #inSafeBounds, inEscapeBounds
-include("Collision.jl")         #sensewall!
-
-function runsimulation_enzstep(seed::Int=trunc(Int, 10^4*rand()))
+function runsimulation_enzstep(seed::Int=randseed())
     println("Enzyme Stepsize Derivation")
     println("Enzyme Thickness:\t$ENZYME_MAX_Y")
     println("Particles: $NUMBER_OF_WALKS \t Steps: $MAX_STEPS_PER_WALK\t Step lengths: $STEP_SIZE_DICT")
@@ -21,14 +18,15 @@ function runsimulation_enzstep(seed::Int=trunc(Int, 10^4*rand()))
     data["particles unresolved"] = 0
     output = runsimulation!(data, seed)
 
-    presentationOrder = ["sensor",
+    presentationorder = ["sensor",
         "escape",
         "particles unresolved",
         "avg steps taken"]
 
-    for key in presentationOrder
+    for key in presentationorder
         println(key, "\t", output[key])
     end
+    return nothing
 end
 
 function getEnzStep()
@@ -42,6 +40,7 @@ function getEnzStep()
         append!(escape_arr, data["escape"])
         append!(unresv_arr, data["particles unresolved"])
     end
+    return nothing
 end
 
 begin

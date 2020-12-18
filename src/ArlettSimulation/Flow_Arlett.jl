@@ -12,7 +12,7 @@ in the positive x direction.
 "
 function flow(xy::Array{Float64,1})::Float64
     y = xy[2]
-    if FLOW_OFF || y < WALL_Y || inEnz(xy)
+    if FLOW_OFF || y < WALL_Y || inenz(xy)
         return 0
     else
         xdisplacementbias = getspeed(y) * SECONDS_PER_STEP

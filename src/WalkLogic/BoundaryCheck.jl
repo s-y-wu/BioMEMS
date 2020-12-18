@@ -18,17 +18,17 @@ dx, dy. Resolve collisions with escape boundaries, sensors, and walls.
 # Examples
 ```ju
 """
-function boundarycheck(initxy, dx, dy)
+function boundarycheck(initxy::Array{Float64,1}, dx::Float64, dy::Float64)::Tuple{Array{Float64,1},String}
     proposedxy, endingLayer = calculateproposedpoint(initxy, dx, dy)
     initx, inity = initxy
     propx, propy = proposedxy
     endingStepSize = STEP_SIZE_DICT[ endingLayer ]
 
-    if inWalls(propx, propy)
+    if inwalls(propx, propy)
         return sensewall!(initxy, dx, dy, endingStepSize), "no collision"
     elseif !inescapebounds(propx, propy)
         return undef, "escape"
-    elseif inSensor(proposedxy)
+    elseif insensor(proposedxy)
         return undef, sensorcases(initx)
     else
         return proposedxy, "no collision"
@@ -36,22 +36,22 @@ function boundarycheck(initxy, dx, dy)
 end
 
 # when we do the top enzyme case
-# function wallCases(initxy)
+# function wallCases(initxy::Array{Float64,1})::String
 #     initx, inity = initxy
 #     if inity <= WALL_Y
 #         return "side wall"
 #     elseif inity > WALL_Y
-#         if inCenterWallsx(initx)
+#         if incenterwallsx(initx)
 #             return "top wall"
-#         elseif inInnerWallsx(initx)
+#         elseif ininnerwallsx(initx)
 #             return "top wall"
-#         elseif inOuterWallsx(initx)
+#         elseif inouterwallsx(initx)
 #             return "top wall"
 #         end
 #     end
 #
 #     if rand(Float64) > 0.5
-#         return "sidewall"
+#         return "side wall"
 #     else
 #         return "top wall"
 # end

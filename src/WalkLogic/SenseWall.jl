@@ -9,7 +9,7 @@ function sensewall!(initxy::Array{Float64,1}, dx::Float64, dy::Float64, stepSize
     newx = initxy[1] + stepSize*dx
     newy = initxy[2] + stepSize*dy
 
-    if inWalls(newx, newy)
+    if inwalls(newx, newy)
         return sensewall!(initxy, dx, dy, stepSize * 0.5)
     else
         initxy[1] = newx

@@ -31,20 +31,20 @@ function runsimulation_arlettnoflow(seed::Int=randseed())::DataFrame
     Random.seed!(seed)
     println("Begin No Flow Simulation. Seed: $seed")
     n_array = []
-    innerXtalk_array = []
-    outerXtalk_array = []
+    innercrosstalk_array = []
+    outercrosstalk_array = []
     center = 0
     inner = 0
     outer = 0
-    innerXtalk = 0.0
-    outerXtalk = 0.0
+    innercrosstalk = 0.0
+    outercrosstalk = 0.0
 
-    arrayOfRandomFloats = rand(NUMBER_OF_WALKS)
+    float_arr = rand(NUMBER_OF_WALKS)
     for n in 1:NUMBER_OF_WALKS
-        peroxidexy = spawnrandompoint(arrayOfRandomFloats[n])
-        index = 0
+        peroxidexy = spawnrandompoint(float_arr[n])
+        steps_sofar = 0
 
-        while peroxidexy != undef && index < MAX_STEPS_PER_WALK
+        while peroxidexy != undef && steps_sofar < MAX_STEPS_PER_WALK
             peroxidexy, collision = onestep!(peroxidexy)
             update = false
 
@@ -61,26 +61,26 @@ function runsimulation_arlettnoflow(seed::Int=randseed())::DataFrame
 
             if update
                 if center > 0
-                    innerXtalk = 50.0 * inner / center
-                    outerXtalk = 50.0 * outer / center
+                    innercrosstalk = 50.0 * inner / center
+                    outercrosstalk = 50.0 * outer / center
                 else
                     if inner > 0
-                        innerXtalk = 100.0
+                        innercrosstalk = 100.0
                     elseif outer > 0
-                        outerXtalk = 100.0
+                        outercrosstalk = 100.0
                     end
                 end
                 append!(n_array, n)
-                append!(innerXtalk_array, innerXtalk)
-                append!(outerXtalk_array, outerXtalk)
+                append!(innercrosstalk_array, innercrosstalk)
+                append!(outercrosstalk_array, outercrosstalk)
             end
-            index += 1
+            steps_sofar += 1
         end
     end
 
     df = DataFrame(
         nth_trial = n_array,
-        innerXtalk = innerXtalk_array,
-        outerXtalk = outerXtalk_array)
+        inner_crosstalk = innercrosstalk_array,
+        outer_crosstalk = outercrosstalk_array)
     return df
 end

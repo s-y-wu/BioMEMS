@@ -1,5 +1,3 @@
-# Author: Sean Wu
-
 # Unless noted otherwise, lengths and coordinates are in microns
 
 # const variables w/ fixed types perform better than default (global) variables

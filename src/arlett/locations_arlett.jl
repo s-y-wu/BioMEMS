@@ -1,9 +1,3 @@
-# Author: Sean Wu
-# Last Updated: December 09, 2020
-
-#include("ArlettParameters.jl")
-#include("OneStep.jl")
-
 "true when inside parylene walls"
 function inwalls(x::Float64, y::Float64)::Bool
     withinx = !incentersensorx(x) && !ininnersensorx(x) && !inoutersensorx(x)

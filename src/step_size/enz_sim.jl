@@ -1,14 +1,14 @@
 using DataFrames
 
 "Lab data shows thin enzyme has ~ double the yield of thick enzyme"
-include("PARAMETERS_Enz.jl")
-include("Locations_Enz.jl")
-include(pwd() * "\\src\\ArlettSimulation\\Flow_Arlett.jl")
-include(pwd() * "\\src\\ArlettSimulation\\Spawn_Arlett.jl")
-include(pwd() * "\\src\\WalkLogic\\WalkLogic.jl")
-# include(pwd() * "\\src\\ViewOut\\UseData.jl")
+include("PARAMETERS_enz.jl")
+include("locations_enz.jl")
+include(pwd() * "/src/arlett/flow_arlett.jl")
+include(pwd() * "/src/arlett/spawn_arlett.jl")
+include(pwd() * "/src/walk_logic/walk_logic.jl")
+# include(pwd() * "/src/view_out/data.jl")
 
-function runsimulation_enzstep(seed::Int=randseed())
+function enz_sim(seed::Int=randseed())
     println("Enzyme Stepsize Derivation")
     println("Enzyme Thickness:\t$ENZYME_MAX_Y")
     println("Particles: $NUMBER_OF_WALKS \t Steps: $MAX_STEPS_PER_WALK\t Step lengths: $STEP_SIZE_DICT")
@@ -16,7 +16,7 @@ function runsimulation_enzstep(seed::Int=randseed())
     data["sensor"] = 0
     data["escape"] = 0
     data["particles unresolved"] = 0
-    output = runsimulation!(data, seed)
+    output = run_sim!(data, seed)
 
     presentationorder = ["sensor",
         "escape",

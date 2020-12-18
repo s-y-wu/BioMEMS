@@ -1,6 +1,3 @@
-# Author: Sean Wu
-# First Written: December 15, 2020
-
 "Simulation Controls"
 const NUMBER_OF_WALKS = 1000
 const MAX_STEPS_PER_WALK = 1485604

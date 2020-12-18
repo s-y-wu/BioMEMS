@@ -1,21 +1,21 @@
 using Random
 using DataFrames
 
-include("PARAMETERS_Arlett.jl")
-include("Locations_Arlett.jl")
-include("Flow_Arlett.jl")
-include("Spawn_Arlett.jl")
-include(pwd() * "\\src\\WalkLogic\\WalkLogic.jl")
-include(pwd() * "\\src\\ViewOut\\UseData.jl")
+include("PARAMETERS_arlett.jl")
+include("locations_arlett.jl")
+include("flow_arlett.jl")
+include("spawn_arlett.jl")
+include(pwd() * "\\src\\walk_logic\\walk_logic.jl")
+include(pwd() * "\\src\\view_out\\data.jl")
 
-function saveanimation_arlett(seed::Int=randseed())
-    df = animatesimulation_arlett(seed)
+function save_arlett_animation(seed::Int=randseed())
+    df = arlett_animation(seed)
     folderpath = "\\out\\animations\\"
     savedata(df, folderpath)
     return nothing
 end
 
-function animatesimulation_arlett(seed::Int=randseed())::DataFrame
+function arlett_animation(seed::Int=randseed())::DataFrame
     Random.seed!(seed)
     x_arr = []
     y_arr = []
@@ -30,7 +30,7 @@ function animatesimulation_arlett(seed::Int=randseed())::DataFrame
             push!(x_arr, compressedX)
             push!(y_arr, compressedY)
         end
-        peroxidexy, collisiontype = onestep!(peroxidexy)
+        peroxidexy, collisiontype = one_step!(peroxidexy)
         index += 1
     end
     df = DataFrame(x_coordinate = x_arr,

@@ -6,12 +6,12 @@
 using Random
 using DataFrames
 
-include("PARAMETERS_Arlett.jl")
-include("Locations_Arlett.jl")
-include("Flow_Arlett.jl")
-include("Spawn_Arlett.jl")
-include(pwd() * "\\src\\WalkLogic\\WalkLogic.jl")
-include(pwd() * "\\src\\ViewOut\\UseData.jl")
+include("PARAMETERS_arlett.jl")
+include("locations_arlett.jl")
+include("flow_arlett.jl")
+include("spawn_arlett.jl")
+include(pwd() * "\\src\\walk_logic\\walk_logic.jl")
+include(pwd() * "\\src\\view_out\\data.jl")
 
 "
     saveNoFlowData
@@ -20,14 +20,14 @@ Save data from a no flow Arlett simulation.
 Runtime 12/8: 89.5 seconds for 100 runs
 Runtime 12/10:
 "
-function savesimulation_arlettnoflow(seed::Int=randseed())
-    df = runsimulation_arlettnoflow()
+function save_arlett_noflow_data(seed::Int=randseed())
+    df = arlett_noflow_data()
     seedstring = string(seed)
     savedata(df, "\\out\\noflowdata\\", seedstring)
     return nothing
 end
 
-function runsimulation_arlettnoflow(seed::Int=randseed())::DataFrame
+function arlett_noflow_data(seed::Int=randseed())::DataFrame
     Random.seed!(seed)
     println("Begin No Flow Simulation. Seed: $seed")
     n_array = []
@@ -45,7 +45,7 @@ function runsimulation_arlettnoflow(seed::Int=randseed())::DataFrame
         steps_sofar = 0
 
         while peroxidexy != undef && steps_sofar < MAX_STEPS_PER_WALK
-            peroxidexy, collision = onestep!(peroxidexy)
+            peroxidexy, collision = one_step!(peroxidexy)
             update = false
 
             if collision == "left outer sensor" || collision == "right outer sensor"

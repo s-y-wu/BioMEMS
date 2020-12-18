@@ -4,11 +4,11 @@
 using DataFrames
 "Lab data shows no ppd has double the yield of ppd"
 
-include("PARAMETERS_PPD.jl")
-include("Locations_PPD.jl")
-include(pwd() * "\\src\\ArlettSimulation\\Flow_Arlett.jl")
-include(pwd() * "\\src\\WalkLogic\\WalkLogic.jl")
-# include(pwd() * "\\src\\ViewOut\\UseData.jl")
+include("PARAMETERS_ppd.jl")
+include("locations_ppd.jl")
+include(pwd() * "/src/arlett/flow_arlett.jl")
+include(pwd() * "/src/walk_logic/walk_logic.jl")
+# include(pwd() * "/src/view_out/data.jl")
 
 function find_ppdstepsize(ppd_stepsizestotest::Array{Float64, 1}=[0.001])::DataFrame
     println("Compare PPD Step Sizes")
@@ -39,7 +39,7 @@ function find_ppdstepsize(ppd_stepsizestotest::Array{Float64, 1}=[0.001])::DataF
     return df
 end
 
-function runsimulation_ppdstepsize(seed::Int=randseed())
+function ppd_sim(seed::Int=randseed())
     println("PPD Stepsize Derivation")
     println("PPD?: $PPD_ON \tSeed: $seed")
     println("Particles: $NUMBER_OF_WALKS \t Steps: $MAX_STEPS_PER_WALK\t Step lengths: $STEP_SIZE_DICT")
@@ -47,7 +47,7 @@ function runsimulation_ppdstepsize(seed::Int=randseed())
     data["sensor"] = 0
     data["escape"] = 0
     data["particles unresolved"] = 0
-    output = runsimulation!(data, seed)
+    output = run_sim!(data, seed)
 
     presentationOrder = ["sensor",
         "escape",

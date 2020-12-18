@@ -1,5 +1,3 @@
-# include("PPD_PARAMETERS.jl")
-
 function spawnrandompoint(randFloatX::Float64=rand(), randFloatY::Float64=rand())::Array{Float64,1}
     newxy = copy(SPAWN_TOP_LEFT_XY)
     newxy[1] += randFloatX * SPAWN_X_RANGE

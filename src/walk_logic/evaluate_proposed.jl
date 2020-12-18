@@ -1,13 +1,8 @@
 # Author: Sean Wu
 # Last Updated: November 11, 2020
 
-#include("Flow.jl")
-#include("BoundaryCross.jl")
-#include("Spawn.jl")
-#include("LocationBools.jl")
-
 "Manages steplength calculations and adjusts the steplength by layers accordingly."
-function calculateproposedpoint(initxy::Array{Float64,1}, dx::Float64, dy::Float64)::Tuple{Array{Float64,1},String}
+function evaluate_proposed(initxy::Array{Float64,1}, dx::Float64, dy::Float64)::Tuple{Array{Float64,1},String}
     if inwater(initxy)
         return watercalc(initxy, dx, dy)
     elseif inenz(initxy)
@@ -15,14 +10,14 @@ function calculateproposedpoint(initxy::Array{Float64,1}, dx::Float64, dy::Float
     elseif inppd(initxy)
         return ppdcalc(initxy, dx, dy)
     else
-        println("calculateproposedpoint Error", initxy)
-        return [-1.0, -1.0], "calculateproposedpoint Error"
+        println("evaluate_proposed Error", initxy)
+        return [-1.0, -1.0], "evaluate_proposed Error"
     end
 end
 
 function watercalc(initxy::Array{Float64,1}, dx::Float64, dy::Float64)::Tuple{Array{Float64,1},String}
     initx, inity = initxy
-    flowBias = flow(initxy)
+    flowBias = flow_arlett(initxy)
     proposedxy = [initx + flowBias + WATER_STEP_SIZE * dx, inity + WATER_STEP_SIZE * dy]
 
     if inwater(proposedxy)
@@ -51,7 +46,7 @@ end
 
 function enzcalc(initxy::Array{Float64,1}, dx::Float64, dy::Float64)::Tuple{Array{Float64,1},String}
     initx, inity = initxy
-    flowBias = flow(initxy) * ENZ_STEP_SIZE / WATER_STEP_SIZE
+    flowBias = flow_arlett(initxy) * ENZ_STEP_SIZE / WATER_STEP_SIZE
     proposedxy = [initx + flowBias + ENZ_STEP_SIZE * dx, inity + ENZ_STEP_SIZE * dy]
 
     if inenz(proposedxy)

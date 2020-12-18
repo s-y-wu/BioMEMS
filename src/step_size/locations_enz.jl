@@ -1,12 +1,6 @@
 # Author: Sean Wu
 # Last Updated: December 11, 2020
 
-# include("ENZ_PARAMETERS")
-
-# function flow(xy)
-#     return 0
-# end
-
 function insensor(xy::Array{Float64,1})::Bool
     x, y = xy
     withinx = abs(x) < SENSOR_HALF_WIDTH

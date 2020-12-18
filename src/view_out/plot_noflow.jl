@@ -1,12 +1,12 @@
 using Plots
 using MyData
 
-include("UseData.jl")
+include("data.jl")
 
 const defaultfile = "2020-12-10T22;02;09.626_seed1234.csv"
 
 function plotdata_noflow(filename::String=defaultfile)
-    df = getdata(filename, "\\out\\noFlowData\\")
+    df = getdata(filename, "/out/noFlowData/")
 
     x_data = df[:, "nth_trial"]
     y_data = df[:, "inner_crosstalk"]

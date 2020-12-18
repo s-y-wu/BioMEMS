@@ -1,8 +1,6 @@
 # Author: Sean Wu
 # Last Updated: November 11, 2020
 
-#include("ArlettParameters.jl")
-
 "Corrects displacement vectors with head and tail at two different layers"
 
 "At horizontal boundary between water-enzyme, water-ppd, or ppd-enzyme"

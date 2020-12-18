@@ -1,8 +1,3 @@
-# Author: Sean Wu
-# Last Updated: November 11, 2020
-
-#include("ArlettParameters.jl")
-
 "Spawning above walls for overflowing enzyme layer"
 function spawnrandompoint(randfloat::Float64=rand(), randfloatstub::Float64=rand())::Array{Float64,1}
     spawnlinelength = ENZYME_RIGHT_X - ENZYME_LEFT_X + 2 * ENZYME_MAX_Y_FROM_WALL

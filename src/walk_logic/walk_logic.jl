@@ -1,7 +1,7 @@
 # Convenient include for the common functions
-include("RunSimulation.jl")
-include("OneStep.jl")
-include("BoundaryCheck.jl")
-include("CalcProposed.jl")
-include("BoundaryCross.jl")
-include("SenseWall.jl")
+include("run_sim!.jl")
+include("one_step!.jl")
+include("approach_wall.jl")
+include("boundary_check.jl")
+include("boundary_cross.jl")
+include("evaluate_proposed.jl")

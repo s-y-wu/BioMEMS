@@ -6,6 +6,7 @@ julia:
   - 1.0
   - 1.4
   - nightly
+coveralls: true
 os:
   - linux
   - osx

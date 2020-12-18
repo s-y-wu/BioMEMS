@@ -14,9 +14,6 @@ using Random
 
 Confirm the next coordinates after initxy with unit displacement vectors
 dx, dy. Resolve collisions with escape boundaries, sensors, and walls.
-
-# Examples
-```ju
 """
 function boundarycheck(initxy::Array{Float64,1}, dx::Float64, dy::Float64)::Tuple{Array{Float64,1},String}
     proposedxy, endingLayer = calculateproposedpoint(initxy, dx, dy)

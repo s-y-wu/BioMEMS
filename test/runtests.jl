@@ -1,11 +1,9 @@
 using HMCResearch2020RandomWalks
 using Test
 
-@testset "HMCResearch2020.jl" begin
-    # Write your tests here.
-end
+spawnrandompoint()
 
-@testset "Spawn.jl" begin
-    @test spawnRandomPoint(0) == [-13.5, 1.5]
-    @test spawnRandomPoint(1) == [13.5, 1.5]
-end
+# @testset "HMCResearch2020RandomWalks.jl" begin
+#     # Write your tests here.
+#     spawnrandompoint()
+# end

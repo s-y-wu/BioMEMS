@@ -3,15 +3,15 @@
 # Author(s): Sean Wu
 # Last Updated: November 27, 2020
 
-using Random
-using DataFrames
+# using Random
+# using DataFrames
 
-include("PARAMETERS_arlett.jl")
-include("locations_arlett.jl")
-include("flow_arlett.jl")
-include("spawn_arlett.jl")
-include(pwd() * "\\src\\walk_logic\\walk_logic.jl")
-include(pwd() * "\\src\\view_out\\data.jl")
+# include("PARAMETERS_arlett.jl")
+# include("locations_arlett.jl")
+# include("flow_arlett.jl")
+# include("spawn_arlett.jl")
+# include(pwd() * "\\src\\walk_logic\\walk_logic.jl")
+# include(pwd() * "\\src\\view_out\\data.jl")
 
 function arlett_sim(seed::Int=randseed())
     println("Arlett Model: Walls + Overflow Spawn + 1 Thick Enzyme + 5 PPD + Flow")

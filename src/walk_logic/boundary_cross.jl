@@ -4,7 +4,7 @@
 "Corrects displacement vectors with head and tail at two different layers"
 
 "At horizontal boundary between water-enzyme, water-ppd, or ppd-enzyme"
-function north!(proposedxy::Array{Float64,1}, initialxy::Array{Float64,1}, dx::Float, dy::Float, start::String, endup::String)::Array{Float64,1}
+function north!(proposedxy::Array{Float64,1}, initialxy::Array{Float64,1}, dx::Float64, dy::Float64, start::String, endup::String)::Array{Float64,1}
     initx, inity = initialxy
     scale = STEP_SIZE_DICT[start]
     scale2 = STEP_SIZE_DICT[endup]

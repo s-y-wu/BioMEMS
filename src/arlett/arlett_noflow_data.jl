@@ -3,15 +3,15 @@
 # Author(s): Sean Wu
 # Last Updated: December 6, 2020
 
-using Random
-using DataFrames
+# using Random
+# using DataFrames
 
-include("PARAMETERS_arlett.jl")
-include("locations_arlett.jl")
-include("flow_arlett.jl")
-include("spawn_arlett.jl")
-include(pwd() * "\\src\\walk_logic\\walk_logic.jl")
-include(pwd() * "\\src\\view_out\\data.jl")
+# include("PARAMETERS_arlett.jl")
+# include("locations_arlett.jl")
+# include("flow_arlett.jl")
+# include("spawn_arlett.jl")
+# include(pwd() * "\\src\\walk_logic\\walk_logic.jl")
+# include(pwd() * "\\src\\view_out\\data.jl")
 
 "
     saveNoFlowData
@@ -23,7 +23,7 @@ Runtime 12/10:
 function save_arlett_noflow_data(seed::Int=randseed())
     df = arlett_noflow_data()
     seedstring = string(seed)
-    savedata(df, "\\out\\noflowdata\\", seedstring)
+    savedata(df, "out/noflowdata/", seedstring)
     return nothing
 end
 

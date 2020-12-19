@@ -1,12 +1,12 @@
 using Random
 using DataFrames
 
-include("PARAMETERS_arlett.jl")
-include("locations_arlett.jl")
-include("flow_arlett.jl")
-include("spawn_arlett.jl")
-include(pwd() * "\\src\\walk_logic\\walk_logic.jl")
-include(pwd() * "\\src\\view_out\\data.jl")
+# include("PARAMETERS_arlett.jl")
+# include("locations_arlett.jl")
+# include("flow_arlett.jl")
+# include("spawn_arlett.jl")
+# include(pwd() * "\\src\\walk_logic\\walk_logic.jl")
+# include(pwd() * "\\src\\view_out\\data.jl")
 
 function save_arlett_animation(seed::Int=randseed())
     df = arlett_animation(seed)

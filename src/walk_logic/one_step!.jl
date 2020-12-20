@@ -1,7 +1,7 @@
 # Author: Sean Wu
 # Last Updated: November 12, 2020
 
-function one_step!(initxy::Array{Float64,1})::Tuple{Array{Float64,1},String}
+function one_step!(initxy::Array{Float64,1})
     theta = 2 * pi * rand(Float64) - pi  # -pi to pi
     dx = cos(theta)
     dy = sin(theta)

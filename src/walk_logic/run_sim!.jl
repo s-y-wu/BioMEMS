@@ -22,8 +22,8 @@ function run_sim!(data::Dict{String,Integer}, seed::Int=randseed())::Dict{String
             end
             steps_sofar += 1
         end
-        avgStepsTaken += index
-        if index >= MAX_STEPS_PER_WALK
+        avgStepsTaken += steps_sofar
+        if steps_sofar >= MAX_STEPS_PER_WALK
             data["particles unresolved"] += 1
         end
     end

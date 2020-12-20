@@ -12,7 +12,7 @@ end
 
 function inwalls(x::Float64, y::Float64)::Bool
     withinx = SENSOR_HALF_WIDTH < abs(x) <= ESCAPE_X
-    withiny = PPD_MIN_Y < y <= WALL_Y
+    withiny = PPD_MIN_Y < y < WALL_Y
     return withinx && withiny
 end
 

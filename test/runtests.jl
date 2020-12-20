@@ -1,12 +1,5 @@
-using HMCResearchRandomWalks
-using Test
-#using .Arlett
-spawnrandompoint()
-using HMCResearchRandomWalks.Arlett
+using SafeTestsets
 
-@test Arlett.WALL_Y == 1.50
-
-# @testset "HMCResearchRandomWalks.jl" begin
-#     # Write your tests here.
-#     spawnrandompoint()
-# end
+@time begin
+    @time @safetestset "Arlett Experiment Tests" begin include("arlett_test.jl") end
+end

@@ -20,10 +20,10 @@ function arlett_animation(seed::Int=randseed())::DataFrame
     x_arr = []
     y_arr = []
     peroxidexy = spawnrandompoint()
-    index = 0
+    steps_sofar = 0
     every_tenth_frame = 10
-    while peroxidexy != undef && index < MAX_STEPS_PER_WALK
-        if index % every_tenth_frame == 0
+    while peroxidexy != undef && steps_sofar < MAX_STEPS_PER_WALK
+        if steps_sofar % every_tenth_frame == 0
             x, y = peroxidexy
             compressedX = convert(Float16, x)
             compressedY = convert(Float16, y)
@@ -31,7 +31,7 @@ function arlett_animation(seed::Int=randseed())::DataFrame
             push!(y_arr, compressedY)
         end
         peroxidexy, collisiontype = one_step!(peroxidexy)
-        index += 1
+        steps_sofar += 1
     end
     df = DataFrame(x_coordinate = x_arr,
                     y_coordinate = y_arr)

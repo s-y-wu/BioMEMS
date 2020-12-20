@@ -48,6 +48,11 @@ end
     @test Arlett.inenz(centerspawn)
     @test !Arlett.inwalls(leftwallspawn[1], leftwallspawn[2])
     @test !Arlett.inwalls(rightwallspawn[1], rightwallspawn[2])
+
+    randspawn = Arlett.spawnrandompoint()
+    @test Arlett.inenz(randspawn)
+    @test !Arlett.inwalls(randspawn[1], randspawn[2])
+    @test isapprox(abs(randspawn[1]), 13.499) || isapprox(randspawn[2], 1.649)
 end
 
 @testset "whereoutsidespawn in Arlett" begin

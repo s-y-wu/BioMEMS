@@ -5,9 +5,9 @@ Analyze hydrogen peroxide position to compute the magnitude of flow
 By laminar flow, all nonzero flow biases the particle downstream
 in the positive x direction.
 "
-function flow_arlett(xy::Array{Float64,1})::Float64
+function flow_arlett(xy::Array{Float64,1})
     y = xy[2]
-    if FLOW_OFF || y < WALL_Y || inenz(xy)
+    if !FLOW_BIAS || y <= WALL_Y || inenz(xy)
         return 0
     else
         xdisplacementbias = getspeed(y) * SECONDS_PER_STEP

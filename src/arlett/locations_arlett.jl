@@ -8,7 +8,7 @@ end
 "true when outside sensors ppd and enzyme layers"
 function inwater(xy::Array{Float64,1})::Bool
     x, y = xy
-    inadjacentwell = PPD_MAX_Y < y <= WALL_Y && ininnersensorx(x) || inoutersensorx(x)
+    inadjacentwell = PPD_MAX_Y < y <= WALL_Y && (ininnersensorx(x) || inoutersensorx(x))
     inwaterabovewalls = y > WALL_Y && inescapebounds(x, y) && !inoverflowenz(x, y)
     return inadjacentwell || inwaterabovewalls
 end
@@ -70,5 +70,42 @@ function sensorcases(initx::Float64)::String
     else
         println("sensorCases error ", initx)
         return "sensorCases error"
+    end
+end
+
+function wallcases(initxy::Array{Float64,1},
+                   dx::Float64,
+                   dy::Float64,
+                   ending_step_size::Float64)
+    if !CATALASE_ON_WALLS
+        return approach_wall!(initxy, dx, dy, ending_step_size), "no collision"
+    end
+
+    if sortwall(initxy) == "side wall"
+        return approach_wall!(initxy, dx, dy, ending_step_size), "side wall"
+    else
+        return undef, "top wall"
+    end
+end
+
+function sortwall(initxy::Array{Float64,1})::String
+    initx, inity = initxy
+    if inity <= WALL_Y      # from between walls
+        return "side wall"
+    elseif inity > WALL_Y   # from above walls
+        if incenterwallsx(initx)
+            return "top wall"
+        elseif ininnerwallsx(initx)
+            return "top wall"
+        elseif inouterwallsx(initx)
+            return "top wall"
+        end
+    end
+    # ambiguous corner case:
+    #   in sensor region, above wall height -- coinflip
+    if rand(Float64) > 0.5
+        return "side wall"
+    else
+        return "top wall"
     end
 end

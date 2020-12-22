@@ -1,5 +1,15 @@
 using Random
 
+function set_NUMBER_OF_WALKS(n::Int64=100)
+    global NUMBER_OF_WALKS = n
+    return nothing
+end
+
+function set_MAX_STEPS_PER_WALK(s::Int64=1485604)
+    global MAX_STEPS_PER_WALK = s
+    return nothing
+end
+
 function randseed()::Int
     maxdigits = 4
     return trunc(Int, 10^maxdigits*rand())

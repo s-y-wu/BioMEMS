@@ -1,8 +1,13 @@
 "Simulation Controls"
-const NUMBER_OF_WALKS = 1000
-const MAX_STEPS_PER_WALK = 1485604
-const FLOW_OFF = false
-const PPD_ON = true  # no PPD == false
+global NUMBER_OF_WALKS = 1000
+global MAX_STEPS_PER_WALK = 1485604
+global PPD_ON = true  # no PPD == false
+const FLOW_BIAS = true
+const CATALASE_ON_WALLS = true
+
+function set_PPD_ON(trueorfalse::Bool=true)
+    global PPD_ON = trueorfalse
+end
 
 "Solvent Diffusion Step Sizes (microns per 2.7 microseconds)"
 const SECONDS_PER_STEP = 0.0000027077

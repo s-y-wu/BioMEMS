@@ -1,8 +1,13 @@
 "Simulation Controls"
-const NUMBER_OF_WALKS = 1000
-const MAX_STEPS_PER_WALK = 3*1485604
-const FLOW_OFF = false
-const THICK_ENZ = true  # thin enzyme == false
+global NUMBER_OF_WALKS = 1000
+global MAX_STEPS_PER_WALK = 3*1485604
+global THICK_ENZ = true  # thin enzyme == false
+const FLOW_BIAS = true
+const CATALASE_ON_WALLS = false
+
+function set_THICK_ENZ(trueorfalse::Bool=true)
+    global THICK_ENZ = trueorfalse
+end
 
 "Solvent Diffusion Step Sizes (microns per 2.7 microseconds)"
 const SECONDS_PER_STEP = 0.0000027077

@@ -1,10 +1,21 @@
 # Unless noted otherwise, lengths and coordinates are in microns
 
 # const variables w/ fixed types perform better than default (global) variables
-"Simulation Controls"
-const NUMBER_OF_WALKS = 100
-const MAX_STEPS_PER_WALK = 3*1485604
-const FLOW_OFF = true
+"Simulation Controls: other setters in ~/src/walk_logic/runsim!.jl"
+global NUMBER_OF_WALKS = 100
+global MAX_STEPS_PER_WALK = 3*1485604
+global FLOW_BIAS = true
+global CATALASE_ON_WALLS = false
+
+function set_FLOW_BIAS(trueorfalse::Bool=true)
+    global FLOW_BIAS = trueorfalse
+    return nothing
+end
+
+function set_CATALASE_ON_WALLS(trueorfalse::Bool=true)
+    global CATALASE_ON_WALLS = trueorfalse
+    return nothing
+end
 
 "Solvent Diffusion Step Sizes (microns per 2.7 microseconds)"
 const SECONDS_PER_STEP = 0.0000027077

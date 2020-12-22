@@ -2,6 +2,15 @@ using CSV
 using DataFrames
 using Dates
 
+global LATEST_FILE_PATH
+
+#TODO: implement into all plots and stuff
+function set_LATEST_FILE_PATH(path::String)
+    global LATEST_FILE_PATH = path
+    return nothing
+end
+
+
 "
     savedata
 

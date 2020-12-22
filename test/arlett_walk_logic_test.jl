@@ -14,5 +14,5 @@ using HMCResearchRandomWalks.Arlett:
 #below_enz =
 #@test north!()
 
-Arlett.set_CATALASE_ON_WALLS(false)
+#Arlett.set_CATALASE_ON_WALLS(false)
 #@test boundary_check([])

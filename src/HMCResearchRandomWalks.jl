@@ -32,8 +32,8 @@ end
 
 module Arlett
 using Random, DataFrames, CSV, Dates
-include(string(@__DIR__, "/walk_logic/walk_logic.jl"))
 include(string(@__DIR__, "/arlett/arlett.jl"))
+include(string(@__DIR__, "/walk_logic/walk_logic.jl"))
 include(string(@__DIR__, "/view_out/data.jl"))
 export arlett_sim,
        arlett_no_flow_data,

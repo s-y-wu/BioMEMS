@@ -1,5 +1,3 @@
-include("data.jl")
-
 const defaultfile = "2020-12-10T22;02;09.626_seed1234.csv"
 
 function plotdata_noflow(filename::String=defaultfile)

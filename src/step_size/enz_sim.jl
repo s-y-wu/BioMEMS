@@ -1,12 +1,6 @@
 using DataFrames
 
 "Lab data shows thin enzyme has ~ double the yield of thick enzyme"
-#include("locations_enz.jl")
-#include("PARAMETERS_enz.jl")
-# include(pwd() * "/src/arlett/flow_arlett.jl")
-# include(pwd() * "/src/arlett/spawn_arlett.jl")
-# include(pwd() * "/src/walk_logic/walk_logic.jl")
-# include(pwd() * "/src/view_out/data.jl")
 
 function enz_sim(seed::Int=randseed())
     println("Enzyme Stepsize Derivation")

@@ -36,8 +36,8 @@ include(string(@__DIR__, "/arlett/arlett.jl"))
 include(string(@__DIR__, "/walk_logic/walk_logic.jl"))
 include(string(@__DIR__, "/view_out/data.jl"))
 export arlett_sim,
-       arlett_no_flow_data,
-       save_arlett_noflow_data,
+       arlett_noflowdata,
+       save_arlett_noflowdata,
        arlett_animation,
        save_arlett_animation,
        set_NUMBER_OF_WALKS,

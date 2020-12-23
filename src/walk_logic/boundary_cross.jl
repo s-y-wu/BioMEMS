@@ -1,14 +1,22 @@
 # Author: Sean Wu
 # Last Updated: November 11, 2020
 
-"Corrects displacement vectors with head and tail at two different layers"
+"""
+    north!(proposedxy, initialxy, dx, dy, start, endup) -> Array{Float64,1}
 
-"At horizontal boundary between water-enzyme, water-ppd, or ppd-enzyme"
-function north!(proposedxy::Array{Float64,1}, initialxy::Array{Float64,1}, dx::Float64, dy::Float64, start::String, endup::String)::Array{Float64,1}
+Corrects displacement vectors with head and tail in two different layers and
+crossing the horizontal boundary between water-enzyme, water-ppd, or ppd-enzyme.
+"""
+function north!(proposedxy::Array{Float64,1},
+                initialxy::Array{Float64,1},
+                dx::Float64, dy::Float64,
+                start::String,
+                endup::String)
     initx, inity = initialxy
+    propx, propy = proposedxy
     scale = STEP_SIZE_DICT[start]
     scale2 = STEP_SIZE_DICT[endup]
-    slope = (proposedxy[1] - initx) / (proposedxy[2] - inity)           # Reciprocal of traditional slope (delta x over delta y)
+    slope = (propx - initx) / (propy - inity)           # Reciprocal of traditional slope (delta x over delta y)
 
     if start == "ppd" || endup == "ppd"
         yintersection = PPD_MAX_Y
@@ -28,8 +36,17 @@ function north!(proposedxy::Array{Float64,1}, initialxy::Array{Float64,1}, dx::F
     return proposedxy
 end
 
-"At vertical boundary between enzyme and water. No ppd-water vertical boundary, only ppd-wall"
-function eastwest!(proposedxy::Array{Float64,1}, initialxy::Array{Float64,1}, dx::Float64, dy::Float64, start::String, endup::String, EastOrWest::String)::Array{Float64,1}
+"""
+    eastwest!(proposedxy, initialxy, dx, dy, start, endup, EastORWest) -> Array{Float64,1}
+
+Corrects displacement vectors with head and tail in two different layers and
+crossing the vertical boundary between water-enzyme, ppd-enzyme.
+"""
+function eastwest!(proposedxy::Array{Float64,1},
+                    initialxy::Array{Float64,1},
+                    dx::Float64, dy::Float64,
+                    start::String, endup::String,
+                    EastOrWest::String)
     initx, inity = initialxy
     propx, propy = proposedxy
     scale = STEP_SIZE_DICT[start]

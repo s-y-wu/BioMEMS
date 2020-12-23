@@ -1,11 +1,15 @@
-"true when inside parylene walls"
+######################################
+# Boolean functions for xy coordinates
+######################################
+
+"Parylene walls in between sensors"
 function inwalls(x::Float64, y::Float64)::Bool
     withinx = !incentersensorx(x) && !ininnersensorx(x) && !inoutersensorx(x)
     withiny = y <= WALL_Y
     return withinx && withiny
 end
 
-"true when outside sensors ppd and enzyme layers"
+"Where no walls, enzymatic layer, nor ppd layers are"
 function inwater(xy::Array{Float64,1})::Bool
     x, y = xy
     inadjacentwell = PPD_MAX_Y < y <= WALL_Y && (ininnersensorx(x) || inoutersensorx(x))
@@ -13,6 +17,7 @@ function inwater(xy::Array{Float64,1})::Bool
     return inadjacentwell || inwaterabovewalls
 end
 
+"Only in the center sensor over ppd, overflowing slightly over adjacent walls"
 function inenz(xy::Array{Float64,1})::Bool
     x, y = xy
     if PPD_MAX_Y < y <= WALL_Y
@@ -22,7 +27,7 @@ function inenz(xy::Array{Float64,1})::Bool
     end
 end
 
-"true when inside the 150 nm thick layer of m-phenylendiamine (PPD) on each sensor pads"
+"Thin layer of phenylenediamine covering all five sensors"
 function inppd(xy::Array{Float64,1})::Bool
     x,y = xy
     withinx = incentersensorx(x) || ininnersensorx(x) || inoutersensorx(x)
@@ -30,29 +35,37 @@ function inppd(xy::Array{Float64,1})::Bool
     return withinx && withiny
 end
 
-
+"Helper for inenz, specifies how much overflow"
 function inoverflowenz(x::Float64, y::Float64)::Bool
     withinx = ENZYME_LEFT_X <= x <= ENZYME_RIGHT_X
     withiny = WALL_Y < y <= ENZYME_MAX_Y
     return withinx && withiny
 end
 
+"Above the center sensor"
 function incentersensorx(x::Float64)::Bool
     return abs(x) < SENSOR_CENTER_MAX_X
 end
 
+"Above either inner sensor"
 function ininnersensorx(x::Float64)::Bool
     return SENSOR_INNER_ADJ_MIN_X < abs(x) < SENSOR_INNER_ADJ_MAX_X
 end
 
+"Above either outer sensor"
 function inoutersensorx(x::Float64)::Bool
     return SENSOR_OUTER_ADJ_MIN_X < abs(x) < SENSOR_OUTER_ADJ_MAX_X
 end
 
+"Entered any sensor"
 function insensor(xy::Array{Float64,1})::Bool
     y = xy[2]
     return y <= 0
 end
+
+#####################################
+# HELPER FUNCTIONS FOR boundary_check
+#####################################
 
 function sensorcases(initx::Float64)::String
     if incentersensorx(initx)
@@ -88,6 +101,7 @@ function wallcases(initxy::Array{Float64,1},
     end
 end
 
+"Distinguish top and side wall collisions when CATALASE_ON_WALLS"
 function sortwall(initxy::Array{Float64,1})::String
     initx, inity = initxy
     if inity <= WALL_Y      # from between walls

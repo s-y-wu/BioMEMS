@@ -1,5 +1,9 @@
-"Spawning above walls for overflowing enzyme layer"
-function spawnrandompoint(randfloat::Float64=rand(), randfloatstub::Float64=rand())::Array{Float64,1}
+"""
+    spawnrandompoint(ranfloat, randfloat) -> Array{Float64,1}
+
+Initialize an [x,y] coordinate, uniformly random at water-enz interface, just inside enz.
+"""
+function spawnrandompoint(randfloat::Float64=rand(), randfloatstub::Float64=rand())
     spawnlinelength = SPAWN_RIGHT_X - SPAWN_LEFT_X + 2 * (SPAWN_ENZYME_MAX_Y - WALL_Y)
     spawncoordinate = spawnlinelength * randfloat - spawnlinelength / 2
 
@@ -20,8 +24,12 @@ function spawnrandompoint(randfloat::Float64=rand(), randfloatstub::Float64=rand
     end
 end
 
-"Assigns an entering molecule W, NW, N, NE, E (cardinal directions) at the water-enzyme boundary"
-function whereoutsidespawn(xy::Array{Float64,1})::String
+"""
+    whereoutsidespawn(xy)
+
+Assign a cardinal direction (W, NW, N, NE, or E) when crossing the water-enzyme boundary
+"""
+function whereoutsidespawn(xy::Array{Float64,1})
     x, y = xy
     if x < ENZYME_LEFT_X
         if y > ENZYME_MAX_Y

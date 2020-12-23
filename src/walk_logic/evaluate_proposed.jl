@@ -1,8 +1,12 @@
 # Author: Sean Wu
 # Last Updated: November 11, 2020
 
-"Manages steplength calculations and adjusts the steplength by layers accordingly."
-function evaluate_proposed(initxy::Array{Float64,1}, dx::Float64, dy::Float64)::Tuple{Array{Float64,1},String}
+"""
+    evaluate_proposed(initxy, dx, dy) -> Tuple{Array{Float64,1},String}
+
+Identify location of xy coordinate and compute correct steplengths/displacement vectors.
+"""
+function evaluate_proposed(initxy::Array{Float64,1}, dx::Float64, dy::Float64)
     if inwater(initxy)
         return watercalc(initxy, dx, dy)
     elseif inenz(initxy)
@@ -15,6 +19,7 @@ function evaluate_proposed(initxy::Array{Float64,1}, dx::Float64, dy::Float64)::
     end
 end
 
+"Helper when xy is initially in water"
 function watercalc(initxy::Array{Float64,1}, dx::Float64, dy::Float64)::Tuple{Array{Float64,1},String}
     initx, inity = initxy
     flowBias = flow_arlett(initxy)
@@ -44,6 +49,7 @@ function watercalc(initxy::Array{Float64,1}, dx::Float64, dy::Float64)::Tuple{Ar
     end
 end
 
+"Helper when xy is initially in the enzyme layer"
 function enzcalc(initxy::Array{Float64,1}, dx::Float64, dy::Float64)::Tuple{Array{Float64,1},String}
     initx, inity = initxy
     flowBias = flow_arlett(initxy) * ENZ_STEP_SIZE / WATER_STEP_SIZE
@@ -73,6 +79,7 @@ function enzcalc(initxy::Array{Float64,1}, dx::Float64, dy::Float64)::Tuple{Arra
     end
 end
 
+"Helper when xy is initially in the ppd layer"
 function ppdcalc(initxy::Array{Float64,1}, dx::Float64, dy::Float64)::Tuple{Array{Float64,1},String}
     initx, inity = initxy
     PPD_STEP_SIZE = STEP_SIZE_DICT["ppd"]

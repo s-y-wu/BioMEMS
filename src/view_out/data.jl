@@ -1,31 +1,33 @@
-using CSV
-using DataFrames
-using Dates
-
-global LATEST_FILE_PATH
-
-#TODO: implement into all plots and stuff
-function set_LATEST_FILE_PATH(path::String)
-    global LATEST_FILE_PATH = path
-    return nothing
-end
-
-
+include("current.jl")
 "
     savedata
 
-Write DataFrame into a CSV file. Name the CSV file by time and an input seed of type String.
+Write most recent dataframe into a CSV file.
 "
-function savedata(df::DataFrame, relativefolderpath::String="out/", seedstring::String="no_seed")
-    timestring = string(Dates.now())
-    # Microsoft file names prohibit ":"
-    microsoftsafestring = replace(timeNow, ":" => ";")
-    filename = microsoftsafestring * "_seed" * seedstring * ".csv"
-    fullpath = normpath(@__DIR__, "..", "..") * relativefolderpath * filename
+function savedata(filename::AbstractString=nameCSVfile())
+    df = current_df()
+    fullpath = abspath(expanduser(joinpath("out", filename)))
     CSV.write(fullpath, df)
-    println(filename, " save success!")
-    return nothing
+    current_path(fullpath)
+    nothing
 end
+
+function mysavedata(paths::AbstractString...)
+    df = current_df()
+    fullpath = abspath(expanduser(joinpath(paths, nameCSVfile())))
+    CSV.write(fullpath, df)
+    current_path(fullpath)
+    nothing
+end
+
+function nameCSVfile()
+    rightnow = string(Dates.now())
+    template = string(rightnow, "_seed_", current_seed())
+    clean = replace(replace(fntemplate, ":" => "_"), "." => "_")
+    fn = string(clean, ".csv")
+    return fn
+end
+
 
 function getdata(filename::String, relativefolderpath::String="/out/")::DataFrame
     fullpath = pwd() * relativefolderpath * filename

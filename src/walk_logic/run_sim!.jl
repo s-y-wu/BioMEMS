@@ -1,21 +1,41 @@
 using Random
 
+"""
+    set_NUMBER_OF_WALKS(n)
+
+Determine the number of independent trials to run.
+
+Modify the global variable declared in PARAMETERS_.jl
+"""
 function set_NUMBER_OF_WALKS(n::Int64=100)
     global NUMBER_OF_WALKS = n
-    return nothing
+    nothing
 end
 
+"""
+    set_MAX_STEPS_PER_WALK(s)
+
+Determine when to give up on an unresolving random walk
+
+Modify the global variable declared in PARAMETERS_.jl.
+"""
 function set_MAX_STEPS_PER_WALK(s::Int64=1485604)
     global MAX_STEPS_PER_WALK = s
-    return nothing
+    nothing
 end
 
+"Generate a random seed between 1 to 4 digits long for many default arguments"
 function randseed()::Int
     maxdigits = 4
     return trunc(Int, 10^maxdigits*rand())
 end
 
-function run_sim!(data::Dict{String,Integer}, seed::Int=randseed())::Dict{String,Integer}
+"""
+    run_sim!(data, seed) -> data::Dict{String,Integer}
+
+Run generic HMCResearchRandomWalk. Include looping overhead and record data.
+"""
+function run_sim!(data::Dict{String,Integer}, seed::Int=randseed())
     println("Seed:\t$seed")
     Random.seed!(seed)
     float_arr_one = rand(NUMBER_OF_WALKS)

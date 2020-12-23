@@ -19,10 +19,10 @@ end
 
 "Solvent Diffusion Step Sizes (microns per 2.7 microseconds)"
 const SECONDS_PER_STEP = 0.0000027077
-STEP_SIZE_DICT = Dict("water" => 0.1, "enz" => 0.005, "ppd" => 0.0007)
+STEP_SIZE_DICT = Dict("water" => 0.1, "enz" => 0.005, "ppd" => 0.001)
 const WATER_STEP_SIZE = 0.1
 const ENZ_STEP_SIZE = 0.005
-const PPD_STEP_SIZE = 0.0007
+const PPD_STEP_SIZE = 0.001
 
 "Sensor/Walls Coordinates"
 const WALL_Y = 1.5

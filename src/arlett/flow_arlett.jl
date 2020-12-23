@@ -1,14 +1,15 @@
-"   flow
+"""
+    flow(xy) -> Float64
 
 Analyze hydrogen peroxide position to compute the magnitude of flow
 
 By laminar flow, all nonzero flow biases the particle downstream
 in the positive x direction.
-"
+"""
 function flow_arlett(xy::Array{Float64,1})
     y = xy[2]
     if !FLOW_BIAS || y <= WALL_Y || inenz(xy)
-        return 0
+        return 0.0
     else
         xdisplacementbias = getspeed(y) * SECONDS_PER_STEP
         return xdisplacementbias
@@ -16,10 +17,11 @@ function flow_arlett(xy::Array{Float64,1})
 end
 
 # lengths are in microns
-const V_MAX = 6326
-const R = 1270
+const V_MAX = 6326.0
+const R = 1270.0
 
-"   getspeed
+"""
+    getspeed(y) -> Float64
 
 Compute the approximate laminar flow bias on the particle; magnitude of flow increases with the y-coordinate
 
@@ -31,8 +33,8 @@ flow-rate, v_eff was approximately 4217 um/s. For a square pipe, it can be deriv
 and thus that v_max = 6326 um/s. From there, using the velocity equation
                                     v(r) = v_max * (1 - r^2 / R^2)
 where r is the y-distance from the center and R is the radius of the pipe. \"
-"
-function getspeed(y::Float64)::Float64
+"""
+function getspeed(y::Float64)
     r = R - y
     return V_MAX * (1 - (r^2) / (R^2))
 end

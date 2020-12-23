@@ -1,18 +1,8 @@
-# Model of Eleanor/Yoojin's Real Experiment, with flow
-# Filename: arlettModel.jl
-# Author(s): Sean Wu
-# Last Updated: November 27, 2020
+"""
+    arlett_sim([seed])
 
-# using Random
-# using DataFrames
-
-# include("PARAMETERS_arlett.jl")
-# include("locations_arlett.jl")
-# include("flow_arlett.jl")
-# include("spawn_arlett.jl")
-# include(pwd() * "\\src\\walk_logic\\walk_logic.jl")
-# include(pwd() * "\\src\\view_out\\data.jl")
-
+Run the random walk simulation of Yoojin/Eleanor's experiments.
+"""
 function arlett_sim(seed::Int=randseed())
     println("Arlett Model: Walls + Overflow Spawn + 1 Thick Enzyme + 5 PPD + Flow")
     println("Particles: $NUMBER_OF_WALKS \t  Steps: $MAX_STEPS_PER_WALK\t Step lengths: $STEP_SIZE_DICT")
@@ -29,7 +19,7 @@ function arlett_sim(seed::Int=randseed())
 
     output = run_sim!(data, seed)
     present_arlett_sim(output)
-    return nothing
+    nothing
 end
 
 function present_arlett_sim(output_data::Dict{String, Integer})

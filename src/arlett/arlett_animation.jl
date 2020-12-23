@@ -1,28 +1,27 @@
-using Random
-using DataFrames
+"""
+    save_arlett_animation
 
-# include("PARAMETERS_arlett.jl")
-# include("locations_arlett.jl")
-# include("flow_arlett.jl")
-# include("spawn_arlett.jl")
-# include(pwd() * "\\src\\walk_logic\\walk_logic.jl")
-# include(pwd() * "\\src\\view_out\\data.jl")
-
-function save_arlett_animation(seed::Int=randseed())
-    df = arlett_animation(seed)
-    folderpath = "\\out\\animations\\"
-    savedata(df, folderpath)
-    return nothing
+Save the most recent data into a CSV file in the /out/noFlowData folder.
+Only use right after arlett_noflow_data().
+"""
+function save_arlett_animation()
+    mysavedata("out", "animations")
+    nothing
 end
 
-function arlett_animation(seed::Int=randseed())::DataFrame
+"""
+    arlett_animation([seed]) -> DataFrame
+
+Start and finish one Arlett walk and return every tenth coordinate in a DataFrame.
+"""
+function arlett_animation(seed::Int=randseed())
     Random.seed!(seed)
     x_arr = []
     y_arr = []
     peroxidexy = spawnrandompoint()
     steps_sofar = 0
     every_tenth_frame = 10
-    while peroxidexy != undef && steps_sofar < MAX_STEPS_PER_WALK
+    while peroxidexy != undef
         if steps_sofar % every_tenth_frame == 0
             x, y = peroxidexy
             compressedX = convert(Float16, x)
@@ -35,5 +34,7 @@ function arlett_animation(seed::Int=randseed())::DataFrame
     end
     df = DataFrame(x_coordinate = x_arr,
                     y_coordinate = y_arr)
+    current_df(df)
+    current_seed(seed)
     return df
 end

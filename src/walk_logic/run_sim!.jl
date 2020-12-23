@@ -1,5 +1,3 @@
-using Random
-
 """
     set_NUMBER_OF_WALKS(n)
 
@@ -7,7 +5,7 @@ Determine the number of independent trials to run.
 
 Modify the global variable declared in PARAMETERS_.jl
 """
-function set_NUMBER_OF_WALKS(n::Int64=100)
+function set_NUMBER_OF_WALKS(n::Int=100)
     global NUMBER_OF_WALKS = n
     nothing
 end
@@ -19,7 +17,7 @@ Determine when to give up on an unresolving random walk
 
 Modify the global variable declared in PARAMETERS_.jl.
 """
-function set_MAX_STEPS_PER_WALK(s::Int64=1485604)
+function set_MAX_STEPS_PER_WALK(s::Int=1485604)
     global MAX_STEPS_PER_WALK = s
     nothing
 end

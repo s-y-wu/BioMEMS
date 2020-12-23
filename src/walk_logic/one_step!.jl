@@ -1,6 +1,3 @@
-# Author: Sean Wu
-# Last Updated: November 12, 2020
-
 """
     one_step!
 
@@ -34,3 +31,4 @@ function inescapebounds(x::Float64, y::Float64)::Bool
     withiny = -1 <= y <= ESCAPE_Y
     return withinx && withiny
 end
+inescapebounds(xy::Array{Float64,1}) = inescapebounds(xy[1], xy[2])

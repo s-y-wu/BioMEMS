@@ -1,10 +1,3 @@
-# Author: Sean Wu
-# Last Updated: November 12, 2020
-
-# using Documenter
-using Random
-
-
 """
     boundary_check(initxy, dx, dy) -> Tuple{Array{Float64,1}, String}
 

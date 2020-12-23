@@ -1,6 +1,3 @@
-# Author: Sean Wu
-# Last Updated: November 11, 2020
-
 """
     approach_wall!(initxy, dx, dy, stepsize) -> initxy::Array{Float64,1}
 

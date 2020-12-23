@@ -1,6 +1,3 @@
-# Author: Sean Wu
-# Last Updated: November 11, 2020
-
 """
     north!(proposedxy, initialxy, dx, dy, start, endup) -> Array{Float64,1}
 

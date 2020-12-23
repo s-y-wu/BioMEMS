@@ -1,6 +1,3 @@
-# Author: Sean Wu
-# Last Updated: November 11, 2020
-
 """
     evaluate_proposed(initxy, dx, dy) -> Tuple{Array{Float64,1},String}
 

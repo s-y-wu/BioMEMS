@@ -5,7 +5,7 @@ using HMCResearchRandomWalks.Arlett:
     north!, eastwest!, evaluate_proposed,
     one_step!, insafebounds, inescapebounds,
     randseed
-    
+
 # see arlett_frontend_tests.jl for run_sim.jl
 # see arlett_backend_tests.jl for all other location ("in...") functions
 
@@ -129,6 +129,23 @@ end
     test_xy(test_wall_top_aw, correct_wall_top)
     test_xy(test_wall_top_wc, correct_wall_top)
     test_xy(test_wall_top_bc, correct_wall_top)
+
+    Arlett.set_CATALASE_ON_WALLS(true)
+    for wallx in [-115, -60, -30, 30, 60, 115]
+        correct_catalase_top = undef
+        test_catalase_top, test_report = boundary_check([wallx, 1.51], 0.0, -1.0)
+        @test test_catalase_top == undef
+        @test test_report == "top wall"
+    end
+
+    side_corner_coinflip = false
+    top_corner_coinflip = false
+    while (!side_corner_coinflip || !top_corner_coinflip)
+        corner_case, corner_report = boundary_check([32.51, 1.51], -1 * diagonal, -1 * diagonal)
+        if corner_report == "side wall" side_corner_coinflip = true end
+        if corner_report == "top wall" top_corner_coinflip = true end
+    end
+    @test side_corner_coinflip && top_corner_coinflip
 end
 
 @testset "onestep!" begin

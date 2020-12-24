@@ -80,9 +80,6 @@ function sensorcases(initx::Float64)::String
         return position * " inner sensor"
     elseif inoutersensorx(initx)
         return position * " outer sensor"
-    else
-        println("sensorCases error ", initx)
-        return "sensorCases error"
     end
 end
 
@@ -107,11 +104,7 @@ function sortwall(initxy::Array{Float64,1})::String
     if inity <= WALL_Y      # from between walls
         return "side wall"
     elseif inity > WALL_Y   # from above walls
-        if incenterwallsx(initx)
-            return "top wall"
-        elseif ininnerwallsx(initx)
-            return "top wall"
-        elseif inouterwallsx(initx)
+        if !(incentersensorx(initx) || ininnersensorx(initx) || inoutersensorx(initx))
             return "top wall"
         end
     end

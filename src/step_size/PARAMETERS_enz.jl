@@ -5,10 +5,6 @@ global THICK_ENZ = true  # thin enzyme == false
 const FLOW_BIAS = true
 const CATALASE_ON_WALLS = false
 
-function set_THICK_ENZ(trueorfalse::Bool=true)
-    global THICK_ENZ = trueorfalse
-end
-
 "Solvent Diffusion Step Sizes (microns per 2.7 microseconds)"
 const SECONDS_PER_STEP = 0.0000027077
 const WATER_STEP_SIZE = 0.1
@@ -22,16 +18,26 @@ const SENSOR_HALF_WIDTH = 0.5 * 280
 const WALL_Y = 0
 
 "Enzyme Layer Dimensions"
-const ENZYME_RIGHT_X = 150
-const ENZYME_LEFT_X = -150
-if THICK_ENZ    # thin wall 0.2, thick wall 2
-    const ENZYME_MAX_Y = 2
-    const ENZYME_MAX_Y_FROM_WALL = 2
-else
-    const ENZYME_MAX_Y_FROM_WALL = 0.2
-    const ENZYME_MAX_Y = 0.2
+function update_enz()
+    if THICK_ENZ
+        global ENZYME_MAX_Y = 2
+        global ENZYME_MAX_Y_FROM_WALL = 2
+    else
+        global ENZYME_MAX_Y_FROM_WALL = 0.2
+        global ENZYME_MAX_Y = 0.2
+    end
+    nothing
 end
 
+function set_THICK_ENZ(trueorfalse::Bool=true)
+    global THICK_ENZ = trueorfalse
+    update_enz()
+    nothing
+end
+
+const ENZYME_RIGHT_X = 150
+const ENZYME_LEFT_X = -150
+update_enz()
 
 "Spawn Inside Enzyme Layer"
 const BORDER_CORRECTION = 0.001

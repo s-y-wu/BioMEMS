@@ -18,9 +18,11 @@ end
 
 module PPD
 using Random, DataFrames, CSV, Dates
-include(string(@__DIR__, "/step_size/ppd_sim.jl"))
+include(string(@__DIR__, "/step_size/PARAMETERS_ppd.jl"))
+include(string(@__DIR__, "/step_size/locations_ppd.jl"))
 include(string(@__DIR__, "/walk_logic/walk_logic.jl"))
 include(string(@__DIR__, "/arlett/flow_arlett.jl"))
+include(string(@__DIR__, "/step_size/ppd_sim.jl"))
 # include(pwd() * "/src/view_out/data.jl")
 export ppd_sim,
        find_ppdstepsize,

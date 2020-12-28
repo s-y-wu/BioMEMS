@@ -3,14 +3,14 @@
 
 function insensor(xy::Array{Float64,1})::Bool
     x, y = xy
-    withinx = abs(x) < SENSOR_HALF_WIDTH
-    withiny = y < 0
+    withinx = abs(x) <= SENSOR_HALF_WIDTH
+    withiny = y <= 0
     return withinx && withiny
 end
 
 function inwalls(x::Float64, y::Float64)::Bool
     withinx = SENSOR_HALF_WIDTH < abs(x) <= ESCAPE_X
-    withiny = y < 0
+    withiny = y <= 0
     return withinx && withiny
 end
 
@@ -40,6 +40,6 @@ end
 function wallcases(initxy::Array{Float64,1},
                    dx::Float64,
                    dy::Float64,
-                   ending_step_size::Float64)::Tuple{Array{Int64,1},String}
+                   ending_step_size::Float64)
     return approach_wall!(initxy, dx, dy, ending_step_size), "no collision"
 end

@@ -95,6 +95,24 @@ end
     end
 end
 
+@testset "displacement at enz-water east" begin
+    correct_enz = [13.4975, 1.6]
+    correct_water = [13.55, 1.6]
+    test_enz = boundary_check(correct_water, -1.0, 0.0)[1]
+    test_water = boundary_check(correct_enz, 1.0, 0.0)[1]
+    test_xy(test_enz, correct_enz)
+    test_xy(test_water, correct_water)
+end
+
+@testset "displacement at enz-water west" begin
+    correct_enz = [-13.4975, 1.6]
+    correct_water = [-13.55, 1.6]
+    test_enz = boundary_check(correct_water, 1.0, 0.0)[1]
+    test_water = boundary_check(correct_enz, -1.0, 0.0)[1]
+    test_xy(test_enz, correct_enz)
+    test_xy(test_water, correct_water)
+end
+
 @testset "universal location functions in one_step!.jl" begin
     for safexy in [[0.0, 2.0],[122.2, 122.2],[-122.2,112.2]]
         @test Arlett.insafebounds(safexy)

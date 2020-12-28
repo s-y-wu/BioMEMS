@@ -5,21 +5,27 @@ global PPD_ON = true  # no PPD == false
 const FLOW_BIAS = true
 const CATALASE_ON_WALLS = true
 
-function set_PPD_ON(trueorfalse::Bool=true)
-    global PPD_ON = trueorfalse
+"Solvent Diffusion Step Sizes (microns per 2.7 microseconds)"
+function update_ppd()
+    if PPD_ON
+        global PPD_STEP_SIZE = 0.001
+    else
+        global PPD_STEP_SIZE = WATER_STEP_SIZE
+    end
+    global STEP_SIZE_DICT = Dict("water" => WATER_STEP_SIZE, "enz" => 0, "ppd" => PPD_STEP_SIZE)
+    nothing
 end
 
-"Solvent Diffusion Step Sizes (microns per 2.7 microseconds)"
+function set_PPD_ON(trueorfalse::Bool=true)
+    global PPD_ON = trueorfalse
+    update_ppd()
+    nothing
+end
+
 const SECONDS_PER_STEP = 0.0000027077
 const WATER_STEP_SIZE = 0.1
 const ENZ_STEP_SIZE = 0
-# varying "ppd" step size
-if PPD_ON
-    global PPD_STEP_SIZE = 0.001
-else
-    global PPD_STEP_SIZE = WATER_STEP_SIZE
-end
-global STEP_SIZE_DICT = Dict("water" => WATER_STEP_SIZE, "enz" => 0, "ppd" => PPD_STEP_SIZE)
+update_ppd()
 
 "Sensor/Walls Coordinates"
 const SENSOR_HALF_WIDTH = 0.5 * 25

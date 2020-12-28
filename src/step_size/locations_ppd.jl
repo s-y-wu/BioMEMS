@@ -50,6 +50,6 @@ end
 function wallcases(initxy::Array{Float64,1},
                    dx::Float64,
                    dy::Float64,
-                   ending_step_size::Float64)::Tuple{Array{Int64,1},String}
+                   ending_step_size::Float64)
     return approach_wall!(initxy, dx, dy, ending_step_size), "no collision"
 end

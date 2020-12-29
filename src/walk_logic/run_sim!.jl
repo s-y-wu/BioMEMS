@@ -5,7 +5,7 @@ Determine the number of independent trials to run.
 
 Modify the global variable declared in PARAMETERS_.jl
 """
-function set_NUMBER_OF_WALKS(n::Int=100)
+function set_NUMBER_OF_WALKS(n::Int=1000)
     global NUMBER_OF_WALKS = n
     nothing
 end
@@ -34,7 +34,7 @@ end
 Run generic HMCResearchRandomWalk. Include looping overhead and record data.
 """
 function run_sim!(data::Dict{String,Integer}, seed::Int=randseed())
-    println("Seed:\t$seed")
+    println("Random seed:\t\t$seed")
     Random.seed!(seed)
     float_arr_one = rand(NUMBER_OF_WALKS)
     float_arr_two = rand(NUMBER_OF_WALKS)

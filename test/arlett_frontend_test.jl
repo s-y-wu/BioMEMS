@@ -3,7 +3,7 @@ using HMCResearchRandomWalks.Arlett
 
 @testset "Setters for simulation controls" begin
     set_NUMBER_OF_WALKS()
-    @test Arlett.NUMBER_OF_WALKS == 100
+    @test Arlett.NUMBER_OF_WALKS == 1000
     set_NUMBER_OF_WALKS(10)
     @test Arlett.NUMBER_OF_WALKS == 10
 

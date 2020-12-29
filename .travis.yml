@@ -9,10 +9,10 @@ os:
   - linux
   - osx
   - windows
+dist:
+  - xenial
 arch:
-  - arm64-gravitron2
-virt:
-  - lxd
+  - x64
 cache:
   directories:
     - ~/.julia/artifacts

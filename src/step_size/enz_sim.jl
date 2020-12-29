@@ -1,5 +1,3 @@
-using DataFrames
-
 "Lab data shows thin enzyme has ~ double the yield of thick enzyme"
 
 function enz_sim(seed::Int=randseed())

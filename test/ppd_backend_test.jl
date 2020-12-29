@@ -30,8 +30,8 @@ end
 
     randxy = [rand_x(), rand_y()]
     @test !PPD.inenz(randxy)
-    @test PPD.whereoutsidespawn([rand_x(), rand_y()]) == "N"
-    @test PPD.sensorcases(randxy) == "sensor"
+    @test PPD.whereoutsidespawn(randxy) == "N"
+    @test PPD.sensorcases(rand_x()) == "sensor"
 end
 
 @testset "boundarycheck cases" begin

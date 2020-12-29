@@ -1,61 +1,65 @@
 # Author: Sean Wu
 # First Written: December 15
 
-using DataFrames
 "Lab data shows no ppd has double the yield of ppd"
 
-# include("PARAMETERS_ppd.jl")
-# include("locations_ppd.jl")
-# include(pwd() * "/src/arlett/flow_arlett.jl")
-# include(pwd() * "/src/walk_logic/walk_logic.jl")
-# include(pwd() * "/src/view_out/data.jl")
-
-function find_ppdstepsize(ppd_stepsizestotest::Array{Float64, 1}=[0.001])::DataFrame
-    println("Compare PPD Step Sizes")
-    println("PPD?: $PPD_ON")
-    if !PPD_ON
-        ppd_stepsizestotest = [WATER_STEP_SIZE]
-    end
-    ss_arr = []
-    sensor_arr = []
-    escape_arr = []
-    unresv_arr = []
-
+function find_ppdstepsize(ppd_stepsizestotest::Array{Float64, 1}=[0.001], seed::Int=randseed())::DataFrame
+    find_ppd_print()
+    ss_arr, sensor_arr, escape_arr, unresv_arr = ([], [], [], [])
+    set_PPD_ON(true)
     for ss in ppd_stepsizestotest
+        set_PPD_STEP_SIZE(ss)
         append!(ss_arr, ss)
-        global PPD_STEP_SIZE = ss
-        global STEP_SIZE_DICT = Dict("water" => WATER_STEP_SIZE, "enz" => ss, "ppd" => 0)
-        data = callSimulation()
+        
+        data = Dict{String,Integer}()
+        data["sensor"]  = 0
+        data["escape"] = 0
+        data["particles unresolved"] = 0
+        data = run_sim!(data, seed)
         append!(sensor_arr, data["sensor"])
         append!(escape_arr, data["escape"])
         append!(unresv_arr, data["particles unresolved"])
     end
-
     df = DataFrame(step_size = ss_arr,
         sensor_yield = sensor_arr,
         escaped = escape_arr,
-        unresolved = unresv_arr,
-        net_yield = netyield_arr)
+        unresolved = unresv_arr)
     return df
 end
 
+function find_ppd_print()
+    println("############################")
+    println("   Compare PPD Step Sizes   ")
+    println("############################")
+    println("_________Parameters_________")
+    println("# of trials:\t\t", string(NUMBER_OF_WALKS))
+    println("# of steps (max):\t", string(MAX_STEPS_PER_WALK))
+    println("Step size, water:\t", string(WATER_STEP_SIZE))
+    nothing
+end
+
 function ppd_sim(seed::Int=randseed())
-    println("PPD Stepsize Derivation")
-    println("PPD?: $PPD_ON \tSeed: $seed")
-    println("Particles: $NUMBER_OF_WALKS \t Steps: $MAX_STEPS_PER_WALK\t Step lengths: $STEP_SIZE_DICT")
+    println("############################")
+    println("       PPD Experiment       ")
+    println("############################")
+    println("_________Parameters_________")
+    println("PPD on sensor:\t\t", string(PPD_ON))
+    println("# of trials:\t\t", string(NUMBER_OF_WALKS))
+    println("# of steps (max):\t", string(MAX_STEPS_PER_WALK))
+    println("Step size, water:\t", string(WATER_STEP_SIZE))
+    if PPD_ON
+        println("Step size, PPD:\t\t", string(PPD_STEP_SIZE))
+    end
+
     data = Dict{String,Integer}()
     data["sensor"] = 0
     data["escape"] = 0
     data["particles unresolved"] = 0
     output = run_sim!(data, seed)
 
-    presentationOrder = ["sensor",
-        "escape",
-        "particles unresolved",
-        "avg steps taken"]
-
-    for key in presentationOrder
-        println(key, "\t", output[key])
-    end
-    return nothing
+    println("_________Results____________")
+    println("# in sensor:\t\t", string(data["sensor"]))
+    println("# of escaped:\t\t", string(data["escape"]))
+    println("# unresolved:\t\t", string(data["particles unresolved"]))
+    nothing
 end

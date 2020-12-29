@@ -10,7 +10,9 @@ os:
   - osx
   - windows
 arch:
-  - x64
+  - arm64-gravitron2
+virt:
+  - lxd
 cache:
   directories:
     - ~/.julia/artifacts

@@ -84,7 +84,7 @@ end
         global find_ppd_test_df = find_ppdstepsize([0.001, 0.002], 6520)
     end
     correct_df = DataFrame(
-        step_size = [0.001, 0.002],
+        ppd_step_size = [0.001, 0.002],
         sensor_yield = [20, 38],
         escaped = [30, 12],
         unresolved = [0, 0]

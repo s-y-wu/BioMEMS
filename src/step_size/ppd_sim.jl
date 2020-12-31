@@ -1,16 +1,27 @@
 # Author: Sean Wu
 # First Written: December 15
 
-"Lab data shows no ppd has double the yield of ppd"
 
-function find_ppdstepsize(ppd_stepsizestotest::Array{Float64, 1}=[0.001], seed::Int=randseed())::DataFrame
+"""
+    find_ppdstepsize([ppd_stepsizestotest, seed]) -> DataFrame
+
+Run controlled ppd experiments at different ppd step sizes (input in an array).
+
+Other simulation controls include:
+    set_PPD_ON() -> IMPORTANT: Make sure PPD_ON is true before running.
+    set_MAX_STEPS_PER_WALK()
+    set_NUMBER_OF_WALKS()
+Lab data shows no ppd experiments (ppd stepsize = 0.1) sees double the yield of ppd.
+Target when the sensor receives half as many peroxides with smaller ppd stepsizes.
+"""
+function find_ppdstepsize(ppd_stepsizestotest::Array{Float64, 1}=[0.001], seed::Int=randseed())
     find_ppd_print()
     ss_arr, sensor_arr, escape_arr, unresv_arr = ([], [], [], [])
     set_PPD_ON(true)
     for ss in ppd_stepsizestotest
         set_PPD_STEP_SIZE(ss)
         append!(ss_arr, ss)
-        
+
         data = Dict{String,Integer}()
         data["sensor"]  = 0
         data["escape"] = 0
@@ -20,13 +31,14 @@ function find_ppdstepsize(ppd_stepsizestotest::Array{Float64, 1}=[0.001], seed::
         append!(escape_arr, data["escape"])
         append!(unresv_arr, data["particles unresolved"])
     end
-    df = DataFrame(step_size = ss_arr,
+    df = DataFrame(ppd_step_size = ss_arr,
         sensor_yield = sensor_arr,
         escaped = escape_arr,
         unresolved = unresv_arr)
     return df
 end
 
+"Helper function to print parameters, not exported in PPD module"
 function find_ppd_print()
     println("############################")
     println("   Compare PPD Step Sizes   ")
@@ -38,6 +50,17 @@ function find_ppd_print()
     nothing
 end
 
+"""
+    ppd_sim([seed])
+
+Run one simulation of the ppd experiment with one sensor in a well.
+
+Simulation controls:
+    set_PPD_ON() -> if PPD_ON === false, then PPD_STEP_SIZE = WATER_STEP_SIZE
+    set_MAX_STEPS_PER_WALK()
+    set_NUMBER_OF_WALKS()
+    set_PPD_STEP_SIZE()
+"""
 function ppd_sim(seed::Int=randseed())
     println("############################")
     println("       PPD Experiment       ")

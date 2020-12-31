@@ -12,7 +12,9 @@ function set_PPD_STEP_SIZE(ppd_step::AbstractFloat=0.001)
     else
         global PPD_STEP_SIZE = WATER_STEP_SIZE
     end
-    global STEP_SIZE_DICT = Dict("water" => WATER_STEP_SIZE, "enz" => 0, "ppd" => PPD_STEP_SIZE)
+    global STEP_SIZE_DICT = Dict("water" => WATER_STEP_SIZE,
+                                "enz" => 0,
+                                "ppd" => PPD_STEP_SIZE)
     nothing
 end
 

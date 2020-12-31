@@ -10,9 +10,11 @@ include(string(@__DIR__, "/arlett/spawn_arlett.jl"))
 include(string(@__DIR__, "/step_size/enz_sim.jl"))
 # include(pwd() * "/src/view_out/data.jl")
 export enz_sim,
+       find_enzstepsize,
        set_NUMBER_OF_WALKS,
        set_MAX_STEPS_PER_WALK,
-       set_THICK_ENZ
+       set_THICK_ENZ,
+       set_ENZ_STEP_SIZE
 end
 
 
@@ -28,7 +30,8 @@ export ppd_sim,
        find_ppdstepsize,
        set_NUMBER_OF_WALKS,
        set_MAX_STEPS_PER_WALK,
-       set_PPD_ON
+       set_PPD_ON,
+       set_PPD_STEP_SIZE
 end
 
 

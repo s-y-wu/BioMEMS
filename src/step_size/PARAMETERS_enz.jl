@@ -9,9 +9,15 @@ const CATALASE_ON_WALLS = false
 const SECONDS_PER_STEP = 0.0000027077
 const WATER_STEP_SIZE = 0.1
 const PPD_STEP_SIZE = 0
-# varying "enz" step size
-global STEP_SIZE_DICT = Dict("water" => WATER_STEP_SIZE, "enz" => 0.005, "ppd" => 0)
-global ENZ_STEP_SIZE = 0.005
+
+function set_ENZ_STEP_SIZE(enz_step::AbstractFloat=0.005)
+    global ENZ_STEP_SIZE = enz_step
+    global STEP_SIZE_DICT = Dict("water" => WATER_STEP_SIZE,
+                                "enz" => ENZ_STEP_SIZE,
+                                "ppd" => 0)
+    nothing
+end
+set_ENZ_STEP_SIZE()
 
 "Sensor/Walls Coordinates"
 const SENSOR_HALF_WIDTH = 0.5 * 280

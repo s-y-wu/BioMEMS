@@ -12,29 +12,30 @@ using Test, Suppressor, DataFrames, HMCResearchRandomWalks.PPD
     @test PPD.STEP_SIZE_DICT["ppd"] == 0.1
 end
 
-@testset "default ppd_sim" begin
-    set_PPD_ON()
-    set_NUMBER_OF_WALKS()
-    set_MAX_STEPS_PER_WALK()
-    output = @capture_out begin ppd_sim(8925) end
-    correct_output = string(
-    "############################\n",
-    "       PPD Experiment       \n",
-    "############################\n",
-    "_________Parameters_________\n",
-    "PPD on sensor:\t\ttrue\n",
-    "# of trials:\t\t1000\n",
-    "# of steps (max):\t1485604\n",
-    "Step size, water:\t0.1\n",
-    "Step size, PPD:\t\t0.001\n",
-    "Random seed:\t\t8925\n",
-    "_________Results____________\n",
-    "# in sensor:\t\t462\n",
-    "# of escaped:\t\t538\n",
-    "# unresolved:\t\t0\n"
-    )
-    @test output === correct_output
-end
+"extra test, commented out for runtime"
+# @testset "default ppd_sim" begin
+#     set_PPD_ON()
+#     set_NUMBER_OF_WALKS()
+#     set_MAX_STEPS_PER_WALK()
+#     output = @capture_out begin ppd_sim(8925) end
+#     correct_output = string(
+#     "############################\n",
+#     "       PPD Experiment       \n",
+#     "############################\n",
+#     "_________Parameters_________\n",
+#     "PPD on sensor:\t\ttrue\n",
+#     "# of trials:\t\t1000\n",
+#     "# of steps (max):\t1485604\n",
+#     "Step size, water:\t0.1\n",
+#     "Step size, PPD:\t\t0.001\n",
+#     "Random seed:\t\t8925\n",
+#     "_________Results____________\n",
+#     "# in sensor:\t\t462\n",
+#     "# of escaped:\t\t538\n",
+#     "# unresolved:\t\t0\n"
+#     )
+#     @test output === correct_output
+# end
 
 @testset "fast custom ppd_sim" begin
     set_PPD_ON(false)
@@ -59,12 +60,12 @@ end
     @test output === correct_output
 end
 
-@testset "find_ppd_print" begin
+@testset "ppd_print" begin
     n = 420
     m = 2000
     set_NUMBER_OF_WALKS(n)
     set_MAX_STEPS_PER_WALK(m)
-    output = @capture_out begin PPD.find_ppd_print() end
+    output = @capture_out begin PPD.ppd_print() end
     correct_output = string(
     "############################\n",
     "   Compare PPD Step Sizes   \n",
@@ -77,11 +78,11 @@ end
     @test output === correct_output
 end
 
-@testset "find_ppd" begin
+@testset "getdata_ppd..." begin
     set_NUMBER_OF_WALKS(50)
     set_MAX_STEPS_PER_WALK()
     @suppress begin
-        global find_ppd_test_df = find_ppdstepsize([0.001, 0.002], 6520)
+        global getdata_ppd_test_df = getdata_ppdstepsize([0.001, 0.002], 6520)
     end
     correct_df = DataFrame(
         ppd_step_size = [0.001, 0.002],
@@ -89,5 +90,5 @@ end
         escaped = [30, 12],
         unresolved = [0, 0]
     )
-    @test find_ppd_test_df == correct_df
+    @test getdata_ppd_test_df == correct_df
 end

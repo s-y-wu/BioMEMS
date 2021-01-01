@@ -1,5 +1,5 @@
 function plotdata_noflow(filename::String=defaultfile)
-    df = getdata(filename, "/out/noFlowData/")
+    df = loaddata(filename, "/out/noFlowData/")
 
     x_data = df[:, "nth_trial"]
     y_data = df[:, "inner_crosstalk"]

@@ -1,16 +1,5 @@
 "
-    save_arlett_noflow_data
-
-Save the most recent data into a CSV file in the /out/noflowdata folder.
-Only use right after arlett_noflow_data().
-"
-function save_arlett_noflowdata()
-    mysavedata("out", "noflowdata")
-    nothing
-end
-
-"
-    arlett_noflowdata([Int]) -> DataFrame
+    getdata_arlett_noflow([Int]) -> DataFrame
 
 Disable flow bias, run the Arlett simulation, and revert controls.
 
@@ -20,9 +9,8 @@ For each walk that ends in a sensor collision, return
     3. outer sensor cross talk, average of left and right
 in a DataFrame.
 "
-function arlett_noflowdata(seed::Int=randseed())
+function getdata_arlett_noflow(seed::Int=randseed())
     Random.seed!(seed)
-    current_seed(seed)
     float_arr = rand(NUMBER_OF_WALKS)
     init_FLOW_BIAS = FLOW_BIAS
     set_FLOW_BIAS(false)
@@ -72,6 +60,8 @@ function arlett_noflowdata(seed::Int=randseed())
         inner_crosstalk = innercrosstalk_array,
         outer_crosstalk = outercrosstalk_array)
     current_df(df)
+    current_seed(seed)
+    current_path("out/noflowdata/")
     set_FLOW_BIAS(init_FLOW_BIAS)
     return df
 end

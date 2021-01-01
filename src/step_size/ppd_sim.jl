@@ -3,7 +3,7 @@
 
 
 """
-    find_ppdstepsize([ppd_stepsizestotest, seed]) -> DataFrame
+    getdata_ppdstepsize([ppd_stepsizestotest, seed]) -> DataFrame
 
 Run controlled ppd experiments at different ppd step sizes (input in an array).
 
@@ -14,8 +14,8 @@ Other simulation controls include:
 Lab data shows no ppd experiments (ppd stepsize = 0.1) sees double the yield of ppd.
 Target when the sensor receives half as many peroxides with smaller ppd stepsizes.
 """
-function find_ppdstepsize(ppd_stepsizestotest::Array{Float64, 1}=[0.001], seed::Int=randseed())
-    find_ppd_print()
+function getdata_ppdstepsize(ppd_stepsizestotest::Array{Float64, 1}=[0.001], seed::Int=randseed())
+    ppd_print()
     ss_arr, sensor_arr, escape_arr, unresv_arr = ([], [], [], [])
     set_PPD_ON(true)
     for ss in ppd_stepsizestotest
@@ -35,11 +35,14 @@ function find_ppdstepsize(ppd_stepsizestotest::Array{Float64, 1}=[0.001], seed::
         sensor_yield = sensor_arr,
         escaped = escape_arr,
         unresolved = unresv_arr)
+    current_df(df)
+    current_seed(seed)
+    current_path("out/ppddata/")
     return df
 end
 
 "Helper function to print parameters, not exported in PPD module"
-function find_ppd_print()
+function ppd_print()
     println("############################")
     println("   Compare PPD Step Sizes   ")
     println("############################")

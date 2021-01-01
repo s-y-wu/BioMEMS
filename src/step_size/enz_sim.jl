@@ -1,5 +1,5 @@
 """
-    find_enzstepsize([enz_stepsizetotest, seed]) -> DataFrame
+    getdata_enzstepsize([enz_stepsizetotest, seed]) -> DataFrame
 
 Run controlled thick and thin enz experiments at different enz step sizes
 as defined by an array input.
@@ -10,8 +10,8 @@ Other simulation controls include:
 Lab data shows thin enzyme has ~ double the yield of thick enzyme, so
 target when the sensor receives half as many peroxides at the thicker parameter
 """
-function find_enzstepsize(enz_stepsizetotest::Array{Float64, 1}=[0.005], seed::Int=randseed())
-    find_enz_print()
+function getdata_enzstepsize(enz_stepsizetotest::Array{Float64, 1}=[0.005], seed::Int=randseed())
+    enz_print()
     ss_arr, sensor_arr, escape_arr, unresv_arr, thick_arr = ([], [], [], [], [])
     for ss in enz_stepsizetotest
         for thickorthin in [true, false]
@@ -40,11 +40,14 @@ function find_enzstepsize(enz_stepsizetotest::Array{Float64, 1}=[0.005], seed::I
         sensor_yield = sensor_arr,
         escaped = escape_arr,
         unresolved = unresv_arr)
+    current_df(df)
+    current_seed(seed)
+    current_path("out/enzdata/")
     return df
 end
 
 "Helper function, not exported in Enz module."
-function find_enz_print()
+function enz_print()
     println("############################")
     println("   Compare Enz Step Sizes   ")
     println("############################")

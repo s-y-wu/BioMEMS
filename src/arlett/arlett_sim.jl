@@ -41,5 +41,5 @@ function present_arlett_sim(output_data::Dict{String, Integer})
         end
         println(key, "\t", extraSpacing, output_data[key])
     end
-    return nothing
+    nothing
 end

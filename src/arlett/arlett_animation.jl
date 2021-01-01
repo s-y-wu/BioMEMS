@@ -1,20 +1,9 @@
 """
-    save_arlett_animation
-
-Save the most recent data into a CSV file in the /out/noFlowData folder.
-Only use right after arlett_noflow_data().
-"""
-function save_arlett_animation()
-    mysavedata("out", "animations")
-    nothing
-end
-
-"""
-    arlett_animation([seed]) -> DataFrame
+    getdata_arlett_animation([seed]) -> DataFrame
 
 Start and finish one Arlett walk and return every tenth coordinate in a DataFrame.
 """
-function arlett_animation(seed::Int=randseed())
+function getdata_arlett_animation(seed::Int=randseed())
     Random.seed!(seed)
     x_arr = []
     y_arr = []
@@ -36,5 +25,6 @@ function arlett_animation(seed::Int=randseed())
                     y_coordinate = y_arr)
     current_df(df)
     current_seed(seed)
+    current_path("out/animations/")
     return df
 end

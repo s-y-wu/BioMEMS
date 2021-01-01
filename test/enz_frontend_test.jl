@@ -34,12 +34,12 @@ end
     @test output === correct_output
 end
 
-@testset "find_enz_print" begin
+@testset "enz_print" begin
     n = 12312020
     m = 1225
     set_NUMBER_OF_WALKS(n)
     set_MAX_STEPS_PER_WALK(m)
-    output = @capture_out begin Enz.find_enz_print() end
+    output = @capture_out begin Enz.enz_print() end
     correct_output = string(
     "############################\n",
     "   Compare Enz Step Sizes   \n",
@@ -52,11 +52,11 @@ end
     @test output === correct_output
 end
 
-@testset "find_enz" begin
+@testset "getdata_enz.." begin
     set_NUMBER_OF_WALKS(5)
     set_MAX_STEPS_PER_WALK()
     @suppress begin
-        global find_enz_test_df = find_enzstepsize(
+        global getdata_enz_test_df = getdata_enzstepsize(
             [0.003, 0.005, 0.007],
             1234
         )
@@ -70,5 +70,5 @@ end
         escaped = [4,0,2,0,3,0],
         unresolved = [0,0,0,0,0,0]
     )
-    @test find_enz_test_df == correct_df
+    @test getdata_enz_test_df == correct_df
 end

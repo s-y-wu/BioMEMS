@@ -1,4 +1,4 @@
-const working_dir_path = normpath(@__DIR__, "..","..")
+const working_dir_path = expanduser(normpath(@__DIR__, "..",".."))
 """
     savetofolder() -> fullpath::String
 

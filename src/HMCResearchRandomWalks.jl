@@ -53,8 +53,8 @@ using Random, DataFrames, Reexport
 include(string(@__DIR__, "/arlett/arlett.jl"))
 include(string(@__DIR__, "/walk_logic/walk_logic.jl"))
 export arlett_sim,
+       getdata_arlett_animation,
        getdata_arlett_noflow,
-       arlett_animation,
        set_NUMBER_OF_WALKS,
        set_MAX_STEPS_PER_WALK,
        set_FLOW_BIAS,

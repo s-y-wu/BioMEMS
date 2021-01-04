@@ -1,5 +1,4 @@
-using Test
-using HMCResearchRandomWalks.Arlett
+using Test, HMCResearchRandomWalks.Arlett
 
 @testset "Setters for simulation controls" begin
     set_NUMBER_OF_WALKS()

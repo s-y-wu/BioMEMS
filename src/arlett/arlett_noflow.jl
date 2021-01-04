@@ -10,21 +10,20 @@ For each walk that ends in a sensor collision, return
 in a DataFrame.
 "
 function getdata_arlett_noflow(seed::Int=randseed())
+    arlett_print()
+    println("Random seed:\t\t$seed")
     Random.seed!(seed)
     float_arr = rand(NUMBER_OF_WALKS)
+    stub_arr = rand(NUMBER_OF_WALKS)
+    # for consistency with run_sim!()
     init_FLOW_BIAS = FLOW_BIAS
     set_FLOW_BIAS(false)
-
     n_array = []
     innercrosstalk_array = []
     outercrosstalk_array = []
-    center = 0
-    inner = 0
-    outer = 0
-    innercrosstalk = 0.0
-    outercrosstalk = 0.0
-
-    println("Begin No Flow Simulation. Seed: $seed")
+    center, inner, outer = (0, 0, 0)
+    innercrosstalk = 0.0; outercrosstalk = 0.0
+    # Record data between trials instead of only the end using run_sim!()
     for n in 1:NUMBER_OF_WALKS
         peroxidexy = spawnrandompoint(float_arr[n])
         steps_sofar = 0
@@ -39,7 +38,6 @@ function getdata_arlett_noflow(seed::Int=randseed())
                 center += 1
             end
         end
-
         if center > 0
             innercrosstalk = 50.0 * inner / center
             outercrosstalk = 50.0 * outer / center
@@ -58,7 +56,8 @@ function getdata_arlett_noflow(seed::Int=randseed())
     df = DataFrame(
         nth_trial = n_array,
         inner_crosstalk = innercrosstalk_array,
-        outer_crosstalk = outercrosstalk_array)
+        outer_crosstalk = outercrosstalk_array
+    )
     current_df(df)
     current_seed(seed)
     current_path("out/noflowdata/")

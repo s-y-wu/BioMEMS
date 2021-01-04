@@ -2,14 +2,23 @@
     getdata_arlett_animation([seed]) -> DataFrame
 
 Start and finish one Arlett walk and return every tenth coordinate in a DataFrame.
+
+Other simulation controls include:
+    set_MAX_STEPS_PER_WALK()
+    set_FLOW_BIAS()
+    set_CATALASE_ON_WALLS()
 """
 function getdata_arlett_animation(seed::Int=randseed())
+    init_N = NUMBER_OF_WALKS
+    set_NUMBER_OF_WALKS(1)
+    arlett_print()
+    println("Random seed:\t\t$seed")
     Random.seed!(seed)
-    x_arr = []
-    y_arr = []
-    peroxidexy = spawnrandompoint()
+    x_arr, y_arr = ([], [])
     steps_sofar = 0
     every_tenth_frame = 10
+    # Record every tenth xy position instead of run_sim!()
+    peroxidexy = spawnrandompoint()
     while peroxidexy != undef
         if steps_sofar % every_tenth_frame == 0
             x, y = peroxidexy
@@ -26,5 +35,6 @@ function getdata_arlett_animation(seed::Int=randseed())
     current_df(df)
     current_seed(seed)
     current_path("out/animations/")
+    set_NUMBER_OF_WALKS(init_N)
     return df
 end

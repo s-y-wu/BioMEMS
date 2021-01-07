@@ -4,7 +4,6 @@
 Start and finish one Arlett walk and return every tenth coordinate in a DataFrame.
 
 Other simulation controls include:
-    set_MAX_STEPS_PER_WALK()
     set_FLOW_BIAS()
     set_CATALASE_ON_WALLS()
 """
@@ -13,6 +12,7 @@ function getdata_arlett_animation(seed::Int=randseed())
     set_NUMBER_OF_WALKS(1)
     arlett_print()
     println("Random seed:\t\t$seed")
+    println("NOTE: # of steps (max) is ignored")
     Random.seed!(seed)
     x_arr, y_arr = ([], [])
     steps_sofar = 0

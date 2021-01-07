@@ -37,7 +37,7 @@ function arlett_print()
     println("Step size, water:\t", string(WATER_STEP_SIZE))
     println("Step size, enz:\t\t", string(ENZ_STEP_SIZE))
     println("Step size, ppd:\t\t", string(PPD_STEP_SIZE))
-    println("Flow Bias On:\t\t", string(FLOW_BIAS))
+    println("Flow bias on:\t\t", string(FLOW_BIAS))
     println("Catalase on walls:\t", string(CATALASE_ON_WALLS))
     nothing
 end
@@ -51,8 +51,8 @@ function present_arlett_data(data::Dict{String, Integer})
     else
         println("Top wall collisions:\t", data["top wall"])
     end
-    println("Escaped\t\t\t", data["escape"])
-    println("*Sensors from Left to Right*")
+    println("# escaped:\t\t", data["escape"])
+    println("*Sensors from left to right*")
     println("# in first:\t\t", data["left outer sensor"])
     println("# in second:\t\t", data["left inner sensor"])
     println("# in third (spawn):\t", data["center sensor"])

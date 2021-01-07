@@ -20,6 +20,7 @@ build_script:
 test_script:
   - echo "%JL_TEST_SCRIPT%"
   - C:\julia\bin\julia -e "%JL_TEST_SCRIPT%"
+repo_token: p37TdrJXJs50TUoBrGvfli2lsZoWVHMDZ
 on_success:
   - echo "Coveralls"
   - C:\julia\bin\julia -e "using Pkg; Pkg.add(\"Coverage\"); using Coverage; Coveralls.submit(process_folder())"

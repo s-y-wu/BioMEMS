@@ -92,5 +92,3 @@ end
     )
     @test getdata_ppd_test_df == correct_df
 end
-
-getdata_ppdstepsize([0.005, 0.001, 0.002, 0.005, 0.01, 0.1])

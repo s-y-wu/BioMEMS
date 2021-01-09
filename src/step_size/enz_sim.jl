@@ -11,7 +11,7 @@ Lab data shows thin enzyme has ~ double the yield of thick enzyme, so
 target when the sensor receives half as many peroxides at the thicker parameter
 """
 function getdata_enzstepsize(enz_stepsizetotest::Array{Float64, 1}=[0.005], seed::Int=randseed())
-    enz_print()
+    enz_print(seed)
     ss_arr, sensor_arr, escape_arr, unresv_arr, thick_arr = ([], [], [], [], [])
     for ss in enz_stepsizetotest
         for thickorthin in [true, false]
@@ -47,7 +47,7 @@ function getdata_enzstepsize(enz_stepsizetotest::Array{Float64, 1}=[0.005], seed
 end
 
 "Helper function, not exported in Enz module."
-function enz_print()
+function enz_print(seed::Int)
     println("############################")
     println("   Compare Enz Step Sizes   ")
     println("############################")
@@ -55,6 +55,7 @@ function enz_print()
     println("# of trials:\t\t", string(NUMBER_OF_WALKS))
     println("# of steps (max):\t", string(MAX_STEPS_PER_WALK))
     println("Step size, water:\t", string(WATER_STEP_SIZE))
+    println("Random seed:\t\t$seed")
     nothing
 end
 
@@ -79,6 +80,7 @@ function enz_sim(seed::Int=randseed())
     println("# of steps (max):\t", string(MAX_STEPS_PER_WALK))
     println("Step size, water:\t", string(WATER_STEP_SIZE))
     println("Step size, enz:\t\t", string(ENZ_STEP_SIZE))
+    println("Random seed:\t\t$seed")
 
     data = Dict{String,Integer}()
     data["sensor"] = 0

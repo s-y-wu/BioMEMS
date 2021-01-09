@@ -1,5 +1,7 @@
 using Test, Suppressor, DataFrames, HMCResearchRandomWalks.PPD
 
+#getdata_ppdstepsize([0.01, 0.05, 0.1])
+
 @testset "setters for simulation control" begin
     set_PPD_ON(true)
     @test PPD.PPD_ON
@@ -63,9 +65,10 @@ end
 @testset "ppd_print" begin
     n = 420
     m = 2000
+    seed = 1234
     set_NUMBER_OF_WALKS(n)
     set_MAX_STEPS_PER_WALK(m)
-    output = @capture_out begin PPD.ppd_print() end
+    output = @capture_out begin PPD.ppd_print(seed) end
     correct_output = string(
     "############################\n",
     "   Compare PPD Step Sizes   \n",
@@ -74,6 +77,7 @@ end
     "# of trials:\t\t$n\n",
     "# of steps (max):\t$m\n",
     "Step size, water:\t0.1\n",
+    "Random seed:\t\t$seed\n"
     )
     @test output === correct_output
 end

@@ -13,7 +13,7 @@ export plotdata_noflow,
 end
 
 module Enz
-using Random, DataFrames, Reexport
+using Random, DataFrames, Reexport, ProgressMeter
 @reexport using HMCResearchRandomWalks.ViewOut
 include(string(@__DIR__, "/step_size/PARAMETERS_enz.jl"))
 include(string(@__DIR__, "/step_size/locations_enz.jl"))
@@ -31,7 +31,7 @@ end
 
 
 module PPD
-using Random, DataFrames, Reexport
+using Random, DataFrames, Reexport, ProgressMeter
 @reexport using HMCResearchRandomWalks.ViewOut
 include(string(@__DIR__, "/step_size/PARAMETERS_ppd.jl"))
 include(string(@__DIR__, "/step_size/locations_ppd.jl"))
@@ -48,7 +48,7 @@ end
 
 
 module Arlett
-using Random, DataFrames, Reexport
+using Random, DataFrames, Reexport, ProgressMeter
 @reexport using HMCResearchRandomWalks.ViewOut
 include(string(@__DIR__, "/arlett/arlett.jl"))
 include(string(@__DIR__, "/walk_logic/walk_logic.jl"))

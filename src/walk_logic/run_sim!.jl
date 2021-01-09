@@ -34,13 +34,12 @@ end
 Run generic HMCResearchRandomWalk. Include looping overhead and record data.
 """
 function run_sim!(data::Dict{String,Integer}, seed::Int=randseed())
-    println("Random seed:\t\t$seed")
     Random.seed!(seed)
     float_arr_one = rand(NUMBER_OF_WALKS)
     float_arr_two = rand(NUMBER_OF_WALKS)
     avgStepsTaken = 0
 
-    for i in 1:NUMBER_OF_WALKS
+    @showprogress 1 "Running simulation..." for i in 1:NUMBER_OF_WALKS
         peroxidexy = spawnrandompoint(float_arr_one[i], float_arr_two[i])
         steps_sofar = 0
         while peroxidexy != undef && steps_sofar < MAX_STEPS_PER_WALK

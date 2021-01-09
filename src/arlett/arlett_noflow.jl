@@ -23,14 +23,14 @@ function getdata_arlett_noflow(seed::Int=randseed())
     set_FLOW_BIAS(false)
     set_CATALASE_ON_WALLS(false)
 
-    arlett_print()
+    arlett_print(seed)
     n_array = []
     innercrosstalk_array = []
     outercrosstalk_array = []
     center, inner, outer = (0, 0, 0)
     innercrosstalk = 0.0; outercrosstalk = 0.0
     # Record data between trials instead of only the end using run_sim!()
-    for n in 1:NUMBER_OF_WALKS
+    @showprogress for n in 1:NUMBER_OF_WALKS
         peroxidexy = spawnrandompoint(float_arr[n])
         steps_sofar = 0
         while peroxidexy != undef && steps_sofar < MAX_STEPS_PER_WALK
@@ -58,7 +58,6 @@ function getdata_arlett_noflow(seed::Int=randseed())
         append!(innercrosstalk_array, innercrosstalk)
         append!(outercrosstalk_array, outercrosstalk)
     end
-    println("Random seed:\t\t$seed")
     df = DataFrame(
         nth_trial = n_array,
         inner_crosstalk = innercrosstalk_array,

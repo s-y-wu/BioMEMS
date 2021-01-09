@@ -15,7 +15,7 @@ Lab data shows no ppd experiments (ppd stepsize = 0.1) sees double the yield of 
 Target when the sensor receives half as many peroxides with smaller ppd stepsizes.
 """
 function getdata_ppdstepsize(ppd_stepsizestotest::Array{Float64, 1}=[0.001], seed::Int=randseed())
-    ppd_print()
+    ppd_print(seed)
     ss_arr, sensor_arr, escape_arr, unresv_arr = ([], [], [], [])
     set_PPD_ON(true)
     for ss in ppd_stepsizestotest
@@ -42,7 +42,7 @@ function getdata_ppdstepsize(ppd_stepsizestotest::Array{Float64, 1}=[0.001], see
 end
 
 "Helper function to print parameters, not exported in PPD module"
-function ppd_print()
+function ppd_print(seed::Int)
     println("############################")
     println("   Compare PPD Step Sizes   ")
     println("############################")
@@ -50,6 +50,7 @@ function ppd_print()
     println("# of trials:\t\t", string(NUMBER_OF_WALKS))
     println("# of steps (max):\t", string(MAX_STEPS_PER_WALK))
     println("Step size, water:\t", string(WATER_STEP_SIZE))
+    println("Random seed:\t\t$seed")
     nothing
 end
 
@@ -76,6 +77,7 @@ function ppd_sim(seed::Int=randseed())
     if PPD_ON
         println("Step size, PPD:\t\t", string(PPD_STEP_SIZE))
     end
+    println("Random seed:\t\t$seed")
 
     data = Dict{String,Integer}()
     data["sensor"] = 0

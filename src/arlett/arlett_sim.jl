@@ -10,7 +10,7 @@ Simulation controls:
     set_MAX_STEPS_PER_WAL()
 """
 function arlett_sim(seed::Int=randseed())
-    arlett_print()
+    arlett_print(seed)
     data = Dict{String,Integer}()
     data["side wall"] = 0
     data["top wall"] = 0
@@ -27,7 +27,7 @@ function arlett_sim(seed::Int=randseed())
 end
 
 "Helper function to start, not exported in Arlett module"
-function arlett_print()
+function arlett_print(seed::Int64)
     println("############################")
     println("      Arlett Simulation     ")
     println("############################")
@@ -39,6 +39,7 @@ function arlett_print()
     println("Step size, ppd:\t\t", string(PPD_STEP_SIZE))
     println("Flow bias on:\t\t", string(FLOW_BIAS))
     println("Catalase on walls:\t", string(CATALASE_ON_WALLS))
+    println("Random seed:\t\t$seed")
     nothing
 end
 

@@ -37,9 +37,10 @@ end
 @testset "enz_print" begin
     n = 12312020
     m = 1225
+    seed = 4321
     set_NUMBER_OF_WALKS(n)
     set_MAX_STEPS_PER_WALK(m)
-    output = @capture_out begin Enz.enz_print() end
+    output = @capture_out begin Enz.enz_print(seed) end
     correct_output = string(
     "############################\n",
     "   Compare Enz Step Sizes   \n",
@@ -48,6 +49,7 @@ end
     "# of trials:\t\t$n\n",
     "# of steps (max):\t$m\n",
     "Step size, water:\t0.1\n",
+    "Random seed:\t\t4321\n"
     )
     @test output === correct_output
 end

@@ -10,8 +10,7 @@ Other simulation controls include:
 function getdata_arlett_animation(seed::Int=randseed())
     init_N = NUMBER_OF_WALKS
     set_NUMBER_OF_WALKS(1)
-    arlett_print()
-    println("Random seed:\t\t$seed")
+    arlett_print(seed)
     println("NOTE: # of steps (max) is ignored")
     Random.seed!(seed)
     x_arr, y_arr = ([], [])

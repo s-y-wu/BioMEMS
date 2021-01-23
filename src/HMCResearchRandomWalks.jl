@@ -61,4 +61,15 @@ export arlett_sim,
        set_CATALASE_ON_WALLS
 end
 
+
+module Quinto
+using Random, DataFrames, Reexport, ProgressMeter
+@reexport using HMCResearchRandomWalks.ViewOut
+include(string(@__DIR__, "/quinto/quinto_sim.jl"))
+export quinto_sim,
+       set_NUMBER_OF_WALKS,
+       set_MAX_STEPS_PER_WALK
+end
+
+
 end

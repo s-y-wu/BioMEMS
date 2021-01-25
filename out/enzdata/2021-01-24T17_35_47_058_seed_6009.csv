@@ -1,0 +1,5 @@
+thick_or_thin,enz_step_size,sensor_yield,escaped,unresolved
+"thick, 2 um",0.02,751,249,0
+"thin, 0.2 um",0.02,907,93,0
+"thick, 2 um",0.025,784,216,0
+"thin, 0.2 um",0.025,906,94,0

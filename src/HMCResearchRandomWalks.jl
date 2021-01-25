@@ -1,10 +1,10 @@
 module HMCResearchRandomWalks
 
 module ViewOut
-using DataFrames, CSV, Dates
+using DataFrames, CSV, Dates, Plots
 include(string(@__DIR__, "/view_out/current.jl"))
 include(string(@__DIR__, "/view_out/data.jl"))
-include(string(@__DIR__, "/view_out/plot_noflow.jl"))
+include(string(@__DIR__, "/view_out/plot_data.jl"))
 export plotdata_noflow,
        savedata,
        savetofolder,
@@ -55,6 +55,8 @@ include(string(@__DIR__, "/walk_logic/walk_logic.jl"))
 export arlett_sim,
        getdata_arlett_animation,
        getdata_arlett_noflow,
+       getdata_arlett_noflowcatalase,
+       getdata_arlett_flow,
        set_NUMBER_OF_WALKS,
        set_MAX_STEPS_PER_WALK,
        set_FLOW_BIAS,
@@ -66,9 +68,11 @@ module Quinto
 using Random, DataFrames, Reexport, ProgressMeter
 @reexport using HMCResearchRandomWalks.ViewOut
 include(string(@__DIR__, "/quinto/quinto_sim.jl"))
+include(string(@__DIR__, "/quinto/quinto_data.jl"))
 export quinto_sim,
        set_NUMBER_OF_WALKS,
-       set_MAX_STEPS_PER_WALK
+       set_MAX_STEPS_PER_WALK,
+       getdata_quinto
 end
 
 

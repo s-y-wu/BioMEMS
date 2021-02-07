@@ -9,6 +9,7 @@ For each walk that ends in a sensor collision, return
     3. outer sensor cross talk, left and right
 in a DataFrame.
 
+
 Simulation controls:
     set_NUMBER_OF_WALKS()
     set_MAX_STEPS_PER_WALK()

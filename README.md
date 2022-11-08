@@ -17,12 +17,12 @@ Random walk simulation to test BioMEMS developed in the Caltech Roukes Group Nan
 
 
 ## Installation
-To clone and cd into the repo:
+To clone and cd into the repo
 ```bash
 $ git clone https://github.com/s-y-wu/BioMEMS.git
 $ cd BioMEMS
 ```
-To enter Julia interactive shell:
+To enter Julia interactive shell
 ```bash
 $ julia
 ```

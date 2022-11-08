@@ -22,7 +22,7 @@ To clone and cd into the repo
 $ git clone https://github.com/s-y-wu/BioMEMS.git
 $ cd BioMEMS
 ```
-To enter Julia interactive shell
+To enter the Julia REPL
 ```bash
 $ julia
 ```

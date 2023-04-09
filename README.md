@@ -3,7 +3,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/lc6qmhcinm82gdal?svg=true)](https://ci.appveyor.com/project/s-y-wu/hmcresearchrandomwalks)
 [![Coverage Status](https://coveralls.io/repos/github/s-y-wu/HMCResearchRandomWalks/badge.svg?branch=main)](https://coveralls.io/github/s-y-wu/HMCResearchRandomWalks?branch=main)
 
-https://youtu.be/FjvasBFEJHA
+https://user-images.githubusercontent.com/54158745/230763191-fa02af6e-871f-48ec-86a7-5f0539152028.mp4
 
 [YouTube Playlist](https://youtube.com/playlist?list=PLQ4NmvpnlBHG_VHUp1NCgwYjvKVz8M-mb) 
 
